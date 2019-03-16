@@ -224,15 +224,15 @@ $menu_WIDTH: 150px;
     float: right;
 }
 .student-saved-row {
-    .edit, .delete, .course, .grade {
+    .edit, .delete, .course, .grade, .credits, .test {
         display: inline-block;
     }
-    .add, .save, .course-select, .grade-select {
+    .add, .save, .course-select, .grade-select, .credits-select {
         display: none;
     }
 }
 .student-new-row {
-    .save, .edit, .delete {
+    .save, .edit, .delete, .test {
         display: none;
     }
     .add {
@@ -250,10 +250,10 @@ $menu_WIDTH: 150px;
     .save, .delete {
         display: inline-block;
     }
-    .course-select, .grade-select {
+    .course-select, .grade-select, .credits-select {
         display: block;
     }
-    .add, .edit, .course, .grade {
+    .add, .edit, .course, .grade, .credits, .test{
         display: none;
     }
 }
