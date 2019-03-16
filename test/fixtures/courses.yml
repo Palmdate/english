@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  skill: MyText
+  quality: 1
+  status: MyText
+  user: one
+
+two:
+  skill: MyText
+  quality: 1
+  status: MyText
+  user: two
