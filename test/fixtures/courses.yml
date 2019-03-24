@@ -2,12 +2,10 @@
 
 one:
   skill: MyText
-  quality: 1
+  qquality: MyText
   status: MyText
-  user: one
 
 two:
   skill: MyText
-  quality: 1
+  qquality: MyText
   status: MyText
-  user: two
