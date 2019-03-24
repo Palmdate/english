@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@course) do |f| %>
+    <% grouped_options_skill = [['Speaking', ['Read Aloud','Repeat Sentence','Describe Image', 'Retell Lecture', 'Answer Short Question']],['Writing', ['Summarise Written Text','Essay']], ['Reading', ['Reading & Writing Fill In Blanks','Multiple Choice, Multiple Answer','Re-order Paragraph', 'Fill In Blanks (Drag & Drop)', 'Multiple Choice, Single Answer']], ['Listening', ['Summarize Spoken Text', 'Multiple Choice, Multiple Answer', 'Fill In Blanks', 'Highlight Correct Summary', 'Multiple Choice, Single Answer', 'Select Missing Word', 'Highlight Incorrect Words', 'Write From Dictation']]] %>
+    <%= f.select :status, grouped_options_for_select(grouped_options_skill, selected: @course.skill) %>
+    <% grouped_options_quality = ['5', '6','7','8', '9', '10', '11', '12','13', '14'] %>
+    <%= f.select :quality, options_for_select(grouped_options_quality, selected: @course.quality) %>
+    <% grouped_options_status = ['Done', 'In Progress','Not Starting'] %>
+    <%= f.select :status, options_for_select(grouped_options_status, selected: @course.status) %>
+    <%= f.submit "Save changes", class: "save btn btn-primary btn-xsxs" %>
+    <% end %>
+  </div>
+</div>

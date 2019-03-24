@@ -65,12 +65,21 @@
       </a>
     </li>
     <li>
-      <a href="<%= home_course_path %>" class="menu">
-        <h2 class="menu-title menu-title_7th">course</h2>
-        <ul class="menu-dropdown">
-          <li>Schedule</li>
-        </ul>
-      </a>
+        <% if current_user %>
+            <a href="<%= home_course_path %>" class="menu">
+                <h2 class="menu-title menu-title_7th">course</h2>
+                <ul class="menu-dropdown">
+                    <li>Schedule</li>
+                </ul>
+            </a>            
+        <% else %>
+            <a href="<%= login_path %>" class="menu">
+                <h2 class="menu-title menu-title_7th">course</h2>
+                <ul class="menu-dropdown">
+                    <li>Schedule</li>
+                </ul>
+            </a>
+        <% end %>
     </li>
   </ul>  
 </nav> 
