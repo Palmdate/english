@@ -4,7 +4,7 @@ This README would normally document whatever steps are necessary to get the
 application up and running.
 
 Deploy:
-https://english-tools.herokuapp.com/
+https://english-h2b.herokuapp.com/
 
 Board:
 https://app.zenhub.com/workspaces/english-web-5c8d29a18dcdbd6b613785d0/boards?repos=175638072
@@ -14,6 +14,7 @@ Things you may want to cover:
 * Ruby version: 2.6.1
 * Rails version: 5.2.2
 * Nodejs
+* Postgrest 9.10.4
 
 * System dependencies
 
