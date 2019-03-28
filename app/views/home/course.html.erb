@@ -1,158 +1,112 @@
 <div class="container">
-    <%= render 'header' %>
-    <div class="row">
-        <h1 >SCHEDULE</h1>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                UPDATE YOUR SCHEDULE HERE
-            </div>
-        </div>
-        <% if current_user.id %>
-            <table class="table table-bordered student-grade-table">
-                <% course = Course.where(user_id: current_user.id) %>
-                <% (1..30).each do |n| %>
-                    <% by_day = course.where(day_id: n) %>
-                    <% if by_day != [] %>
-                        <thead>
-                            <tr>
-                                <th>DAY <%= n %></th>
-                                <th>SKILL</th>
-                                <th>QUALITY</th>
-                                <th>STATUS</th>
-                                <th>ACTIONS</th>
-                            </tr>
-                        </thead>
-                    <% end %>
-                    <tbody>
-                        
-                        <% by_day.each do |c| %>
-                            <tr class="student-saved-row">
-                                <td>
-                                    
-                                </td>
-                                <td>
-                                    <span class="course"><%= c.skill %></span>
-                                </td>
-                                <td>
-                                    <span class="grade"><%= c.quality%></span>
-                                </td>
-                                <td>
-                                    <span class="credits"><%= c.status%></span>
-                                </td>
-                                <td>
-                                    <%#= link_to 'Edit',edit_course_path(c), :class => "edit btn btn-warning btn-xs" %>
-                                    <button class="edit btn btn-warning btn-xs">Edit</button>
-                                    <button class="save btn btn-primary btn-xs">Save</button>
-                                    <button class="test btn btn-info btn-xs">Test</button>
-                                    <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn btn-danger btn-xs" %>
-                                </td>
-                            </tr>
-                            <% @course = Course.find(c.id) %>
-                            <tr class="student-edit-row" style="display: none;">
-                                <%= form_for(@course) do |f| %>
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        <% grouped_options_skill = [['Speaking', ['Read Aloud','Repeat Sentence','Describe Image', 'Retell Lecture', 'Answer Short Question']],['Writing', ['Summarise Written Text','Essay']], ['Reading', ['Reading & Writing Fill In Blanks','Multiple Choice, Multiple Answer','Re-order Paragraph', 'Fill In Blanks (Drag & Drop)', 'Multiple Choice, Single Answer']], ['Listening', ['Summarize Spoken Text', 'Multiple Choice, Multiple Answer', 'Fill In Blanks', 'Highlight Correct Summary', 'Multiple Choice, Single Answer', 'Select Missing Word', 'Highlight Incorrect Words', 'Write From Dictation']]] %>
-                                        <%= f.select :skill, grouped_options_for_select(grouped_options_skill, selected: @course.skill)%>
-                                    </td>
-                                    <td>
-                                        <% grouped_options_quality = ['5', '6','7','8', '9', '10', '11', '12','13', '14'] %>
-                                        <%= f.select :quality, options_for_select(grouped_options_quality, selected: @course.quality) %>
-                                    </td>
-                                    <td>
-                                        <% grouped_options_status = ['Done', 'In Progress','Not Starting'] %>
-                                        <%= f.select :status, options_for_select(grouped_options_status, selected: @course.status) %>
-                                    </td>
-                                    <td>
-                                        <%= f.submit "Save changes", class: "form-control save btn btn-primary btn-xs", :style => "width: 25%;height: 35%;" %>
-                                    </td>
-                                <% end %>
-                            </tr>
-                        <% end %>
-                <% end %>
-                <tr class="student-new-row active">
-                    <form method="POST" action="/course/store" enctype="multipart/form-data" class="post-form">
-                        <%= token_tag %>
-                        <td style="width: 10%;">
-                            <div class="row">
-                                <label class="col-sm-2 col-form-label">Day</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="day_id">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <select class="course-select form-control input-sm" name="skill">
-                                <option value="">- Select Skill -</option>
-                                <optgroup label="Speaking">
-                                    <option>Read Aloud</option>
-                                    <option>Repeat Sentence</option>
-                                    <option>Describe Image</option>
-                                    <option>Retell Lecture</option>
-                                    <option>Answer Short Question</option>
-                                </optgroup>
-                                <optgroup label="Writing">
-                                    <option>Summarise Written Text</option>
-                                    <option>Essay</option>
-                                </optgroup>
-                                <optgroup label="Reading">
-                                    <option>Reading & Writing Fill In Blanks</option>
-                                    <option>Multiple Choice, Multiple Answer</option>
-                                    <option>Re-order Paragraph</option>
-                                    <option>Fill In Blanks (Drag & Drop)</option>
-                                    <option>Multiple Choice, Single Answer</option>
-                                </optgroup>
-                                <optgroup label="Listening">
-                                    <option>Summarize Spoken Text</option>
-                                    <option>Multiple Choice, Multiple Answer</option>
-                                    <option>Fill In Blanks</option>
-                                    <option>Highlight Correct Summary</option>
-                                    <option>Multiple Choice, Single Answer </option>
-                                    <option>Select Missing Word</option>
-                                    <option>Highlight Incorrect Words</option>
-                                    <option>Write From Dictation</option>
-                                </optgroup>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="quality" id="" class="grade-select form-control input-sm">
-                                <option value="">- Select Grade -</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
-                                <option>11</option>
-                                <option>12</option>
-                                <option>13</option>
-                                <option>14</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="status" id="" class="credits-select form-control input-sm">
-                                <option value="">- Select Status -</option>
-                                <option >Done</option>
-                                <option>In Progress</option>
-                                <option >Not Starting</option>
-                            </select>
-                        </td>
-                        <td>
-                            <button class="add btn btn-success btn-xs" type="submit">Add Skill</button>
-                        </td>
-                    </form>
-                </tr>
-            </table>
-        <% end %>
+  <%= render 'header' %>
+  <div class="row">
+    <h1 >SCHEDULE</h1>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        UPDATE YOUR SCHEDULE HERE
+      </div>
     </div>
+    <% if current_user.id %>
+    <table class="table table-bordered student-grade-table">
+      <% course = Course.where(user_id: current_user.id) %>
+      <% (1..30).each do |n| %>
+      <% by_day = course.where(day_id: n) %>
+      <% if by_day != [] %>
+      <thead>
+        <tr>
+          <th>DAY <%= n %></th>
+          <th>SKILL</th>
+          <th>QUALITY</th>
+          <th>STATUS</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <% end %>
+      <tbody>
+        <% by_day.each do |c| %>
+        <tr class="student-saved-row">
+          <td>
+            
+          </td>
+          <td>
+            <span class="course"><%= c.skill %></span>
+          </td>
+          <td>
+            <span class="grade"><%= c.quality%></span>
+          </td>
+          <td>
+            <span class="credits"><%= c.status%></span>
+          </td>
+          <td>
+            <%#= link_to 'Edit',edit_course_path(c), :class => "edit btn btn-warning btn-xs" %>
+            <button class="edit btn btn-warning btn-xs">Edit</button>
+            <button class="save btn btn-primary btn-xs">Save</button>
+            <button class="test btn btn-info btn-xs">Test</button>
+            <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn btn-danger btn-xs" %>
+          </td>
+        </tr>
+        <% @course = Course.find(c.id) %>
+        <tr class="student-edit-row" style="display: none;">
+          <%= form_for(@course) do |f| %>
+          <td>
+            
+          </td>
+          <td>
+            <% grouped_options_skill = [['Speaking', ['Read Aloud','Repeat Sentence','Describe Image', 'Retell Lecture', 'Answer Short Question']],['Writing', ['Summarise Written Text','Essay']], ['Reading', ['Reading & Writing Fill In Blanks','Multiple Choice, Multiple Answer','Re-order Paragraph', 'Fill In Blanks (Drag & Drop)', 'Multiple Choice, Single Answer']], ['Listening', ['Summarize Spoken Text', 'Multiple Choice, Multiple Answer', 'Fill In Blanks', 'Highlight Correct Summary', 'Multiple Choice, Single Answer', 'Select Missing Word', 'Highlight Incorrect Words', 'Write From Dictation']]] %>
+            <%= f.select :skill, grouped_options_for_select(grouped_options_skill, selected: @course.skill), {}, {class: "course-select form-control input-sm"}%>
+          </td>
+          <td>
+            <% grouped_options_quality = ['5', '6','7','8', '9', '10', '11', '12','13', '14'] %>
+            <%= f.select :quality, options_for_select(grouped_options_quality, selected: @course.quality), {}, {class: "grade-select form-control input-sm"} %>
+          </td>
+          <td>
+            <% grouped_options_status = ['Done', 'In Progress','Not Starting'] %>
+            <%= f.select :status, options_for_select(grouped_options_status, selected: @course.status), {}, {class: "credits-select form-control input-sm"}%>
+          </td>
+          <td>
+            <%= f.submit "Save changes", class: "form-control save btn btn-primary btn-xs" %>
+          </td>
+          <% end %>
+        </tr>
+        <% end %>
+        <% end %>
+        <tr class="student-new-row active">
+          <%= form_with url: course_store_path, class: 'post-form' do |f| %>
+          <td style="width: 10%;">
+            <div class="row">
+              <%= f.label :day_id, "Day", class: 'col-sm-2 col-form-label' %>
+              <div class="col-sm-7">
+                <%= f.text_field :day_id, class: 'form-control' %>
+              </div>
+            </div>
+          </td>
+          <td>
+            <% grouped_options_skill = [['Speaking', ['Read Aloud','Repeat Sentence','Describe Image', 'Retell Lecture', 'Answer Short Question']],['Writing', ['Summarise Written Text','Essay']], ['Reading', ['Reading & Writing Fill In Blanks','Multiple Choice, Multiple Answer','Re-order Paragraph', 'Fill In Blanks (Drag & Drop)', 'Multiple Choice, Single Answer']], ['Listening', ['Summarize Spoken Text', 'Multiple Choice, Multiple Answer', 'Fill In Blanks', 'Highlight Correct Summary', 'Multiple Choice, Single Answer', 'Select Missing Word', 'Highlight Incorrect Words', 'Write From Dictation']]] %>
+            <%= f.select :skill, grouped_options_for_select(grouped_options_skill), {},{class: "course-select form-control input-sm"}%>
+          </td>
+          <td>
+            <% grouped_options_quality = ['5', '6','7','8', '9', '10', '11', '12','13', '14'] %>
+            <%= f.select :quality, options_for_select(grouped_options_quality), {}, {class: "grade-select form-control input-sm"}%>
+          </td>
+          <td>
+            <% grouped_options_status = ['Done', 'In Progress','Not Starting'] %>
+            <%= f.select :status, options_for_select(grouped_options_status), {}, {class: "credits-select form-control input-sm"} %>
+          </td>
+          <td>
+            <%= f.submit "Add", class: "form-control add btn btn-success btn-xs", :style => "width: 25%;height: 35%;" %>
+          </td>
+          <% end %>
+        </tr>
+    </table>
+    <% end %>
+  </div>
 </div>
 <script>
- var $dataTable = $('.student-grade-table');
- $dataTable.on('click', '.edit', function(e) {
-     var $row = $(this).closest('tr');
-     $row.hide();
-     $row.next().show();
- })
+  var $dataTable = $('.student-grade-table');
+  $dataTable.on('click', '.edit', function(e) {
+    var $row = $(this).closest('tr');
+    $row.hide();
+    $row.next().show();
+  })
 </script>
