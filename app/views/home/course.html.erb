@@ -1,6 +1,6 @@
 <div class="container">
   <%= render 'header' %>
-  <div class="row">
+  <div class="row hList1">
     <h1 >SCHEDULE</h1>
     <div class="panel panel-default">
         <div class="panel-body">
@@ -16,8 +16,8 @@
               <% if by_day != [] %>
                   <div class="row panel-body panel panel-default">
                       <div class="col-6 col-md-1">DAY <%= n %></div>
-                      <div class="col-6 col-md-3">SKILL</div>
-                      <div class="col-6 col-md-3">QUALITY</div>
+                      <div class="col-6 col-md-4">SKILL</div>
+                      <div class="col-6 col-md-2">QUALITY</div>
                       <div class="col-6 col-md-3">STATUS</div>
                       <div class="col-6 col-md-2">ACTIONS</div>
                   </div>
@@ -25,13 +25,13 @@
               <% by_day.order("id ASC").each do |c| %>
                   <div class="row panel-body">
                       <div class="col-6 col-md-1"></div>
-                      <div class="col-6 col-md-3"><%= c.skill %></div>
-                      <div class="col-6 col-md-3"><%= c.quality%></div>
+                      <div class="col-6 col-md-4"><%= c.skill %></div>
+                      <div class="col-6 col-md-2"><%= c.quality%></div>
                       <div class="col-6 col-md-3"><%= c.status%></div>
                       <div class="col-6 col-md-2">
-                          <button class="edit btn btn-warning btn-xs">Edit</button>
-                          <button class="test btn btn-info btn-xs">Test</button>
-                          <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn btn-danger btn-xs" %>
+                          <button class="edit btn-warning btn-xs">Edit</button>
+                          <button class="test btn-info btn-xs">Test</button>
+                          <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn-danger btn-xs", :style => "margin-left: 25%;" %>
                       </div>
                   </div>
                   
