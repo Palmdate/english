@@ -1,0 +1,17 @@
+<%= form_with(model: write_fr_dic, local: true) do |form| %>
+  <% if write_fr_dic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(write_fr_dic.errors.count, "error") %> prohibited this write_fr_dic from being saved:</h2>
+
+      <ul>
+      <% write_fr_dic.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

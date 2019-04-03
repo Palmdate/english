@@ -1,0 +1,2 @@
+class WriteFrDic < ApplicationRecord
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_26_082903) do
+ActiveRecord::Schema.define(version: 2019_04_01_100902) do
 
   create_table "courses", force: :cascade do |t|
     t.text "skill"
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(version: 2019_03_26_082903) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  create_table "write_fr_dics", force: :cascade do |t|
+    t.string "audio"
+    t.text "content"
+    t.text "result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
