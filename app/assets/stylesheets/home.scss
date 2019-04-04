@@ -5,23 +5,23 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 
 html {
-  height: 100%;
-  background-color: #f8f8f8;
+    height: 100%;
+    background-color: #f8f8f8;
 }
 
 body {
-  overflow: hidden;
-  // height: 100%;
-  // width: 100%;
-  margin: 0 auto;
-  background-color: #ffffff;
-  font-family: 'Roboto', sans-serif;
-  color: #555555;
+    overflow: hidden;
+    // height: 100%;
+    // width: 100%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    color: #555555;
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
 // * {
@@ -31,70 +31,70 @@ a {
 $menu_WIDTH: 150px;
 
 .menu {
-  display: block;
-  position: relative;
-  cursor: pointer;
+    display: block;
+    position: relative;
+    cursor: pointer;
 }
 
 .menu-title {
-  display: block;
-  width: $menu_WIDTH;
-  height: 50px;
-  padding: 12px 0 0;
-  background: #9dc852;
-  text-align: center;
-  color: black;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: 0.3s background-color;
-  font-family: initial;
-  font-size: 24px;
+    display: block;
+    width: $menu_WIDTH;
+    height: 50px;
+    padding: 12px 0 0;
+    background: #9dc852;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s background-color;
+    font-family: initial;
+    font-size: 24px;
 }
 
 .menu-title:before {
-  content: "";
-  display: block;
-  height: 0;
-  border-top: 5px solid #9dc852;
-  border-left: ($menu_WIDTH / 2) solid transparent;
-  border-right: ($menu_WIDTH / 2) solid transparent;
-  border-bottom: 0 solid #dddddd;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 101;
-  transition:
-    0.2s 0.2s border-top ease-out,
-    0.3s border-top-color;
+    content: "";
+    display: block;
+    height: 0;
+    border-top: 5px solid #9dc852;
+    border-left: ($menu_WIDTH / 2) solid transparent;
+    border-right: ($menu_WIDTH / 2) solid transparent;
+    border-bottom: 0 solid #dddddd;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 101;
+    transition:
+        0.2s 0.2s border-top ease-out,
+        0.3s border-top-color;
 }
 
 .menu-title:hover { background: #8db842; }
 .menu-title:hover:before { border-top-color: #8db842; }
 
 .menu:hover > .menu-title:before {
-  border-top-width: 0;
-  transition:
-    0.2s border-top-width ease-in,
-    0.3s border-top-color;
+    border-top-width: 0;
+    transition:
+        0.2s border-top-width ease-in,
+        0.3s border-top-color;
 }
 
 .menu-title:after {
-  content: "";
-  display: block;
-  height: 0;
-  border-left: ($menu_WIDTH / 2) solid transparent;
-  border-right: ($menu_WIDTH / 2) solid transparent;
-  border-bottom: 0 solid #ebebeb;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 101;
-  transition: 0.2s border-bottom ease-in;
+    content: "";
+    display: block;
+    height: 0;
+    border-left: ($menu_WIDTH / 2) solid transparent;
+    border-right: ($menu_WIDTH / 2) solid transparent;
+    border-bottom: 0 solid #ebebeb;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 101;
+    transition: 0.2s border-bottom ease-in;
 }
 
 .menu:hover > .menu-title:after {
-  border-bottom-width: 5px;
-  transition: 0.2s 0.2s border-bottom-width ease-out;
+    border-bottom-width: 5px;
+    transition: 0.2s 0.2s border-bottom-width ease-out;
 }
 
 .menu-title_2nd { background: #4e96b3; }
@@ -128,57 +128,57 @@ $menu_WIDTH: 150px;
 .menu-title_7th:hover:before { border-top-color: #c9adc6; }
 
 .menu-dropdown {
-  min-width: 100%;
-  padding: 15px 0;
-  position: absolute;
-  background: white;
-  z-index: 100;
-  transition:
-    0.5s padding,
-    0.5s background;
+    min-width: 100%;
+    padding: 15px 0;
+    position: absolute;
+    background: white;
+    z-index: 100;
+    transition:
+        0.5s padding,
+        0.5s background;
 }
 
 .menu-dropdown:after {
-  content: "";
-  display: block;
-  height: 0;
-  border-top: 5px solid #ebebeb;
-  border-left: ($menu_WIDTH / 2) solid transparent;
-  border-right: ($menu_WIDTH / 2) solid transparent;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 101;
-  transition: 0.5s border-top;
+    content: "";
+    display: block;
+    height: 0;
+    border-top: 5px solid #ebebeb;
+    border-left: ($menu_WIDTH / 2) solid transparent;
+    border-right: ($menu_WIDTH / 2) solid transparent;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 101;
+    transition: 0.5s border-top;
 }
 
 .menu:not(:hover) > .menu-dropdown {
-  padding: 4px 0;
-  background: #dddddd;
-  z-index: 99;
+    padding: 4px 0;
+    background: #dddddd;
+    z-index: 99;
 }
 
 .menu:not(:hover) > .menu-dropdown:after {
-  border-top-color: #dddddd;
+    border-top-color: #dddddd;
 }
 
 .menu:not(:hover) > .menu-title:after {
-  border-bottom-color: #dddddd;
+    border-bottom-color: #dddddd;
 }
 
 .menu-dropdown > * {
-  overflow: hidden;
-  height: 30px;
-  padding: 5px 10px;
-  background: rgba(0,0,0,0);
-  color: black;
-  white-space: nowrap;
-  transition: 
-    0.5s height cubic-bezier(.73,.32,.34,1.5),
-    0.5s padding cubic-bezier(.73,.32,.34,1.5),
-    0.5s margin cubic-bezier(.73,.32,.34,1.5),
-    0.5s 0.2s color,
-    0.2s background-color;
+    overflow: hidden;
+    height: 30px;
+    padding: 5px 10px;
+    background: rgba(0,0,0,0);
+    color: black;
+    white-space: nowrap;
+    transition: 
+        0.5s height cubic-bezier(.73,.32,.34,1.5),
+        0.5s padding cubic-bezier(.73,.32,.34,1.5),
+        0.5s margin cubic-bezier(.73,.32,.34,1.5),
+        0.5s 0.2s color,
+        0.2s background-color;
 }
 
 .menu-dropdown > *:hover {
@@ -187,20 +187,20 @@ $menu_WIDTH: 150px;
 }
 
 .menu:not(:hover) > .menu-dropdown > * {
-  visibility: hidden;
-  height: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  margin: 0;
-  // color: rgba(25,25,25,0);
-  color: black;
-  transition: 
-    0.5s 0.1s height,
-    0.5s 0.1s padding,
-    0.5s 0.1s margin,
-    0.3s color,
-    0.6s visibility;
-  z-index: 99;
+    visibility: hidden;
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+    // color: rgba(25,25,25,0);
+    color: black;
+    transition: 
+        0.5s 0.1s height,
+        0.5s 0.1s padding,
+        0.5s 0.1s margin,
+        0.3s color,
+        0.6s visibility;
+    z-index: 99;
 }
 
 .hList {
@@ -208,11 +208,11 @@ $menu_WIDTH: 150px;
 }
 
 .hList > * {
-  float: left;
+    float: left;
 }
 
 .hList > * + * {
-  margin-left: 0;
+    margin-left: 0;
 }
 
 // CSS for Course page
@@ -226,11 +226,12 @@ $menu_WIDTH: 150px;
 
 .student-saved-row {
     .edit, .delete, .course, .grade, .credits, .test {
-    .edit, .delete, .course, .grade, .credits, .test {
-        display: inline-block;
-    }
-    .add, .save, .course-select, .grade-select, .credits-select {
-        display: none;
+        .edit, .delete, .course, .grade, .credits, .test {
+            display: inline-block;
+        }
+        .add, .save, .course-select, .grade-select, .credits-select {
+            display: none;
+        }
     }
 }
 .student-new-row {
@@ -277,31 +278,32 @@ $menu_WIDTH: 150px;
 
 body{background: #f0f0f0;}
 svg{
-  display: block;
-  width: 40%;
-  margin: auto;
-  
+    display: block;
+    width: 40%;
+    margin: auto;
+    
 }
 #coder{
-  animation: dash 10s linear forwards;
-  stroke-dasharray: 5000;
-  stroke-dashoffset: 5000;
+    animation: dash 10s linear forwards;
+    stroke-dasharray: 5000;
+    stroke-dashoffset: 5000;
 }
 @keyframes dash {
-  to {
-    stroke-dashoffset: 10;
-  }
+    to {
+        stroke-dashoffset: 10;
+    }
 }
 #colors{
-  opacity: 0;
-  animation: colorIn 5s 8s ease-out forwards;
+    opacity: 0;
+    animation: colorIn 5s 8s ease-out forwards;
 }
 @keyframes colorIn {
-  from {opacity:0;}
-  to {opacity: 1;}
+    from {opacity:0;}
+    to {opacity: 1;}
 }
 @media only screen and (max-width: 600px) {
     svg {
         width: 100%;
     }
 }
+
