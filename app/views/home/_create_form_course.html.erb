@@ -1,0 +1,23 @@
+<%= form_with url: course_store_path, class: 'panel-body post-form' do |f| %>
+    <div class="row" style="border-top-style: double;padding-top: 15px;">
+        <div class="col-6 col-md-1" style="display: flex;">
+          <p>DAY  </p>
+          <%= f.text_field :day_id, style: "width: 50%; margin-left: 10px;" %>
+        </div>
+        <div class="col-6 col-md-3">
+            <% grouped_options_skill = [['Speaking', ['Read Aloud','Repeat Sentence','Describe Image', 'Retell Lecture', 'Answer Short Question']],['Writing', ['Summarise Written Text','Essay']], ['Reading', ['Reading & Writing Fill In Blanks','Multiple Choice, Multiple Answer','Re-order Paragraph', 'Fill In Blanks (Drag & Drop)', 'Multiple Choice, Single Answer']], ['Listening', ['Summarize Spoken Text', 'Multiple Choice, Multiple Answer', 'Fill In Blanks', 'Highlight Correct Summary', 'Multiple Choice, Single Answer', 'Select Missing Word', 'Highlight Incorrect Words', 'Write From Dictation']]] %>
+            <%= f.select :skill, grouped_options_for_select(grouped_options_skill), {},{class: "course-select form-control input-sm"}%>
+        </div>
+        <div class="col-6 col-md-3">
+            <% grouped_options_quality = ['5', '6','7','8', '9', '10', '11', '12','13', '14'] %>
+            <%= f.select :quality, options_for_select(grouped_options_quality), {}, {class: "grade-select form-control input-sm"}%>
+        </div>
+        <div class="col-6 col-md-3">
+            <% grouped_options_status = ['Done', 'In Progress','Not Starting'] %>
+            <%= f.select :status, options_for_select(grouped_options_status), {}, {class: "credits-select form-control input-sm"} %>
+        </div>
+        <div class="col-6 col-md-2">
+            <%= f.submit "Add", class: "form-control add btn btn-success btn-xs", :style => "width: 25%;height: 35%;" %>
+        </div>
+    </div>
+<% end %>

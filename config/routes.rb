@@ -1,5 +1,8 @@
 # coding: utf-8
 Rails.application.routes.draw do
+  get 'course/create'
+  post 'course/store'
+  resources :course, only: [:edit, :update, :destroy]
   get 'home/course'
   resources :users
   root "home#index"

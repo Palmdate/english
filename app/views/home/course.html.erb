@@ -1,321 +1,55 @@
-<!-- <\!-- jQuery -\-> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
-
-<!-- <\!-- Bootstrap JS -\-> -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
-
-<!-- <\!-- Bootstrap-Select CSS -\-> -->
-<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet"/> -->
-
-<!-- <\!-- Bootstrap-Select JS -\-> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script> -->
-
 <div class="container">
   <%= render 'header' %>
   <div class="row">
     <h1 >SCHEDULE</h1>
     <div class="panel panel-default">
-      <div class="panel-body">
-        UPDATE YOUR SCHEDULE HERE
-      </div>
+        <div class="panel-body">
+            UPDATE YOUR SCHEDULE HERE
+        </div>
     </div>
-    <table class="table table-bordered student-grade-table">
-      <thead>
-        <tr>
-          <th>DAY 1 </th>
-          <th>SKILL</th>
-          <th>QUALITY</th>
-          <th>STATUS</th>
-          <th>ACTIONS</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="student-saved-row">
-          <td>
-            
-          </td>
-          <td>
-            <span class="course">Read Aloud</span>
-            <select class="course-select form-control input-sm" name="course">
-              <option value="">- Select Skill -</option>
-                <optgroup label="Speaking">
-                  <option value="Read_Aloud" selected>Read Aloud</option>
-                  <option value="Repeat_Sentence">Repeat Sentence</option>
-                  <option value="Describe_Image">Describe Image</option>
-                  <option value="Retell_Lecture">Retell Lecture</option>
-                  <option value="ASQ">Answer Short Question</option>
-                </optgroup>
-                <optgroup label="Writing">
-                  <option value="SWT">Summarise Written Text</option>
-                  <option value="Essay">Essay</option>
-                </optgroup>
-                <optgroup label="Reading">
-                  <option value="RWF">Reading & Writing Fill In Blanks</option>
-                  <option value="WCMA">Multiple Choice, Multiple Answer</option>
-                  <option value="RP">Re-order Paragraph</option>
-                   <option value="FIB">Fill In Blanks (Drag & Drop)</option>
-                  <option value="WCSA">Multiple Choice, Single Answer</option>
-                </optgroup>
-                <optgroup label="Listening">
-                  <option value="Audit">Summarize Spoken Text</option>
-                  <option value="Withdrawl">Multiple Choice, Multiple Answer</option>
-                  <option value="FIB">Fill In Blanks</option>
-                  <option value="HC">Highlight Correct Summary</option>
-                  <option value="MCSA">Multiple Choice, Single Answer </option>
-                  <option value="SM">Select Missing Word</option>
-                  <option value="HI">Highlight Incorrect Words</option>
-                  <option value="WFD">Write From Dictation</option>
-                  </optgroup>
-            </select>
-          </td>
-          <td>
-            <span class="grade">5</span>
-            <select name="" id="" class="grade-select form-control input-sm">
-              <option>- Select Grade -</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
-              <option>11</option>
-              <option>12</option>
-              <option>13</option>
-              <option>14</option>
-          </td>
-          <td>
-            <span class="credits">Not Starting</span>
-            <select name="" id="" class="credits-select form-control input-sm">
-              <option value="">- Select Status -</option>
-              <option >Done</option>
-              <option>In Progress</option>
-              <option >Not Starting</option>
-          </td>
-          <td>
-            <button class="add btn btn-success btn-xs">Add Skill</button>
-            <button class="edit btn btn-warning btn-xs">Edit</button>
-            <button class="save btn btn-primary btn-xs">Save</button>
-            <button class="test btn btn-info btn-xs">Test</button>
-            <button class="delete btn btn-danger btn-xs" title="Delete"><span class="glyphicon glyphicon-remove"></span></button>
-          </td>
-        </tr>
-        <tr class="student-new-row active">
-          <td>
-            
-          </td>
-          <td>
-            <span class="course"></span>
-            <select class="course-select form-control input-sm" name="course">
-              <option value="">- Select Skill -</option>
-                <optgroup label="Speaking">
-                  <option value="Read_Aloud">Read Aloud</option>
-                  <option value="Repeat_Sentence">Repeat Sentence</option>
-                  <option value="Describe_Image">Describe Image</option>
-                  <option value="Retell_Lecture">Retell Lecture</option>
-                  <option value="ASQ">Answer Short Question</option>
-                </optgroup>
-                <optgroup label="Writing">
-                  <option value="SWT">Summarise Written Text</option>
-                  <option value="Essay">Essay</option>
-                </optgroup>
-                <optgroup label="Reading">
-                  <option value="RWF">Reading & Writing Fill In Blanks</option>
-                  <option value="WCMA">Multiple Choice, Multiple Answer</option>
-                  <option value="RP">Re-order Paragraph</option>
-                   <option value="FIB">Fill In Blanks (Drag & Drop)</option>
-                  <option value="WCSA">Multiple Choice, Single Answer</option>
-                </optgroup>
-                <optgroup label="Listening">
-                  <option value="Audit">Summarize Spoken Text</option>
-                  <option value="Withdrawl">Multiple Choice, Multiple Answer</option>
-                  <option value="FIB">Fill In Blanks</option>
-                  <option value="HC">Highlight Correct Summary</option>
-                  <option value="MCSA">Multiple Choice, Single Answer </option>
-                  <option value="SM">Select Missing Word</option>
-                  <option value="HI">Highlight Incorrect Words</option>
-                  <option value="WFD">Write From Dictation</option>
-                  </optgroup>
-            </select>
-          </td>
-          <td>
-            <span class="grade"></span>
-            <select name="" id="" class="grade-select form-control input-sm">
-              <option value="">- Select Grade -</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
-              <option>11</option>
-              <option>12</option>
-              <option>13</option>
-              <option>14</option>
-          </td>
-          <td>
-            <span class="credits"></span>
-            <select name="" id="" class="credits-select form-control input-sm">
-              <option value="">- Select Status -</option>
-              <option >Done</option>
-              <option>In Progress</option>
-              <option >Not Starting</option>
-          </td>
-          <td>
-            <button class="add btn btn-success btn-xs">Add Skill</button>
-            <button class="edit btn btn-warning btn-xs">Edit</button>
-            <button class="save btn btn-primary btn-xs">Save</button>
-            <button class="test btn btn-info btn-xs">Test</button>
-            <button class="delete btn btn-danger btn-xs" title="Delete"><span class="glyphicon glyphicon-remove"></span></button>
-          </td>
-        </tr>
-         <tr>
-          <th>DAY 2 </th>
-          <th>SKILL</th>
-          <th>QUALITY</th>
-          <th>STATUS</th>
-          <th>ACTIONS</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="student-saved-row">
-          <td>
-            
-          </td>
-          <td>
-            <span class="course">Read Aloud</span>
-            <select class="course-select form-control input-sm" name="course">
-              <option value="">- Select Skill -</option>
-                <optgroup label="Speaking">
-                  <option value="Read_Aloud" selected>Read Aloud</option>
-                  <option value="Repeat_Sentence">Repeat Sentence</option>
-                  <option value="Describe_Image">Describe Image</option>
-                  <option value="Retell_Lecture">Retell Lecture</option>
-                  <option value="ASQ">Answer Short Question</option>
-                </optgroup>
-                <optgroup label="Writing">
-                  <option value="SWT">Summarise Written Text</option>
-                  <option value="Essay">Essay</option>
-                </optgroup>
-                <optgroup label="Reading">
-                  <option value="RWF">Reading & Writing Fill In Blanks</option>
-                  <option value="WCMA">Multiple Choice, Multiple Answer</option>
-                  <option value="RP">Re-order Paragraph</option>
-                   <option value="FIB">Fill In Blanks (Drag & Drop)</option>
-                  <option value="WCSA">Multiple Choice, Single Answer</option>
-                </optgroup>
-                <optgroup label="Listening">
-                  <option value="Audit">Summarize Spoken Text</option>
-                  <option value="Withdrawl">Multiple Choice, Multiple Answer</option>
-                  <option value="FIB">Fill In Blanks</option>
-                  <option value="HC">Highlight Correct Summary</option>
-                  <option value="MCSA">Multiple Choice, Single Answer </option>
-                  <option value="SM">Select Missing Word</option>
-                  <option value="HI">Highlight Incorrect Words</option>
-                  <option value="WFD">Write From Dictation</option>
-                  </optgroup>
-            </select>
-          </td>
-          <td>
-            <span class="grade">5</span>
-            <select name="" id="" class="grade-select form-control input-sm">
-              <option>- Select Grade -</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
-              <option>11</option>
-              <option>12</option>
-              <option>13</option>
-              <option>14</option>
-          </td>
-          <td>
-            <span class="credits">Not Starting</span>
-            <select name="" id="" class="credits-select form-control input-sm">
-              <option value="">- Select Status -</option>
-              <option >Done</option>
-              <option>In Progress</option>
-              <option >Not Starting</option>
-          </td>
-          <td>
-            <button class="add btn btn-success btn-xs">Add Skill</button>
-            <button class="edit btn btn-warning btn-xs">Edit</button>
-            <button class="save btn btn-primary btn-xs">Save</button>
-            <button class="test btn btn-info btn-xs">Test</button>
-            <button class="delete btn btn-danger btn-xs" title="Delete"><span class="glyphicon glyphicon-remove"></span></button>
-          </td>
-        </tr>
-        <tr class="student-new-row active">
-          <td>
-            
-          </td>
-          <td>
-            <span class="course"></span>
-            <select class="course-select form-control input-sm" name="course">
-              <option value="">- Select Skill -</option>
-                <optgroup label="Speaking">
-                  <option value="Read_Aloud">Read Aloud</option>
-                  <option value="Repeat_Sentence">Repeat Sentence</option>
-                  <option value="Describe_Image">Describe Image</option>
-                  <option value="Retell_Lecture">Retell Lecture</option>
-                  <option value="ASQ">Answer Short Question</option>
-                </optgroup>
-                <optgroup label="Writing">
-                  <option value="SWT">Summarise Written Text</option>
-                  <option value="Essay">Essay</option>
-                </optgroup>
-                <optgroup label="Reading">
-                  <option value="RWF">Reading & Writing Fill In Blanks</option>
-                  <option value="WCMA">Multiple Choice, Multiple Answer</option>
-                  <option value="RP">Re-order Paragraph</option>
-                   <option value="FIB">Fill In Blanks (Drag & Drop)</option>
-                  <option value="WCSA">Multiple Choice, Single Answer</option>
-                </optgroup>
-                <optgroup label="Listening">
-                  <option value="Audit">Summarize Spoken Text</option>
-                  <option value="Withdrawl">Multiple Choice, Multiple Answer</option>
-                  <option value="FIB">Fill In Blanks</option>
-                  <option value="HC">Highlight Correct Summary</option>
-                  <option value="MCSA">Multiple Choice, Single Answer </option>
-                  <option value="SM">Select Missing Word</option>
-                  <option value="HI">Highlight Incorrect Words</option>
-                  <option value="WFD">Write From Dictation</option>
-                  </optgroup>
-            </select>
-          </td>
-          <td>
-            <span class="grade"></span>
-            <select name="" id="" class="grade-select form-control input-sm">
-              <option value="">- Select Grade -</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
-              <option>11</option>
-              <option>12</option>
-              <option>13</option>
-              <option>14</option>
-          </td>
-          <td>
-            <span class="credits"></span>
-            <select name="" id="" class="credits-select form-control input-sm">
-              <option value="">- Select Status -</option>
-              <option >Done</option>
-              <option>In Progress</option>
-              <option >Not Starting</option>
-          </td>
-          <td>
-            <button class="add btn btn-success btn-xs">Add Skill</button>
-            <button class="edit btn btn-warning btn-xs">Edit</button>
-            <button class="save btn btn-primary btn-xs">Save</button>
-            <button class="test btn btn-info btn-xs">Test</button>
-            <button class="delete btn btn-danger btn-xs" title="Delete"><span class="glyphicon glyphicon-remove"></span></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  </div>
+  <div class="student-grade-table">
+      <% if current_user.id %>
+          <% course = Course.where(user_id: current_user.id) %>
+          <% (1..30).each do |n| %>
+              <% by_day = course.where(day_id: n) %>
+              <% if by_day != [] %>
+                  <div class="row panel-body panel panel-default">
+                      <div class="col-6 col-md-1">DAY <%= n %></div>
+                      <div class="col-6 col-md-3">SKILL</div>
+                      <div class="col-6 col-md-3">QUALITY</div>
+                      <div class="col-6 col-md-3">STATUS</div>
+                      <div class="col-6 col-md-2">ACTIONS</div>
+                  </div>
+              <% end %>
+              <% by_day.order("id ASC").each do |c| %>
+                  <div class="row panel-body">
+                      <div class="col-6 col-md-1"></div>
+                      <div class="col-6 col-md-3"><%= c.skill %></div>
+                      <div class="col-6 col-md-3"><%= c.quality%></div>
+                      <div class="col-6 col-md-3"><%= c.status%></div>
+                      <div class="col-6 col-md-2">
+                          <button class="edit btn btn-warning btn-xs">Edit</button>
+                          <button class="test btn btn-info btn-xs">Test</button>
+                          <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn btn-danger btn-xs" %>
+                      </div>
+                  </div>
+                  
+                  <% @course = Course.find(c.id) %>
+                  <%= render 'edit_form_course', course: @course  %>
+                  
+              <% end %>
+          <% end %>
+          <%= render 'create_form_course' %>
+      <% end %>
   </div>
 </div>
+
+<script>
+  var $dataTable = $('.student-grade-table');
+  $dataTable.on('click', '.edit', function(e) {
+    var $row = $(this).closest('.row');
+    $row.hide();
+    $row.next().show();
+  })
+</script>

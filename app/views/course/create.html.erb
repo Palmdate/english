@@ -1,0 +1,60 @@
+<h1>Course#create</h1>
+<p>Find me in app/views/course/create.html.erb</p>
+
+<div class="title">
+    <h1>Live Blog</h1>
+    <p>Editor View</p>
+</div>
+
+<div style="text-align:center">
+    <p><strong>Fill and submit the form below to create a new post</strong></p>
+
+    <form method="POST" action="/course/store" enctype="multipart/form-data" class="post-form">
+        <%= token_tag %>
+        <div class="form-group">
+            <select class="course-select form-control input-sm" name="skill">
+                <option value="">- Select Skill -</option>
+                <optgroup label="Speaking">
+                    <option value="Read_Aloud" selected>Read Aloud</option>
+                    <option value="Repeat_Sentence">Repeat Sentence</option>
+                    <option value="Describe_Image">Describe Image</option>
+                    <option value="Retell_Lecture">Retell Lecture</option>
+                    <option value="ASQ">Answer Short Question</option>
+                </optgroup>
+                <optgroup label="Writing">
+                    <option value="SWT">Summarise Written Text</option>
+                    <option value="Essay">Essay</option>
+                </optgroup>
+                <optgroup label="Reading">
+                    <option value="RWF">Reading & Writing Fill In Blanks</option>
+                    <option value="WCMA">Multiple Choice, Multiple Answer</option>
+                    <option value="RP">Re-order Paragraph</option>
+                    <option value="FIB">Fill In Blanks (Drag & Drop)</option>
+                    <option value="WCSA">Multiple Choice, Single Answer</option>
+                </optgroup>
+                <optgroup label="Listening">
+                    <option value="Audit">Summarize Spoken Text</option>
+                    <option value="Withdrawl">Multiple Choice, Multiple Answer</option>
+                    <option value="FIB">Fill In Blanks</option>
+                    <option value="HC">Highlight Correct Summary</option>
+                    <option value="MCSA">Multiple Choice, Single Answer </option>
+                    <option value="SM">Select Missing Word</option>
+                    <option value="HI">Highlight Incorrect Words</option>
+                    <option value="WFD">Write From Dictation</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="media">Post Media</label>
+            <input type="file" name="quality" class="form-control media-upload">
+        </div>
+        <div class="form-group">
+            <label for="author">Post Author</label>
+            <input type="text" name="status" class="form-control" />
+        </div>
+        <input type="text" name="user_id" class="form-control">
+        <div class="from-group">
+            <div><input type="submit" value="Create Post"></div>
+        </div>
+    </form>
+</div>
