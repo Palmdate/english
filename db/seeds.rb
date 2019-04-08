@@ -5,3 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# (1..10).each do |n|
+#   WriteFrDic.create
+#   (
+#     audio: '#{n}',
+#     content: nil
+#   )
+# end
+WriteFrDic.all.each do |k|
+  k.destroy
+end
+
+(1..10).each do |n|
+  
+  WriteFrDic.create(audio: "#{n}.wav", content: "ha test.")
+
+end

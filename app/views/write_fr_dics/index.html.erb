@@ -23,7 +23,7 @@
 <!-- <br> -->
 
 <!-- <%= link_to 'New Write Fr Dic', new_write_fr_dic_path %> -->
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <div class="container">
   <div class="page-header">
     <h1 class="h3">Progress Stepper
@@ -34,153 +34,102 @@
     <h2 class="h5">Features: bootstrap tabs, disabled states, tooltips and directional functionality.</h2>
 
   </div>
-  <div class="panel panel-default">
+  <div class="panel panel-default" style="height: 450px;">
     <div class="panel-body">
-
-
-      <!-- STEPPER
-           Allows a user to complete steps in a given process.
-           
-           * Required base class: .stepper
-           @param .active
-           @param .completed
-           @param .disabled
-
-           Dependencies:
-           //maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css
-           //cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js
-           //maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js
-           
-        -->
-
-      <div class="stepper">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a class="persistant-disabled" href="#stepper-step-1" data-toggle="tab" aria-controls="stepper-step-1" role="tab" title="Step 1">
-              <span class="round-tab">1</span>
-            </a>
+      <div class="nl-process">
+        <div class="complete-hint"><i class="fa fa-check"></i></div>
+        <ul class="process-list">
+          <!-- Add form list sentences -->
+          <li class="process-item is-active">
+            <div class="process-content">
+              <div class="process-active-bar"></div>
+              <div class="circle">
+                <span></span>
+              </div>
+              <div class="des">
+                <span>Step1</span>
+              </div>
+            </div>
           </li>
-          <li role="presentation" class="disabled">
-            <a class="persistant-disabled" href="#stepper-step-2" data-toggle="tab" aria-controls="stepper-step-2" role="tab" title="Step 2">
-              <span class="round-tab">2</span>
-            </a>
+          <li class="process-item is-active">
+            <div class="process-content">
+              <div class="process-active-bar"></div>
+              <div class="circle">
+                <span></span>
+              </div>
+              <div class="des">
+                <span>Step2</span>
+              </div>
+            </div>
           </li>
-          <li role="presentation" class="disabled">
-            <a class="persistant-disabled" href="#stepper-step-3" data-toggle="tab" aria-controls="stepper-step-3" role="tab" title="Step 3">
-              <span class="round-tab">3</span>
-            </a>
+          <li class="process-item is-current">
+            <div class="process-content">
+              <div class="process-active-bar"></div>
+              <div class="circle">
+                <span></span>
+              </div>
+              <div class="des">
+                <span>Step3</span>
+              </div>
+            </div>
           </li>
-          <li role="presentation" class="disabled">
-            <a class="persistant-disabled" href="#stepper-step-4" data-toggle="tab" aria-controls="stepper-step-4" role="tab" title="Complete">
-              <span class="round-tab">4</span>
-            </a>
+          <li class="process-item">
+            <div class="process-content">
+              <div class="process-active-bar"></div>
+              <div class="circle">
+                <span></span>
+              </div>
+              <div class="des">
+                <span>Step4</span>
+              </div>
+            </div>
           </li>
+          <li class="process-item">
+            <div class="process-content">
+              <div class="process-active-bar"></div>
+              <div class="circle">
+                <span></span>
+              </div>
+              <div class="des">
+                <span>Step5</span>
+              </div>
+            </div>
+          </li>
+          <li class="process-item">
+            <div class="process-content">
+              <div class="process-active-bar"></div>
+              <div class="circle">
+                <span></span>
+              </div>
+              <div class="des">
+                <span>Step5</span>
+              </div>
+            </div>
+          </li>
+          <!-- End form list sentences -->
         </ul>
-        <form role="form">
-          <div class="tab-content">
-            <div class="tab-pane fade in active" role="tabpanel" id="stepper-step-1">
-              <h3 class "h2">1. Select Payment Type</h3>
-              <p>This is step 1</p>
-              <ul class="list-inline pull-right">
-                <li>
-                  <a class="btn btn-primary next-step">Next</a>
-                </li>
-              </ul>
-            </div>
-            <div class="tab-pane fade" role="tabpanel" id="stepper-step-2">
-              <h3 class "h2">2. Enter Payment Information</h3>
-              <p>This is step 2</p>
-              <ul class="list-inline pull-right">
-                <li>
-                  <a class="btn btn-default prev-step">Back</a>
-                </li>
-                <li>
-                  <a class="btn btn-primary next-step">Next</a>
-                </li>
-              </ul>
-            </div>
-            <div class="tab-pane fade" role="tabpanel" id="stepper-step-3">
-              <h3 class="hs">3. Review and Submit Payment</h3>
-              <p>This is step 3</p>
-              <ul class="list-inline pull-right">
-                <li>
-                  <a class="btn btn-default prev-step">Back</a>
-                </li>
-                <li>
-                  <a class="btn btn-default cancel-stepper">Cancel Payment</a>
-                </li>
-                <li>
-                  <a class="btn btn-primary next-step">Submit Payment</a>
-                </li>
-              </ul>
-            </div>
-            <div class="tab-pane fade" role="tabpanel" id="stepper-step-4">
-              <h3>4. All done!</h3>
-              <p>You have successfully completed all steps.</p>
-            </div>
-          </div>
-        </form>
       </div>
-
+      <div class="page-header">
+        <!-- Content user -->
+        <div class="row">
+          <%= audio_tag "170.wav", controls: true, id: "timer-beep" %>
+          <div class="timer">
+	          <span class="minutes">This audio will auto play after </span><span class="seconds">03</span><span>s</span>
+          </div>
+        </div>
+      </div>
+      <div class="md-form md-outline">
+        <textarea id="form75" class="md-textarea form-control" rows="3"></textarea>
+        <label for="form75">Material textarea</label>
+      </div>
+      <div class="footer">
+        <button class="footer-btn  prev is-show">Prev</button>
+        <button class="footer-btn next is-show">Next</button>
+        <button class="footer-btn finished is-hide">Complete</button>
+      </div>
+      
     </div>
   </div>
 </div>
 
-<script>
-  
-(function($) {
-  'use strict';
-
-  $(function() {
-
-    $(document).ready(function() {
-      function triggerClick(elem) {
-        $(elem).click();
-      }
-      var $progressWizard = $('.stepper'),
-        $tab_active,
-        $tab_prev,
-        $tab_next,
-        $btn_prev = $progressWizard.find('.prev-step'),
-        $btn_next = $progressWizard.find('.next-step'),
-        $tab_toggle = $progressWizard.find('[data-toggle="tab"]'),
-        $tooltips = $progressWizard.find('[data-toggle="tab"][title]');
-
-      // To do:
-      // Disable User select drop-down after first step.
-      // Add support for payment type switching.
-
-      //Initialize tooltips
-      $tooltips.tooltip();
-
-      //Wizard
-      $tab_toggle.on('show.bs.tab', function(e) {
-        var $target = $(e.target);
-
-        if (!$target.parent().hasClass('active, disabled')) {
-          $target.parent().prev().addClass('completed');
-        }
-        if ($target.parent().hasClass('disabled')) {
-          return false;
-        }
-      });
-
-      $btn_next.on('click', function() {
-        $tab_active = $progressWizard.find('.active');
-
-        $tab_active.next().removeClass('disabled');
-
-        $tab_next = $tab_active.next().find('a[data-toggle="tab"]');
-        triggerClick($tab_next);
-
-      });
-      $btn_prev.click(function() {
-        $tab_active = $progressWizard.find('.active');
-        $tab_prev = $tab_active.prev().find('a[data-toggle="tab"]');
-        triggerClick($tab_prev);
-      });
-    });
-  });
-
-}(jQuery, this));
-</script>
+<p><%= @count %></p>
