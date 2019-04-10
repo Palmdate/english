@@ -17,8 +17,8 @@ WriteFrDic.all.each do |k|
   k.destroy
 end
 
-(1..10).each do |n|
+(1..6).each do |n|
   
-  WriteFrDic.create(audio: "#{n}.wav", content: "ha test.")
+  WriteFrDic.create(audio: "#{n}.wav", result: "ha test.")
 
 end

@@ -1,135 +1,138 @@
-<!-- <p id="notice"><%= notice %></p> -->
-
-<!-- <h1>Write Fr Dics</h1> -->
-
-<!-- <table> -->
-  <!--   <thead> -->
-    <!--     <tr> -->
-      <!--       <th colspan="3"></th> -->
-      <!--     </tr> -->
-    <!--   </thead> -->
-
-  <!--   <tbody> -->
-    <!--     <% @write_fr_dics.each do |write_fr_dic| %> -->
-    <!--       <tr> -->
-      <!--         <td><%= link_to 'Show', write_fr_dic %></td> -->
-      <!--         <td><%= link_to 'Edit', edit_write_fr_dic_path(write_fr_dic) %></td> -->
-      <!--         <td><%= link_to 'Destroy', write_fr_dic, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
-      <!--       </tr> -->
-    <!--     <% end %> -->
-    <!--   </tbody> -->
-  <!-- </table> -->
-
-<!-- <br> -->
-
-<!-- <%= link_to 'New Write Fr Dic', new_write_fr_dic_path %> -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <div class="container">
   <div class="page-header">
-    <h1 class="h3">Progress Stepper
-      <small>
-        built with Bootstrap, SCSS and custom JS.
-      </small>
-    </h1>
+    <h1 class="h3">Progress Stepper</h1>
     <h2 class="h5">Features: bootstrap tabs, disabled states, tooltips and directional functionality.</h2>
-
   </div>
-  <div class="panel panel-default" style="height: 450px;">
-    <div class="panel-body">
-      <div class="nl-process">
-        <div class="complete-hint"><i class="fa fa-check"></i></div>
-        <ul class="process-list">
-          <!-- Add form list sentences -->
-          <li class="process-item is-active">
-            <div class="process-content">
-              <div class="process-active-bar"></div>
-              <div class="circle">
-                <span></span>
-              </div>
-              <div class="des">
-                <span>Step1</span>
-              </div>
-            </div>
-          </li>
-          <li class="process-item is-active">
-            <div class="process-content">
-              <div class="process-active-bar"></div>
-              <div class="circle">
-                <span></span>
-              </div>
-              <div class="des">
-                <span>Step2</span>
-              </div>
-            </div>
-          </li>
-          <li class="process-item is-current">
-            <div class="process-content">
-              <div class="process-active-bar"></div>
-              <div class="circle">
-                <span></span>
-              </div>
-              <div class="des">
-                <span>Step3</span>
-              </div>
-            </div>
-          </li>
-          <li class="process-item">
-            <div class="process-content">
-              <div class="process-active-bar"></div>
-              <div class="circle">
-                <span></span>
-              </div>
-              <div class="des">
-                <span>Step4</span>
-              </div>
-            </div>
-          </li>
-          <li class="process-item">
-            <div class="process-content">
-              <div class="process-active-bar"></div>
-              <div class="circle">
-                <span></span>
-              </div>
-              <div class="des">
-                <span>Step5</span>
-              </div>
-            </div>
-          </li>
-          <li class="process-item">
-            <div class="process-content">
-              <div class="process-active-bar"></div>
-              <div class="circle">
-                <span></span>
-              </div>
-              <div class="des">
-                <span>Step5</span>
-              </div>
-            </div>
-          </li>
-          <!-- End form list sentences -->
-        </ul>
-      </div>
-      <div class="page-header">
-        <!-- Content user -->
-        <div class="row">
-          <%= audio_tag "170.wav", controls: true, id: "timer-beep" %>
+  <div class="panel panel-default">
+    <!--form-content-->
+    <form id="form-id">
+      <!--Progressbar-->
+      <% k = 0 %>
+      <ul class='progress'>
+        <li class="active"></li>
+        <% (2..@count.to_i). each do |sentence| %>
+        <li><% sentence %></li>
+        <% end %>
+      </ul>
+      <% WriteFrDic.all.drop(1).each do |sens| %>
+      <!--Account Setup-->
+      <fieldset>
+        <h2 class='title'>Sentence <%= k + 1 %> </h2>
+        <h3 class='sub-title'>
           <div class="timer">
 	          <span class="minutes">This audio will auto play after </span><span class="seconds">03</span><span>s</span>
           </div>
+        </h3>
+        <div class="page-header">
+          <%= audio_tag "#{sens.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
         </div>
-      </div>
-      <div class="md-form md-outline">
-        <textarea id="form75" class="md-textarea form-control" rows="3"></textarea>
-        <label for="form75">Material textarea</label>
-      </div>
-      <div class="footer">
-        <button class="footer-btn  prev is-show">Prev</button>
-        <button class="footer-btn next is-show">Next</button>
-        <button class="footer-btn finished is-hide">Complete</button>
-      </div>
+        <div class="md-form">
+          <textarea id="form7" class="md-textarea form-control" rows="3" name="sens.content"></textarea>
+          <label for="form7"><%= sens.result %></label>
+        </div>
+        <input type='button' name='previous' class='prev-button custom-button' value="Back">
+        <input type='button' name='next' class='next-button custom-button' value="Next">
+      </fieldset>
+      <% end %>
+      <!--Social Profiles-->
+      <fieldset>
+        <h2 class='title'>Sentence <%= @count.to_i %> </h2>
+        <h3 class='sub-title'>
+          <div class="timer">
+	          <span class="minutes">This audio will auto play after </span><span class="seconds">03</span><span>s</span>
+          </div>
+        </h3>
+        <div class="page-header">
+          <%= audio_tag "#{WriteFrDic.first.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
+        </div>
+        <div class="md-form">
+          <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
+          <label for="form7"><%= WriteFrDic.first.content %></label>
+        </div>
+        <input type='button' name='previous' class='prev-button custom-button' value="Back">
+        <input type='button' name='next' class='next-button custom-button' value="Next">
+      </fieldset>
       
-    </div>
+    </form>
+    <!-- end form -->
   </div>
 </div>
-
 <p><%= @count %></p>
+<!-- Result diff words- -->
+<div id="ng-app" ng-app="diffDemo" layout="column" flex ng-controller="diffCtrl">
+  <md-content flex layout-padding>
+    <div flex layout="column">
+      <div flex layout="column" layout-gt-md="row">
+        <md-card flex>
+          <md-card-content>
+            <textarea layout-fill class="inputBox" ng-model="left"></textarea>
+          </md-card-content>
+        </md-card>
+        <md-card flex>
+          <md-card-content>
+            <textarea layout-fill class="inputBox" ng-model="right"></textarea>
+          </md-card-content>
+        </md-card>
+      </div>
+      <div flex layout="column" layout-gt-md="row">
+        <md-card flex>
+          <md-card-content>
+            <div layout="row">
+              <h2>processingDiff</h2>
+              <span flex></span>
+              <md-input-container>
+                <label>editCost</label><input type="number" step="1" name="editCost" ng-model="options.editCost" min="1" max="99999">
+              </md-input-container>
+            </div>
+            <pre class="textdiff" processing-diff left-obj="left" right-obj="right" options="options"></pre>
+          </md-card-content>
+        </md-card>
+      </div>
+    </div>
+  </md-content>
+</div>
+
+<script src='https://code.angularjs.org/1.7.2/angular.js'></script>
+<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+
+<script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js'></script>
+<script src='http://rawgit.com/google/diff-match-patch/master/javascript/diff_match_patch.js'></script>
+<script src='http://rawgit.com/amweiss/angular-diff-match-patch/v0.7.0/angular-diff-match-patch.js'></script>
+
+<script>
+
+  var app = angular.module('diffDemo', ['ngMaterial', 'diff-match-patch']);
+  app.config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+      .primaryPalette('indigo')
+      .accentPalette('blue');
+  });
+  
+  app.controller('diffCtrl', ['$scope', function($scope) {
+    $scope.left = $('fieldset').find('#form7').val();
+    
+    $scope.right = "ha is testing.";
+    
+    $scope.options = {
+      editCost: 4,
+      interLineDiff: true,
+      ignoreTrailingNewLines: true,
+      attrs: {
+        insert: {
+          'data-attr': 'insert',
+          'class': 'insertion'
+        },
+        delete: {
+          'data-attr': 'delete'
+        },
+        equal: {
+          'data-attr': 'equal'
+        }
+      }
+    };
+  }]);
+
+  </script>
