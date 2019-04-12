@@ -14,13 +14,36 @@ Things you may want to cover:
 * Ruby version: 2.6.1
 * Rails version: 5.2.2
 * Nodejs
-* Postgrest 9.10.4
+* Postgrest 9.4.10
 
 * System dependencies
 
 * Configuration
 
 * Database creation
+  + Write from Dictionary skill
+     + Doing step by step:
+      1. Create new branch: git checkout write-from-dictionary/database
+      2. Modify in file: PATH/english/db/seed.db:
+      
+      - Add new lines:
+         
+          write_from_dic =  { <name of audio 1> => <content of audio 1>,
+          
+                         <name of audio 2> => <content of audio 2>
+            
+                           }
+          
+        # Example: 
+        
+        write_from_dic = { "1.wav" => "Ha is surfing web",
+        
+                           "2.wav" => "Cong is sleeping"
+                           
+                          } 
+      3. Create folder audio in PATH/english/app/assets/audio/ and Copy all file audios to there.
+      4. Push this branch to git 
+     
 
 * Database initialization
 
