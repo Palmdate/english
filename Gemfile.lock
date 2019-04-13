@@ -90,6 +90,9 @@ GEM
     erubi (1.8.0)
     execjs (2.7.0)
     ffi (1.10.0)
+    
+    fuzzy-string-match (1.0.1)
+      RubyInline (>= 3.8.6)
     font-awesome-sass (4.7.0)
       sass (>= 3.2)
     fuzzy-string-match (1.0.1)
@@ -235,6 +238,8 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
+  
+  fuzzy-string-match
   font-awesome-sass (~> 4.7.0)
   fuzzy-string-match
   jbuilder (~> 2.5)

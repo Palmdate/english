@@ -17,7 +17,7 @@ $.fn.timer = (callback) ->
       $secondsEl.text start.toString()
       if start == 0
         clearInterval timer
-        $secondsEl.text '00'
+        $secondsEl.text '0'
         callback()
       return
     ), interval)
@@ -25,22 +25,26 @@ $.fn.timer = (callback) ->
 
 # ------------------------------------------------------------------------------
 $(document).on 'turbolinks:load', ->
-
+    
+  Pause = ->
+    $('.timer-beep').each (i) ->
+      $(this).get($('fieldset').index(i)).pause()
+      $(this).get($('fieldset').index(i)).currentTime = 0
+      return
+    return
+  
   $('.next-button').click ->
-    prev = $(this).parent().prev()
     current = $(this).parent()
     next = $(this).parent().next()
     $('.progress li').eq($('fieldset').index(next)).addClass 'active'
-    alert($('fieldset').index(current)).find('textarea')
+    Pause()
     current.hide()
     next.show()
-    $('.timer-beep').get($('fieldset').index(current)).pause()
-    $('.timer-beep').get($('fieldset').index(current)).currentTime = 0
     $('.timer').timer ->
-      
       $('.timer-beep').get($('fieldset').index(next)).play()
       return
     return
+    
   $('.prev-button').click ->
     current = $(this).parent()
     prev = $(this).parent().prev()
@@ -55,6 +59,7 @@ $(document).on 'turbolinks:load', ->
     return
   $ ->
     $('.timer').timer ->
+      Pause()
       document.getElementById('timer-beep').play()
       return
     return
