@@ -1,32 +1,45 @@
-<%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<div class="container">
+  <!-- Icon -->
+  <div class="text-center">
+    <h3>EN4ALL</h3>
+  </div>
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+  <!-- Message Error -->
+  <div class="row text-left">
+      <ul class="offset-4">
+        <li class="text-danger">Message 01</li>
+        <li class="text-danger">Message 02</li>
+        <li class="text-danger">Message 03</li>
+        <li class="text-danger">Message 04</li>
+        <li class="text-danger">Message 05</li>
       </ul>
+  </div>
+
+  <!-- Login Form -->
+  <form>
+    <div class="row mb-2">
+      <div class="col-4">
+        <label class="text-right">Email: <span class="text-danger">*</span</label>
+      </div>
+      <input type="text" id="login" class="fadeIn second col-4" name="login" placeholder="">
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
+    <div class="row mb-2">
+      <div class="col-4">
+        <label class="text-right">Password: <span class="text-danger">*</span</label>
+      </div>
+      <input type="password" id="password" class="fadeIn third col-4" name="login" placeholder="">
+    </div>
 
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
+    <div class="row mb-2">
+      <div class="col-4">
+        <label class="text-right">Password Confirm: <span class="text-danger">*</spanc</label>
+      </div>
+      <input type="password" id="password" class="fadeIn third col-4" name="login" placeholder="">
+    </div>
 
-  <div class="field">
-    <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+    <div class="mt-2 mb-2 text-center">
+      <input type="submit" class="btn bg-blue-en4all text-light" value="Sign Up">
+    </div>
+  </form>
+</div>
