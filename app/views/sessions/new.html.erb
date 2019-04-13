@@ -1,44 +1,27 @@
-<h1>Sessions#new</h1>
-<p>Find me in app/views/sessions/new.html.erb</p>
-<p id=”alert”><%= alert %></p>
-
-<h1>Login</h1>
-
-<%= form_tag sessions_path do |form| %>
-<div class=”field”>
-  <%= label_tag :email %>
-  <%= text_field_tag :email %>
-</div>
-
-<div class=”field”>
-  <%= label_tag :password %>
-  <%= password_field_tag :password %>
-</div>
-
-<div class=”actions”>
-  <%= submit_tag 'Login'%>
-</div>
-<% end %>
-
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <!-- Tabs Titles -->
 
     <!-- Icon -->
-    <div class="fadeIn first">
-      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+    <div>
+      <img src="https://img.icons8.com/clouds/100/000000/lock.png">
     </div>
 
     <!-- Login Form -->
     <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password">
+      <div class="mt-2 mb-2">
+      <input type="submit" class="btn bg-blue-en4all text-light" value="Log In">
+      </div>
     </form>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      <div class="clearfix">
+        <a class="underlineHover text-blue-en4all float-left" href="#">Forgot Password?</a>
+        <a class="underlineHover text-blue-en4all float-right" href="/signup">Sign Up</a>
+      </div>
     </div>
 
   </div>
