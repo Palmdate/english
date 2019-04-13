@@ -35,7 +35,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap'
 gem 'jquery-rails'
-
+gem 'fuzzy-string-match'
 # Font awesome include icon
 gem 'font-awesome-sass', '~> 4.7.0'
 

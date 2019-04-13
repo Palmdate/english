@@ -8,20 +8,11 @@
 #     content: nil
 #   )
 # end
-WriteFrDic.all.each do |k|
-  k.destroy
-end
-
-(1..6).each do |n|
-  
-  WriteFrDic.create(audio: "#{n}.wav", result: "ha test.")
-
-end
-
 # Examples:
 #
 #   movies => Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
 wfd = { "April19_1.mp3" => "Archaeologists discovered tools and artifacts in ancient tombs.",
         "April19_2.mp3" => "Blue whale is the largest mammal that ever lived.",
         "April19_3.mp3" => "Children conquer their first language without any efforts.",
@@ -55,3 +46,14 @@ wfd = { "April19_1.mp3" => "Archaeologists discovered tools and artifacts in anc
         "April19_31.mp3" => "You must set a security question when resetting your password.",
         "April19_32.mp3" => "Your ideas are discussed depending on your seminar or tutorial."
       }
+
+WriteFrDic.all.each do |k|
+  k.destroy
+end
+
+
+wfd.each do |name, content|
+  
+  WriteFrDic.create(audio: name, result: content)
+
+end

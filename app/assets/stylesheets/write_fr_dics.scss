@@ -8,18 +8,18 @@
 // basic reset
 * {margin: 0; padding: 0;}
 
-html {
-	  height: 100%;
-	  // Image only BG fallback
+// html {
+// 	  height: 100%;
+// 	  // Image only BG fallback
 	  
-	  // background = gradient + image pattern combo
-	  background: 
-		    linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
-}
+// 	  // background = gradient + image pattern combo
+// 	  background: 
+// 		    linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+// }
 
-body {
-	  font-family: montserrat, arial, verdana;
-}
+// body {
+// 	  font-family: montserrat, arial, verdana;
+// }
 
 #form-id{
   width:400px;
@@ -165,4 +165,19 @@ del {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+
+.modal-header, h4, .close {
+    background-color: #5cb85c;
+    color:white !important;
+    text-align: center;
+    font-size: 30px;
+}
+.modal-footer {
+    background-color: #f9f9f9;
+}
+
+pre {
+    white-space: inherit;
 }

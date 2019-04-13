@@ -1,101 +1,77 @@
-<div class="container">
-  <div class="page-header">
-    <h1 class="h3">Progress Stepper</h1>
-    <h2 class="h5">Features: bootstrap tabs, disabled states, tooltips and directional functionality.</h2>
-  </div>
-  <div class="panel panel-default">
-    <!--form-content-->
-    <form id="form-id">
-      <!--Progressbar-->
-      <% k = 0 %>
-      <ul class='progress'>
-        <li class="active"></li>
-        <% (2..@count.to_i). each do |sentence| %>
-        <li><% sentence %></li>
-        <% end %>
-      </ul>
-      <% WriteFrDic.all.drop(1).each do |sens| %>
-      <!--Account Setup-->
-      <fieldset>
-        <h2 class='title'>Sentence <%= k + 1 %> </h2>
-        <h3 class='sub-title'>
-          <div class="timer">
-	          <span class="minutes">This audio will auto play after </span><span class="seconds">03</span><span>s</span>
-          </div>
-        </h3>
-        <div class="page-header">
-          <%= audio_tag "#{sens.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
-        </div>
-        <div class="md-form">
-          <textarea id="form7" class="md-textarea form-control" rows="3" name="sens.content"></textarea>
-          <label for="form7"><%= sens.result %></label>
-        </div>
-        <input type='button' name='previous' class='prev-button custom-button' value="Back">
-        <input type='button' name='next' class='next-button custom-button' value="Next">
-      </fieldset>
-      <% end %>
-      <!--Social Profiles-->
-      <fieldset>
-        <h2 class='title'>Sentence <%= @count.to_i %> </h2>
-        <h3 class='sub-title'>
-          <div class="timer">
-	          <span class="minutes">This audio will auto play after </span><span class="seconds">03</span><span>s</span>
-          </div>
-        </h3>
-        <div class="page-header">
-          <%= audio_tag "#{WriteFrDic.first.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
-        </div>
-        <div class="md-form">
-          <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
-          <label for="form7"><%= WriteFrDic.first.content %></label>
-        </div>
-        <input type='button' name='previous' class='prev-button custom-button' value="Back">
-        <input type='button' name='next' class='next-button custom-button' value="Next">
-      </fieldset>
-      
-    </form>
-    <!-- end form -->
-  </div>
-</div>
-<p><%= @count %></p>
-<!-- Result diff words- -->
 <div id="ng-app" ng-app="diffDemo" layout="column" flex ng-controller="diffCtrl">
-  <md-content flex layout-padding>
-    <div flex layout="column">
-      <div flex layout="column" layout-gt-md="row">
-        <md-card flex>
-          <md-card-content>
-            <textarea layout-fill class="inputBox" ng-model="left"></textarea>
-          </md-card-content>
-        </md-card>
-        <md-card flex>
-          <md-card-content>
-            <textarea layout-fill class="inputBox" ng-model="right"></textarea>
-          </md-card-content>
-        </md-card>
-      </div>
-      <div flex layout="column" layout-gt-md="row">
-        <md-card flex>
-          <md-card-content>
-            <div layout="row">
-              <h2>processingDiff</h2>
-              <span flex></span>
-              <md-input-container>
-                <label>editCost</label><input type="number" step="1" name="editCost" ng-model="options.editCost" min="1" max="99999">
-              </md-input-container>
+  <div class="container">
+    <div class="page-header">
+      <h1 class="h3">Progress Stepper</h1>
+      <h2 class="h5">Features: bootstrap tabs, disabled states, tooltips and directional functionality.</h2>
+    </div>
+    <div class="panel panel-default">
+      <!--form-content-->
+      <form id="form-id">
+        <!--Progressbar-->
+        <% k = 0 %>
+        <ul class='progress'>
+          <li class="active"></li>
+          <% (2..@count.to_i). each do |sentence| %>
+          <li><% sentence %></li>
+          <% end %>
+        </ul>
+        
+        <!--Account Setup-->
+        <div id="ng-app" ng-app="diffDemo" layout="column" flex ng-controller="diffCtrl">
+          <% WriteFrDic.all.sample(@count.to_i).each do |sens| %>
+
+          <fieldset>
+            <h2 class='title'>Sentence <%= k = k + 1 %> </h2>
+            <h3 class='sub-title'>
+              <div class="timer">
+	              <span class="minutes">This audio will auto play after </span><span class="seconds">03</span><span>s</span>
+              </div>
+            </h3>
+            <div class="page-header">
+              <%= audio_tag "#{sens.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
             </div>
-            <pre class="textdiff" processing-diff left-obj="left" right-obj="right" options="options"></pre>
-          </md-card-content>
-        </md-card>
+            <div class="md-form" data-ng-init="anyFunction()">
+              <!-- gfdkgkdgdkgddf -->
+              <!-- Modal -->
+              <div class="modal fade" id="myModal<%= k %>" role="dialog">
+                <div class="modal-dialog">
+                  
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-body" style="padding:40px 50px;">
+                      <form role="form">
+                        <div class="form-group">
+                          <pre class="textdiff" processing-diff left-obj="left" right-obj="right='<%= sens.result%>'" options="options"></pre>
+                        </div>                        
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      
+                      <button type="submit" class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+              <textarea layout-fill id="sens-content" class="md-textarea form-control" ng-model="left"></textarea>
+              <p><%= sens.content %></p>
+            </div>
+            <% if (k == @count.to_i) %>
+            <button type="button" class="custom-button" id="myBtn" onclick="$('#myModal<%= k %>').modal()">Check</button>
+            <input type='button' name='next' ng-click="clear()" class='submit-button custom-button' value="Submit">
+            <% else %>
+            <button type="button" class="custom-button" id="myBtn" onclick="$('#myModal<%= k %>').modal()" >Check</button>
+            <input type='button' name='next' ng-click="clear()" class='next-button custom-button' value="Next">
+            <% end %>
+          </fieldset>
+          <% end %>
+      </form>
+      <!-- end form -->
       </div>
     </div>
-  </md-content>
+  </div>
 </div>
 
 <script src='https://code.angularjs.org/1.7.2/angular.js'></script>
-<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.css'>
-<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
-
 <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js'></script>
@@ -103,7 +79,6 @@
 <script src='http://rawgit.com/amweiss/angular-diff-match-patch/v0.7.0/angular-diff-match-patch.js'></script>
 
 <script>
-
   var app = angular.module('diffDemo', ['ngMaterial', 'diff-match-patch']);
   app.config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
@@ -112,27 +87,38 @@
   });
   
   app.controller('diffCtrl', ['$scope', function($scope) {
-    $scope.left = $('fieldset').find('#form7').val();
     
-    $scope.right = "ha is testing.";
-    
-    $scope.options = {
-      editCost: 4,
-      interLineDiff: true,
-      ignoreTrailingNewLines: true,
-      attrs: {
-        insert: {
-          'data-attr': 'insert',
-          'class': 'insertion'
-        },
-        delete: {
-          'data-attr': 'delete'
-        },
-        equal: {
-          'data-attr': 'equal'
+    $scope.anyFunction = function(){
+      
+      $scope.left = "";
+      $scope.right = "";
+      
+      $scope.options = {
+        editCost: 4,
+        interLineDiff: true,
+        ignoreTrailingNewLines: true,
+        attrs: {
+          insert: {
+            'data-attr': 'insert',
+            'class': 'insertion'
+          },
+          delete: {
+            'data-attr': 'delete'
+          },
+          equal: {
+            'data-attr': 'equal'
+          }
         }
-      }
+      };
     };
-  }]);
 
-  </script>
+    $scope.products = [];
+
+    $scope.clear = function() {
+      $scope.addMe = document.getElementById('sens-content').value;
+      $scope.products.push($scope.addMe);
+      $scope.left = "";
+    };
+    
+  }]);
+</script>
