@@ -8,13 +8,14 @@
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password">
-      <div class="mt-2 mb-2">
-      <input type="submit" class="btn bg-blue-en4all text-light" value="Log In">
-      </div>
-    </form>
+    <%= form_tag sessions_path do |form| %>
+    <%= text_field_tag :email, nil, class: "fadeIn second", id: "login", placeholder: "Email"%>
+    <%= password_field_tag :password, nil, class: "fadeIn third", id: "password", placeholder: "Password"%>
+
+    <div class="mt-2 mb-2">
+      <%= submit_tag 'Login', class: "btn bg-blue-en4all text-light"%>
+    </div>
+    <% end %>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
