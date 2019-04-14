@@ -7,7 +7,7 @@ Deploy:
 https://english-h2b.herokuapp.com/
 
 Board:
-https://app.zenhub.com/workspaces/english-web-5c8d29a18dcdbd6b613785d0/boards?repos=175638072
+https://eng4all.leankit.com/board/823861460
 
 Things you may want to cover:
 
