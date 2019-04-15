@@ -36,6 +36,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap'
 gem 'jquery-rails'
 
+gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
+gem 'therubyracer', platforms: :ruby
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
