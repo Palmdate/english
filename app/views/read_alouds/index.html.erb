@@ -1,0 +1,57 @@
+<%= render 'home/header' %>
+
+<div class="container">
+  <h6 class="font-weight-bold font-italic">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
+  <div class="data-source">
+    <p class="text-justify m-4">
+      5G networks that transform entertainment, communication and transportation may still be years away. But in manufacturing, the technology is already making a difference.
+      <br/>
+      Next-generation 5G networks can be 100 times faster than 4G, making communication between devices and servers much faster. The networks can be installed in relatively small areas — like a factory — without too much fuss.
+      <br/>
+      The combination of speed, practicality and potential cost savings is encouraging factory operators to experiment with 5G. The results have been positive, suggesting the tech may be widely used in factories before smartphones and other consumer products, especially because surveys show many consumers are not yet willing to pay more for 5G.
+    </p>
+  </div>
+  <div class="result-read shadow rounded">
+    <p class="text-justify p-4">
+      ghjkl;
+    </p>
+  </div>
+  <div class="record-tool">
+    <h6 class="font-weight-bold">RECORED</h6>
+    <p class="font-italic text-danger" id="time-prepaire">Begining in <span id="time"> 00:40</span> seconds</p>
+    <p class="font-italic text-danger d-none" id="time-progess">Begining in <span id="time"> 00:40</span> seconds</p>
+  </div>
+</div>
+<div class="action-bottom">
+  <div class="float-right">
+    <button class="edit btn bg-blue-en4all text-light mr-2">AGAIN</button>
+    <button class="edit btn bg-blue-en4all text-light">NEXT</button>
+  </div>
+</div>
+
+<script>
+function startTimer(duration, display) {
+  var timer = duration, minutes, seconds;
+  setInterval(function () {
+      minutes = parseInt(timer / 60, 10)
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      display.textContent = minutes + ":" + seconds;
+
+      if (--timer < 0) {
+          timer = duration;
+      }
+  }, 1000);
+}
+
+window.onload = function () {
+  var height = $(".data-source").height();
+  $(".result-read").css("min-height", height);
+  var fiveMinutes = 40,
+      display = document.querySelector('#time');
+  startTimer(fiveMinutes, display);
+};
+</script>
