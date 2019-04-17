@@ -18,20 +18,21 @@
   </div>
   <div class="record-tool">
     <h6 class="font-weight-bold">RECORED</h6>
-    <p class="font-italic text-danger" id="time-prepaire">Begining in <span id="time"> 00:40</span> seconds</p>
-    <p class="font-italic text-danger d-none" id="time-progess">Begining in <span id="time"> 00:40</span> seconds</p>
+    <p class="font-italic text-danger" id="time-prepaire">Begining in <span id="timePrepaire"> 00:40</span> seconds</p>
+    <p class="font-italic text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:40</span> seconds</p>
   </div>
 </div>
 <div class="action-bottom">
   <div class="float-right">
-    <button class="edit btn bg-blue-en4all text-light mr-2">AGAIN</button>
-    <button class="edit btn bg-blue-en4all text-light">NEXT</button>
+    <button class="edit btn bg-blue-en4all text-light mr-2" id="btnAgain" disabled onclick="reload()">AGAIN</button>
+    <button class="edit btn bg-blue-en4all text-light" id="btnNext" disabled>NEXT</button>
   </div>
 </div>
 
 <script>
 function startTimer(duration, display) {
   var timer = duration, minutes, seconds;
+  var stopRecord = false;
   setInterval(function () {
       minutes = parseInt(timer / 60, 10)
       seconds = parseInt(timer % 60, 10);
@@ -43,15 +44,36 @@ function startTimer(duration, display) {
 
       if (--timer < 0) {
           timer = duration;
+          
+          display = document.querySelector('#timeProgess');
+
+          $("#time-prepaire").css("display", "none");
+          $("#time-progess").css("cssText", "display: block !important");
+
+          if(stopRecord) {
+            $("#time-prepaire").css("cssText", "display: none !important");
+            $("#time-progess").css("cssText", "display: none !important");
+
+            $("#btnAgain").removeAttr("disabled");
+            $("#btnNext").removeAttr("disabled");
+          }
+
+          stopRecord = true;
       }
   }, 1000);
+}
+
+function reload() {
+  var fiveMinutes = 40,
+      display = document.querySelector('#timePrepaire');
+  startTimer(fiveMinutes, display);
 }
 
 window.onload = function () {
   var height = $(".data-source").height();
   $(".result-read").css("min-height", height);
   var fiveMinutes = 40,
-      display = document.querySelector('#time');
+      display = document.querySelector('#timePrepaire');
   startTimer(fiveMinutes, display);
 };
 </script>
