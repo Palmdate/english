@@ -3,7 +3,12 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 # Javascript for delay paly audio in skill Write from dictionary
-$.fn.timer = (callback) ->
+
+
+# ------------------------------------------------------------------------------
+$(document).on 'turbolinks:load', ->
+
+  $.fn.timer = (callback) ->
   callback = callback or ->
   @each ->
     `var timer`
@@ -22,10 +27,7 @@ $.fn.timer = (callback) ->
       return
     ), interval)
     return
-
-# ------------------------------------------------------------------------------
-$(document).on 'turbolinks:load', ->
-    
+  
   Pause = ->
     $('.timer-beep').each (i) ->
       $(this).get($('fieldset').index(i)).pause()
