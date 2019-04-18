@@ -88,14 +88,14 @@ Board team: https://eng4all.leankit.com/board/823861460.
 
 Ready to run in production?
 
-## Test Process
+# Test Process
 
   1. Pick task from lane "Ready for review"
   2. Connect to VM of server, test on it.
   3. Create a new branch for each task with format: `test-<<content of task>>`, all branch  depend on master branch.  
   4. Everything is ok, merge that branch to master. 
-  If not, comment the errors on task and back assign to deverloper (Move task to lane Approved) or create new bug in board.
-#
+  
+  If not, comment the errors on task and back assign to developer (Move task to lane Approved) or Create new bug in board and assign to developer.
 
 
 ### All commands for migration database
