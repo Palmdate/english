@@ -72,7 +72,7 @@
 Now you can visit [`localhost:3000`](http://localhost:3000) from your browser.
 
 
-## For Deverloper and Tester
+## For Developer and Tester
 
 
 Board team: https://eng4all.leankit.com/board/823861460.
