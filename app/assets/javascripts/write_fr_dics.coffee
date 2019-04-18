@@ -3,12 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 # Javascript for delay paly audio in skill Write from dictionary
-
-
-# ------------------------------------------------------------------------------
-$(document).on 'turbolinks:load', ->
-
-  $.fn.timer = (callback) ->
+$.fn.timer = (callback) ->
   callback = callback or ->
   @each ->
     `var timer`
@@ -27,6 +22,22 @@ $(document).on 'turbolinks:load', ->
       return
     ), interval)
     return
+
+# ------------------------------------------------------------------------------
+$(document).on 'turbolinks:load', ->
+  
+  # Time play audio
+  timer = 5
+  interval = setInterval((->
+    
+    timer--
+    $('.timer').text timer
+    if timer == 0
+      Pause()
+      document.getElementById('timer-beep').play()
+      clearInterval interval
+    return
+  ), 1000)
   
   Pause = ->
     $('.timer-beep').each (i) ->
@@ -42,9 +53,16 @@ $(document).on 'turbolinks:load', ->
     Pause()
     current.hide()
     next.show()
-    $('.timer').timer ->
-      $('.timer-beep').get($('fieldset').index(next)).play()
+    timer = 5
+    interval = setInterval((->
+      timer--
+      $('.timer').text timer
+      if timer == 0
+        Pause()
+        $('.timer-beep').get($('fieldset').index(next)).play()
+        clearInterval interval
       return
+    ), 1000)
     return
     
   $('.prev-button').click ->
@@ -55,14 +73,6 @@ $(document).on 'turbolinks:load', ->
     $('.timer-beep').get($('fieldset').index(current)).currentTime = 0
     current.hide()
     prev.show()
-    $('.timer').timer ->
-      $('.timer-beep').get($('fieldset').index(prev)).play()
-      return
     return
-  $ ->
-    $('.timer').timer ->
-      Pause()
-      document.getElementById('timer-beep').play()
-      return
-    return
+
   return

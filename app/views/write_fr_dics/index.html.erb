@@ -1,8 +1,7 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-<!-- jQuery Modal -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <div id="ng-app" ng-app="diffDemo" layout="column" flex ng-controller="diffCtrl">
   <div class="container">
     <div class="page-header">
@@ -29,27 +28,46 @@
           <fieldset>
             <h2 class='title'>Sentence <%= k = k + 1 %> / <%= @count %> </h2>
             <h3 class='sub-title'>
-              <div class="timer">
-	              <span class="minutes">This audio will auto play after </span><span class="seconds">03</span><span>s</span>
+              <div class="page-header">
+	              <span class="minutes">This audio will auto play after </span><span class="timer">05</span><span>s</span>
               </div>
             </h3>
             <div class="page-header">
               <%= audio_tag "#{sens.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
             </div>
             <div class="md-form" data-ng-init="anyFunction()">
-              <!-- gfdkgkdgdkgddf -->
+
               <!-- Modal -->
+              <div class="modal fade" id="myModal<%= k%>" role="dialog">
+                <div class="modal-dialog" role="document">
+                  
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-body" style="padding:40px 50px;">
+                      <form role="form">
+                        <div class="form-group">
+                          <pre class="textdiff" processing-diff left-obj="left" right-obj="right='<%= sens.result%>'" options="options"></pre>
+                        </div>                        
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      
+                      <button type="submit" class="btn btn-danger pull-left" data-dismiss="modal"><span class="fa fa-close"></span></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               
               <textarea layout-fill id="sens-content" class="md-textarea form-control" ng-model="left"></textarea>
               <p><%= sens.content %></p>
             </div>
             <% if (k == @count.to_i) %>
             
-            <button type="button" class="custom-button" id="myBtn" onclick="$('#myModal').modal('')">Check</button>
+            <input type="button" value='Check' class="custom-button" id="myBtn" onclick="$('#myModal<%= k %>').modal()">
             <input type='button' name='next' ng-click="clear()" class='submit-button custom-button' value="Submit">
             <% else %>
-            <button type="button" class="custom-button" id="myBtn" onclick="$('#myModal').modal('show')" >Check</button>
-            <input type='button' name='next' ng-click="clear()" class='next-button custom-button' value="Next">
+            <input type="button" value='Check' class="custom-button" id="myBtn" onclick="$('#myModal<%= k %>').modal('show')" >
+            <input type='button' name='next' ng-click="clear()" class='custom-button' value="Next">
             <% end %>
           </fieldset>
           <% end %>
@@ -59,26 +77,7 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog" role="document">
-    
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-body" style="padding:40px 50px;">
-        <form role="form">
-          <div class="form-group">
-            
-          </div>                        
-        </form>
-      </div>
-      <div class="modal-footer">
-        
-        <button type="submit" class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
-      </div>
-    </div>
-  </div>
-</div>
-
+<i class="fa fa-star"></i>
 <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js'></script>
@@ -130,3 +129,5 @@
     
   }]);
 </script>
+
+
