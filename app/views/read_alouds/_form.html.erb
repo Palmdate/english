@@ -1,0 +1,17 @@
+<%= form_with(model: read_aloud, local: true) do |form| %>
+  <% if read_aloud.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(read_aloud.errors.count, "error") %> prohibited this read_aloud from being saved:</h2>
+
+      <ul>
+      <% read_aloud.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

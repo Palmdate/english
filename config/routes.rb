@@ -1,5 +1,6 @@
 # coding: utf-8
 Rails.application.routes.draw do
+  resources :read_alouds
   get 'course/create'
   post 'course/store'
   resources :course, only: [:edit, :update, :destroy]

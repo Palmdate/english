@@ -1,0 +1,2 @@
+class ReadAloud < ApplicationRecord
+end
