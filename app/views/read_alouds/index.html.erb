@@ -1,7 +1,15 @@
 <%= render 'home/header' %>
 
-<div class="container">
-  <h6 class="font-weight-bold font-italic">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
+<div class="container read-alouds">
+  <h6 class="font-weight-bold font-italic mb-4">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
+  <div class="record-tool">
+    <div class="status rounded shadow">
+      <h6 class="font-weight-bold text-light">STATUS</h6>
+      <p class="font-italic text-light" id="time-prepaire">Begining in <span id="timePrepaire"> 00:40</span> seconds</p>
+      <p class="font-italic text-light d-none" id="time-progess">Stop in <span id="timeProgess"> 00:40</span> seconds</p>
+      <p class="font-italic text-danger d-none" id="time-out">Time out</p>
+    </div>
+  </div>
   <div class="data-source">
     <p class="text-justify m-4">
       5G networks that transform entertainment, communication and transportation may still be years away. But in manufacturing, the technology is already making a difference.
@@ -13,13 +21,8 @@
   </div>
   <div class="result-read shadow rounded">
     <p class="text-justify p-4">
-      ghjkl;
+      
     </p>
-  </div>
-  <div class="record-tool">
-    <h6 class="font-weight-bold">RECORED</h6>
-    <p class="font-italic text-danger" id="time-prepaire">Begining in <span id="timePrepaire"> 00:40</span> seconds</p>
-    <p class="font-italic text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:40</span> seconds</p>
   </div>
 </div>
 <div class="action-bottom">
@@ -56,6 +59,8 @@ function startTimer(duration, display) {
 
             $("#btnAgain").removeAttr("disabled");
             $("#btnNext").removeAttr("disabled");
+
+            $('#time-out').css("cssText", "display: block !important");
           }
 
           stopRecord = true;

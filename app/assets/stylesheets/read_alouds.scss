@@ -1,6 +1,9 @@
 // Place all the styles related to the Read_Alouds controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.read-alouds {
+    margin-bottom: 100px;
+}
 
 .action-bottom {
     background-color: #e8e8e8;
@@ -12,6 +15,11 @@
 
 .record-tool {
     text-align: center;
+    .status{
+        background-color: #52738b;
+        display: inline-block;
+        padding: 30px;
+    }
 }
 
 .result-read {
