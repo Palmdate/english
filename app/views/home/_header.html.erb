@@ -1,90 +1,77 @@
 <nav class="fixed-top bg-blue-en4all shadow">
   <ul class="hList" style="list-style: none;">
-    <li>
-    <a href="/" class="menu" id="home">
-      <h2 class="menu-title">Home</h2>
-    </a>
+
+    <li class="sub-menu-parent">
+      <a href="/" class="menu" id="home"><h2 class="menu-title">Home</h2></a>
     </li>
-    <li>
-      <a href="#click" class="menu">
-        <h2 class="menu-title">speaking</h2>
-        <ul class="menu-dropdown">
-          <li>Read Aloud</li>
-          <li>Repeat Sentence</li>
-          <li>Describe Image</li>
-          <li>Retell Lecture</li>
-          <li>Answer Short Questions</li>
+
+    <li class="sub-menu-parent">
+        <a href="#" class="menu"><h2 class="menu-title">speaking</h2></a>
+        <ul class="sub-menu bg-blue-en4all">
+          <li><a href="<%= read_alouds_path %>" class="menu">Read Aloud</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Repeat Sentence</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Describe Image</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Retell Lecture</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Answer Short Questions</a></li>
         </ul>
-      </a>
     </li>
-    <li>
-      <a href="#click" class="menu">
-        <h2 class="menu-title ">Writing</h2>
-        <ul class="menu-dropdown">
-          <li>Summarize Written Text</li>
-          <li>Essay</li>
+
+    <li class="sub-menu-parent">
+      <a href="#" class="menu"><h2 class="menu-title ">Writing</h2></a>
+        <ul class="sub-menu bg-blue-en4all">
+          <li><a href="<%= build_index_path %>" class="menu">Summarize Written Text</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Essay</a></li>
         </ul>
-      </a>
     </li>
-    <li>
-      <a href="#click" class="menu">
-        <h2 class="menu-title ">Reading</h2>
-        <ul class="menu-dropdown">
-          <li>Reading & Writing Fill in the blanks</li>
-          <li>Multiple Choice, Multiple Answer</li>
-          <li>Re-order Paragraph</li>
-          <li>Fill in the blanks (Drap & Drop)</li>
-          <li>Multiple Choice, Single Answer</li>
+
+    <li class="sub-menu-parent">
+      <a href="#click" class="menu"><h2 class="menu-title ">Reading</h2></a>
+        <ul class="sub-menu bg-blue-en4all">
+          <li><a href="<%= build_index_path %>" class="menu">Reading & Writing Fill in the blanks</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Multiple Choice, Multiple Answer</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Re-order Paragraph</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Fill in the blanks (Drap & Drop)</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Multiple Choice, Single Answer</a></li>
         </ul>
-      </a>
     </li>
-    <li>
-      <a href="#click" class="menu">
-        <h2 class="menu-title ">listening</h2>
-        <ul class="menu-dropdown">
-          <li>Summarize Spoken Text</li>
-          <li>Multiple Choice, Multiple Answer</li>
-          <li>Fill in the blanks</li>
-          <li>Highlight Correct Summary</li>
-          <li>Multiple Choice, Single Answer</li>
-          <li>Select Missing Word</li>
-          <li>Highlight Incorrect Words</li>
-          <li>Write from Dictation</li>
+    
+    <li class="sub-menu-parent">
+      <a href="#click" class="menu"><h2 class="menu-title ">listening</h2></a>
+        <ul class="sub-menu bg-blue-en4all">
+          <li><a href="<%= build_index_path %>" class="menu">Summarize Spoken Text</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Multiple Choice, Multiple Answer</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Fill in the blanks</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Highlight Correct Summary</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Multiple Choice, Single Answer</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Select Missing Word</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Highlight Incorrect Words</a></li>
+          <li><a href="<%= build_index_path %>" class="menu">Write from Dictation</a></li>
         </ul>
-      </a>
     </li>
-    <li>
+
+    <li class="sub-menu-parent">
+      <a href="#" class="menu"><h2 class="menu-title">course</h2></a>
+      <ul class="sub-menu bg-blue-en4all">
         <% if current_user %>
-            <a href="<%= home_course_path %>" class="menu">
-        <h2 class="menu-title menu-title_7th">course</h2>
-        <ul class="menu-dropdown">
-                    <li>Schedule</li>
-        </ul>
-      </a>
+          <li><a href="<%= home_course_path %>">Schedule</a></li>
         <% else %>
-            <a href="<%= login_path %>" class="menu">
-                <h2 class="menu-title">course</h2>
-                <ul class="menu-dropdown">
-                    <li>Schedule</li>
-                </ul>
-            </a>
+          <li><a href="<%= login_path %>">Schedule</a></li>
         <% end %>
+      </ul>
     </li>
+
     <% if current_user %>
-        <li class="avatar d-flex float-right" style="top: 5px">
-          <%=image_tag ("cuteCat.jpg") %>
-          <a href="<%= logout_path %>" class="menu">
-            <h2><span class="text-light dropdown-toggle dropdown-toggle-split menu avatar-dropdown-toggle"></span></h2>
-            <ul class="avatar-dropdown menu-dropdown" style="top: 45px; right: -20px;">
-              <li>Log out</li>
-            </ul>
-          </a>
+      <li class="avatar d-flex float-right sub-menu-parent" style="top: 5px">
+        <%=image_tag ("cuteCat.jpg") %>
+        <a href="#" class="menu"></a>
+          <h2><span class="text-light dropdown-toggle dropdown-toggle-split menu avatar-dropdown-toggle"></span></h2>
+          <ul class="avatar-dropdown menu-dropdown sub-menu" style="top: 45px; right: -20px;">
+            <li><a href="<%= logout_path %>">Log out</a></li>
+          </ul>
       </li>
       <% else %>
         <li class="float-right" style="margin-right: 50px;">
-          <a href="<%= login_path %>" class="menu">
-            <h2 class="menu-title">Log in</h2>
-          </a>
+          <a href="<%= login_path %>" class="menu"><h2 class="menu-title text-white">Log in</h2></a>
         </li>
       <% end %>
   </ul>  
