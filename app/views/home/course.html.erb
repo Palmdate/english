@@ -1,22 +1,15 @@
+<%= render 'header' %>
 <div class="container">
-  <%= render 'header' %>
-  <div class="row hList1">
-    <h1 >SCHEDULE</h1>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            UPDATE YOUR SCHEDULE HERE
-        </div>
-    </div>
-  </div>
+  <h4 class="text-center mb-4">SCHEDULE</h4>
   <div class="student-grade-table">
       <% if current_user.id %>
         <% course = Course.where(user_id: current_user.id) %>
-        <div class="row panel-body panel panel-default mb-4">
+        <div class="row mb-4">
             <div class="col-6 col-md-1 font-weight-bold">DAY</div>
             <div class="col-6 col-md-4 font-weight-bold">SKILL</div>
             <div class="col-6 col-md-2 font-weight-bold">QUALITY</div>
-            <div class="col-6 col-md-3 font-weight-bold">STATUS</div>
-            <div class="col-6 col-md-2 font-weight-bold">ACTIONS</div>
+            <div class="col-6 col-md-2 font-weight-bold">STATUS</div>
+            <div class="col-6 col-md-3 font-weight-bold">ACTIONS</div>
         </div>
           <% (1..30).each do |n| %>
               <% by_day = course.where(day_id: n) %>
@@ -26,8 +19,8 @@
                       <div class="col-6 col-md-1"><%= n %></div>
                       <div class="col-6 col-md-4"><%= c.skill %></div>
                       <div class="col-6 col-md-2"><%= c.quality%></div>
-                      <div class="col-6 col-md-3"><%= c.status%></div>
-                      <div class="col-6 col-md-2 d-flex">
+                      <div class="col-6 col-md-2"><%= c.status%></div>
+                      <div class="col-6 col-md-3 d-flex">
                           <button class="edit btn btn-warning mr-2">.</button>
                           <button class="test btn btn-info mr-2">.</button>
                           <%= link_to "<span>.</span>".html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn btn-danger" %>
