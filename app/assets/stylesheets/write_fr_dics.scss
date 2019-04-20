@@ -54,7 +54,7 @@
 }
 #form-id .custom-button{
   width:100px;
-  background: #f96359;
+  background: #003359;
   font-weight: bold;
   color:#fff;
   border:0;
@@ -64,7 +64,7 @@
 }
 
 #form-id .custom-button:hover{
-  box-shadow:0 0 0 2px #fff, 0 0 0 4px #f96359;
+  box-shadow:0 0 0 2px #fff, 0 0 0 4px #003359;
 }
 .title{
   font-size:15px;
@@ -199,3 +199,13 @@ pre {
 
 .pad { padding: 25px; }
 
+.countDown {
+    border: solid .5px #fff;
+    padding: 10px;
+    border-radius: 65px;
+  color: #d2322d;
+}
+div#placement {
+    width: 500px;
+    margin: 0 auto;
+}
