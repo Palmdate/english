@@ -2,6 +2,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+<%= render partial: 'home/header' %>
 <div id="ng-app" ng-app="diffDemo" layout="column" flex ng-controller="diffCtrl">
   <div class="container">
     <div class="page-header">
@@ -32,42 +33,49 @@
 	              <span class="minutes">This audio will auto play after </span><span class="timer">05</span><span>s</span>
               </div>
             </h3>
+            <h1>{{products}}</h1>
+            <h1><%= sens.result%></h1>
             <div class="page-header">
               <%= audio_tag "#{sens.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
             </div>
             <div class="md-form" data-ng-init="anyFunction()">
-
+              <textarea layout-fill id="sens-content" class="md-textarea left form-control" ng-model="left"></textarea>
+              <textarea layout-fill id="sens-content-right" class="md-textarea right form-control" ng-model="right"><%= sens.result%></textarea>
+              <h1 class="right"><%= sens.result%></h1>
+              <pre class="textdiff" processing-diff left-obj="left" right-obj="right='<%= sens.result%>'" options="options"></pre>
               <!-- Modal -->
-              <div class="modal fade" id="myModal<%= k%>" role="dialog">
+              <div class="modal fade" id="myModal<%= k %>" role="dialog" >
                 <div class="modal-dialog" role="document">
-                  
-                  <!-- Modal content-->
-                  <div class="modal-content">
+                               <!-- Modal content-->
+                  <div class="modal-content" >
                     <div class="modal-body" style="padding:40px 50px;">
                       <form role="form">
-                        <div class="form-group">
-                          <pre class="textdiff" processing-diff left-obj="left" right-obj="right='<%= sens.result%>'" options="options"></pre>
+                        <div class="form-group" >
+                          <ol >
+                            <li ng-repeat="x in products"><pre class="textdiff" processing-diff left-obj="x.left" right-obj="x.right" options="options"></pre></li>
+                           
+                          </ol>
                         </div>                        
                       </form>
                     </div>
                     <div class="modal-footer">
-                      
+                      <input type="button" class="btn btn-default pull-left" data-dismiss="modal"><span class="fa fa-star"></span></button>
                       <button type="submit" class="btn btn-danger pull-left" data-dismiss="modal"><span class="fa fa-close"></span></button>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <textarea layout-fill id="sens-content" class="md-textarea form-control" ng-model="left"></textarea>
+              
               <p><%= sens.content %></p>
             </div>
             <% if (k == @count.to_i) %>
             
-            <input type="button" value='Check' class="custom-button" id="myBtn" onclick="$('#myModal<%= k %>').modal()">
+            <input type='button' value='Check' ng-click="clear()" class="custom-button" id="myBtn" onclick="$('#myModal<%= k %>').modal()">
             <input type='button' name='next' ng-click="clear()" class='submit-button custom-button' value="Submit">
             <% else %>
-            <input type="button" value='Check' class="custom-button" id="myBtn" onclick="$('#myModal<%= k %>').modal('show')" >
-            <input type='button' name='next' ng-click="clear()" class='custom-button' value="Next">
+            <input type="button" value='Check' class="custom-button" id="myBtn" onclick="$('#myModal<%= k %>').modal()" >
+            <input type='button' name='next' class='next-button custom-button' value="Next">
             <% end %>
           </fieldset>
           <% end %>
@@ -77,7 +85,12 @@
     </div>
   </div>
 </div>
-<i class="fa fa-star"></i>
+
+
+
+
+
+
 <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js'></script>
@@ -117,14 +130,19 @@
           }
         }
       };
+      
     };
-
-    $scope.products = [];
+    
+    
 
     $scope.clear = function() {
-      $scope.addMe = document.getElementById('sens-content').value;
-      $scope.products.push($scope.addMe);
-      $scope.left = "";
+      $scope.products = [];
+      $('fieldset').each(function(i) {
+        $scope.addMe1 = $('textarea .left')[i].value;
+        $scope.addMe2 = $('.md-textarea .right')[i].value;
+
+        $scope.products.push({"left":$scope.addMe1, "right":$scope.addMe2});
+      });
     };
     
   }]);

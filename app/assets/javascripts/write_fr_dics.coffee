@@ -50,6 +50,7 @@ $(document).on 'turbolinks:load', ->
     current = $(this).parent()
     next = $(this).parent().next()
     $('.progress li').eq($('fieldset').index(next)).addClass 'active'
+    
     Pause()
     current.hide()
     next.show()
