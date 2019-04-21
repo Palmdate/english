@@ -371,6 +371,7 @@ svg{
 // }
 
 input[type=text],
+input[type=email],
 input[type=password] {
   background-color: #f6f6f6;
   border: none;
@@ -393,12 +394,14 @@ input[type=password] {
 }
 
 input[type=text]:focus,
+input[type=email]:focus,
 input[type=password] :focus {
   background-color: #fff;
   border-bottom: 2px solid #003359;
 }
 
 input[type=text]:placeholder,
+input[type=email]:placeholder,
 input[type=password] :placeholder {
   color: #cccccc;
 }

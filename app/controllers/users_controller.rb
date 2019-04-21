@@ -27,10 +27,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     begin
       if @user.save
-        flash[:success] = "Welcome #{@user.email} to the EN4PR! Please login to learn English "
+        flash[:success] = "Welcome #{@user.email} to the web EN4PR! Please login to learn English "
         redirect_to login_path
       else
-        flash[:danger] = " #{@user.errors}. Please sign up again."
+        flash[:danger] = " Errors in sign up. Please sign up again."
         redirect_to signup_path
       end
     rescue ActiveRecord::RecordNotUnique
