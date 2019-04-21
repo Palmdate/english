@@ -2,123 +2,210 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// Stepper
-.stepper {
-    .nav-tabs {
-        position: relative;
-    }
-    .nav-tabs > li {
-        width: 25%;
-        position: relative;
-        &:after {
-            content: '';
-            position: absolute;
-            background: #f1f1f1;
-            display: block;
-            width: 100%;
-            height: 5px;
-            top: 30px;
-            left: 50%;
-            z-index: 1;
-        }
-        &.completed {
-            &::after {
-                background: #34bc9b;
-            }
-        }
-        &:last-child {
-            &::after {
-                background: transparent;
-            }
-        }
-        &.active:last-child {
-            .round-tab {
-                background: #34bc9b;
-                &::after {
-                    content: '✔';
-                    color: #fff;
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    margin: 0 auto;
-                    top: 0;
-                    display: block;
-                }
-            }
-        }
-    }
-    .nav-tabs [data-toggle='tab'] {
-        width: 25px;
-        height: 25px;
-        margin: 20px auto;
-        border-radius: 100%;
-        border: none;
-        padding: 0;
-        color: #f1f1f1;
-    }
-    .nav-tabs [data-toggle='tab']:hover {
-        background: transparent;
-        border: none;
-    }
-    .nav-tabs > .active > [data-toggle='tab'], .nav-tabs > .active > [data-toggle='tab']:hover, .nav-tabs > .active > [data-toggle='tab']:focus {
-        color: #34bc9b;
-        cursor: default;
-        border: none;
-    }
-    .tab-pane {
-        position: relative;
-        padding-top: 50px;
-    }
-    .round-tab {
-        width: 25px;
-        height: 25px;
-        line-height: 22px;
-        display: inline-block;
-        border-radius: 25px;
-        background: #fff;
-        border: 2px solid #34bc9b;
-        color: #34bc9b;
-        z-index: 2;
-        position: absolute;
-        left: 0;
-        text-align: center;
-        font-size: 14px;
-        
-    }
-    .completed .round-tab{
-    	background: #34bc9b;
-    	&::after {
-    		content: '✔';
-    		color: #fff;
-    		position: absolute;
-    		left: 0;
-    		right: 0;
-    		margin: 0 auto;
-    		top: 0;
-    		display: block;
-        }
-    }
-    .active .round-tab {
-        background: #fff;
-        border: 2px solid #34bc9b;
-        &:hover {
-            background: #fff;
-            border: 2px solid #34bc9b;
-        }
-        &::after {
-            display: none;
-        }
-    }
-    .disabled .round-tab {
-        background: #fff;
-        color: #f1f1f1;
-        border-color: #f1f1f1;
-        &:hover {
-            color: #4dd3b6;
-            border: 2px solid #a6dfd3;
-        }
-        &::after {
-            display: none;
-        }
-    }
+// custom font
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+// basic reset
+* {margin: 0; padding: 0;}
+
+// html {
+// 	  height: 100%;
+// 	  // Image only BG fallback
+	  
+// 	  // background = gradient + image pattern combo
+// 	  background: 
+// 		    linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+// }
+
+// body {
+// 	  font-family: montserrat, arial, verdana;
+// }
+
+#form-id{
+  margin:50px auto;
+  text-align:center;
+  position: relative;
+}
+#form-id fieldset{
+  background:#fff;
+  border:0 none;
+  border-radius:3px;
+  box-shadow:0 0 10px 1px rgba(0,0,0,0.4);
+  box-sizing:border-box;
+  padding:20px 30px;
+  width:80%;
+  margin:0 10%;
+  position: relative;  
+}
+#form-id fieldset:not(:first-of-type){
+  display:none;
+}
+
+#form-id input{
+  border:1px solid #ccc;
+  border-radius:3px;
+  padding:15px;
+  color:#2C3E50;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom:10px;
+  font-size:13px;
+  box-sizing:border-box; 
+  width:100%;
+}
+#form-id .custom-button{
+  width:100px;
+  background: #003359;
+  font-weight: bold;
+  color:#fff;
+  border:0;
+  pointer:cursor;
+  padding:10px;
+  margin:10px;  
+}
+
+#form-id .custom-button:hover{
+  box-shadow:0 0 0 2px #fff, 0 0 0 4px #003359;
+}
+.title{
+  font-size:15px;
+  margin-bottom:10px;
+  color:#2C3E50;
+  text-transform:uppercase;
+}
+.sub-title{
+  font-size:13px;
+  margin-bottom:20px;
+  font-weight:normal;
+  color:#666;
+}
+/*Progressbar*/
+.progress {
+	margin-bottom: 30px;
+	overflow: hidden;
+	/*CSS counters to number the steps*/
+	counter-reset: step;
+}
+.progress li {
+	list-style-type: none;
+	color: white;
+	text-transform: uppercase;
+	font-size: 9px;
+	width: 33.33%;
+	float: left;
+	position: relative;
+}
+.progress li:before {
+	content: counter(step);
+	counter-increment: step;
+	width: 20px;
+	line-height: 20px;
+	display: block;
+	font-size: 10px;
+	color: #333;
+	background: white;
+	border-radius: 3px;
+	margin: 0 auto 5px auto;
+}
+/*progressbar connectors*/
+.progress li:after {
+	content: '';
+	width: 100%;
+	height: 2px;
+	background: #fff;
+	position: absolute;
+	left: -50%;
+	top: 9px;
+  z-index:-1; /*put it behind the numbers*/
+}
+.progress li:first-child:after {
+		/*connector not needed before the first step*/
+  content: none; 
+}
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+.progress li.active:before,  .progress li.active:after{
+	background: #f96359;
+	color: white;
+}
+// ---------------CSS for Result diff words--------------------------
+body md-content {
+    background-color: #f7f7f7;
+}
+
+md-card-content pre {
+    overflow: auto
+}
+
+.inputBox {
+    height: 100px;
+}
+
+.match,
+.textdiff span {
+    color: gray;
+}
+
+.ins,
+ins {
+    color: black;
+    background: #bbffbb;
+}
+
+.del,
+del {
+    color: black;
+    background: #ffbbbb;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+.modal-header, h4, .close {
+    background-color: #5cb85c;
+    color:white !important;
+    text-align: center;
+    font-size: 30px;
+}
+.modal-footer {
+    background-color: #f9f9f9;
+}
+
+pre {
+    white-space: inherit;
+}
+
+.modal { 
+	display: block;
+}
+
+/* Custom dialog/modal headers */
+
+.dialog-header-error { background-color: #d2322d; }
+.dialog-header-wait { background-color: #428bca; }
+.dialog-header-notify { background-color: #eeeeee; }
+.dialog-header-confirm { background-color: #333333; }
+.dialog-header-error span, .dialog-header-error h4,
+.dialog-header-wait span, .dialog-header-wait h4,
+.dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
+
+/* Ease Display */
+
+.pad { padding: 25px; }
+
+.countDown {
+    border: solid .5px #fff;
+    padding: 10px;
+    border-radius: 65px;
+  color: #d2322d;
+}
+div#placement {
+    width: 500px;
+    margin: 0 auto;
 }

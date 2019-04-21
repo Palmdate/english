@@ -22,8 +22,12 @@
                       <div class="col-6 col-md-2"><%= c.status%></div>
                       <div class="col-6 col-md-3 d-flex">
                           <button class="edit btn btn-warning mr-2">.</button>
-                          <button class="test btn btn-info mr-2">.</button>
-                          <%= link_to "<span class="fa fa-close">.</span>".html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn btn-danger" %>
+                          <% if (c.skill == "Write From Dictation") %>
+                          <%= link_to "Test", write_fr_dics_path(:audio => c.quality), :class => "test form-control btn-info btn-xs", :style => "display: unset;color: white;"%>
+                          <% else %>
+                          <button class="test btn-info btn-xs">Test</button>
+                          <% end %>
+                          <%= link_to '<span class="fa fa-close">.</span>'.html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn btn-danger" %>
                       </div>
                   </div>
                   

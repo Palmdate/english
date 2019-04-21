@@ -5,27 +5,31 @@ class WriteFrDicsController < ApplicationController
   # GET /write_fr_dics.json
   def index
     @write_fr_dics = WriteFrDic.all
+    @count = params[:audio]
   end
 
   # GET /write_fr_dics/1
   # GET /write_fr_dics/1.json
   def show
+    
   end
 
   # GET /write_fr_dics/new
   def new
     @write_fr_dic = WriteFrDic.new
+    
   end
 
   # GET /write_fr_dics/1/edit
   def edit
+    
   end
 
   # POST /write_fr_dics
   # POST /write_fr_dics.json
   def create
     @write_fr_dic = WriteFrDic.new(write_fr_dic_params)
-
+    
     respond_to do |format|
       if @write_fr_dic.save
         format.html { redirect_to @write_fr_dic, notice: 'Write fr dic was successfully created.' }
@@ -69,6 +73,6 @@ class WriteFrDicsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def write_fr_dic_params
-      params.fetch(:write_fr_dic, {})
+      params.require(:write_fr_dic).permit(:audio, :content)
     end
 end
