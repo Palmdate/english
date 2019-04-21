@@ -84,12 +84,8 @@
           <!-- Modl result -->
           
           <% if (k == @count.to_i) %>
-          <input type="button" value='Previous' class="prev-button custom-button">
           <input type='button' value='Finish' ng-click="result()" class="custom-button finish" onclick="$('#myModal<%= k %>').modal({backdrop: 'static', keyboard: false})">
-          <% elsif (k == 1)%>
-          <input type='button' name='next' class='next-button custom-button' value="Next">
           <% else %>
-          <input type="button" value='Previous' class="prev-button custom-button">
           <input type='button' name='next' class='next-button custom-button' value="Next">
           <% end %>
         </fieldset>
@@ -222,30 +218,6 @@
         if (timer === 0) {
           Pause();
           $('.timer-beep').get($('fieldset').index(next)).play();
-          clearInterval(interval);
-        }
-      }), 1000);
-    });
-    $('.prev-button').click(function() {
-      var current, prev;
-      current = $(this).parent();
-      prev = $(this).parent().prev();
-      Pause();
-      current.hide();
-      prev.show();
-      $('.next-button').prop('disabled', true);
-      $('.prev-button').prop('disabled', true);
-      setTimeout((function() {
-        $('.next-button').prop('disabled', false);
-        $('.prev-button').prop('disabled', false);
-      }), 10000);
-      timer = 5;
-      interval = setInterval((function() {
-        timer--;
-        $('.timer').text(timer);
-        if (timer === 0) {
-          Pause();
-          $('.timer-beep').get($('fieldset').index(prev)).play();
           clearInterval(interval);
         }
       }), 1000);
