@@ -2,8 +2,8 @@
     <div class="row" style="border-top-style: double;padding-top: 15px; font-family: 'Roboto', sans-serif; font-size: 15px;">
         <div class="col-6 col-md-1">
             <div class="md-form" style="margin-top: unset">
-                <%= f.text_field :day_id, class: "form-control", id: "input-char-counter"%>
-                <label for="input-char-counter" style="font-family: 'Roboto', sans-serif; font-size: 15px;">DAY</label>
+                <%= f.number_field :day_id, class: "form-control", id: "input-char-counter", placeholder: "DAY", required: true%>
+                <label for="input-char-counter" style="font-family: 'Roboto', sans-serif; font-size: 15px;"></label>
           </div>
         </div>
         <div class="col-6 col-md-4">
@@ -15,8 +15,8 @@
             <%= f.select :quality, options_for_select(grouped_options_quality), {}, {class: "grade-select form-control input-sm"}%>
         </div>
         <div class="col-6 col-md-2">
-            <% grouped_options_status = ['Done', 'In Progress','Not Starting'] %>
-            <%= f.select :status, options_for_select(grouped_options_status), {}, {class: "credits-select form-control input-sm"} %>
+            <% grouped_options_status = ['Not Starting', 'In Progress', 'Done'] %>
+            <%= f.select :status, options_for_select(grouped_options_status, 'Not Starting'), {}, {class: "credits-select form-control input-sm"} %>
         </div>
         <div class="col-6 col-md-3">
             <%= f.submit "Add", class: "add btn btn-success btn-md" %>
