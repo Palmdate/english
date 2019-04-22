@@ -3,7 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
-.sub-menu-parent { position: relative; }
+.sub-menu-parent { 
+  position: relative; 
+}
+
+.sub-menu-parent:first-child { 
+  padding-left: 50px;
+}
 
 .sub-menu { 
   padding: 0px;
