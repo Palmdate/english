@@ -14,7 +14,7 @@
             <%= f.select :status, options_for_select(grouped_options_status, selected: course.status), {}, {class: "credits-select form-control input-sm"}%>
         </div>
         <div class="col-6 col-md-3">
-            <%= f.submit "Save", class: "save btn btn-primary"%>
+            <button type="submit" class="save btn-sm btn-success"><span class="fa fa-floppy-o"></span></button>
         </div>
     </div>
 <% end %>

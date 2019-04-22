@@ -1,6 +1,12 @@
 <%= render 'header' %>
 <div class="container">
-  <h4 class="text-center mb-4">SCHEDULE</h4>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="#">Course</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Schedule</li>
+    </ol>
+  </nav>
   <div class="student-grade-table">
       <% if current_user.id %>
         <% course = Course.where(user_id: current_user.id) %>
@@ -20,14 +26,14 @@
                       <div class="col-6 col-md-4"><%= c.skill %></div>
                       <div class="col-6 col-md-2"><%= c.quality%></div>
                       <div class="col-6 col-md-2"><%= c.status%></div>
-                      <div class="col-6 col-md-3 d-flex">
-                          <button class="edit btn btn-warning mr-2">.</button>
+                      <div class="col-6 col-md-3">
+                          <a class="edit btn-sm btn-warning" style="display: unset;color: white;"><span class="fa fa-pencil"></span></a>
                           <% if (c.skill == "Write From Dictation") %>
-                          <%= link_to "Test", write_fr_dics_path(:audio => c.quality), :class => "test form-control btn-info btn-xs", :style => "display: unset;color: white;"%>
+                            <%= link_to '<span class="fa fa-tv"></span>'.html_safe, write_fr_dics_path(:audio => c.quality), :class => "test btn-sm btn-info", :style => "display: unset;color: white;"%>
                           <% else %>
-                          <button class="test btn-info btn-xs">Test</button>
+                            <a class="test btn-sm btn-info" style="display: unset;color: white;" href="#"><span class="fa fa-tv"></span></a>
                           <% end %>
-                          <%= link_to '<span class="fa fa-close">.</span>'.html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn btn-danger" %>
+                          <%= link_to '<span class="fa fa-trash-o"></span>'.html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn-sm btn-danger" %>
                       </div>
                   </div>
                   
