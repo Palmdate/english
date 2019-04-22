@@ -1,26 +1,34 @@
 <%= render 'home/header' %>
 
-<div class="container">
+<div class="container bg-white p-2">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="#">Speaking</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Read alouds</li>
+    </ol>
+  </nav>
   <h6 class="font-weight-bold font-italic">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
-  <div class="data-source">
-    <p class="text-justify m-4">
-      5G networks that transform entertainment, communication and transportation may still be years away. But in manufacturing, the technology is already making a difference.
-      <br/>
-      Next-generation 5G networks can be 100 times faster than 4G, making communication between devices and servers much faster. The networks can be installed in relatively small areas — like a factory — without too much fuss.
-      <br/>
-      The combination of speed, practicality and potential cost savings is encouraging factory operators to experiment with 5G. The results have been positive, suggesting the tech may be widely used in factories before smartphones and other consumer products, especially because surveys show many consumers are not yet willing to pay more for 5G.
-    </p>
-  </div>
-  <div class="result-read shadow rounded">
-    <p class="text-justify p-4">
-      ghjkl;
-    </p>
-  </div>
   <div class="record-tool">
-    <h6 class="font-weight-bold">RECORED</h6>
-    <p class="font-italic text-danger" id="time-prepaire">Begining in <span id="timePrepaire"> 00:40</span> seconds</p>
-    <p class="font-italic text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:40</span> seconds</p>
+    <div class="status rounded shadow">
+      <h6 class="font-weight-bold text-danger">STATUS</h6>
+      <p class="font-italic text-danger" id="time-prepaire">Begining in <span id="timePrepaire"> 00:40</span> seconds</p>
+      <p class="font-italic text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:40</span> seconds</p>
+      <p class="font-italic text-danger d-none" id="time-out">Time out</p>
+    </div>
   </div>
+  <div style="width: 80%; margin: auto">
+    <div class="data-source">
+      <p class="text-justify m-4">
+        5G networks that transform entertainment, communication and transportation may still be years away. But in manufacturing, the technology is already making a difference.
+      </p>
+    </div>
+    <div class="result-read shadow rounded">
+      <p class="text-justify p-4">
+      </p>
+    </div>
+  </div>
+  
 </div>
 <div class="action-bottom">
   <div class="float-right">
