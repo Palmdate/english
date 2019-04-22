@@ -25,15 +25,17 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
-    respond_to do |format|
+    begin
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
+        flash[:success] = "Welcome #{@user.email} to the web EN4PR! Please login to learn English "
+        redirect_to login_path
       else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        flash[:danger] = " Errors in sign up. Please sign up again."
+        redirect_to signup_path
       end
+    rescue ActiveRecord::RecordNotUnique
+      flash[:danger] = " #Your acoount #{@user.email} have used. Please use it to login."
+      redirect_to login_path
     end
   end
 

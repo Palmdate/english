@@ -14,8 +14,8 @@
             <%= f.select :quality, options_for_select(grouped_options_quality), {}, {class: "grade-select form-control input-sm"}%>
         </div>
         <div class="col-6 col-md-2">
-            <% grouped_options_status = ['Done', 'In Progress','Not Starting'] %>
-            <%= f.select :status, options_for_select(grouped_options_status), {}, {class: "credits-select form-control input-sm"} %>
+            <% grouped_options_status = ['Not Starting', 'In Progress', 'Done'] %>
+            <%= f.select :status, options_for_select(grouped_options_status, 'Not Starting'), {}, {class: "credits-select form-control input-sm"} %>
         </div>
         <div class="col-6 col-md-3">
             <button type="submit" name="commit" class="test btn-sm btn-success"><span class="fa fa-plus"></span></button>

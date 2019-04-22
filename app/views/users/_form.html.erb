@@ -1,26 +1,27 @@
+<% flash.each do |key, value| %>
+<div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
 <div class="container">
   <!-- Icon -->
 
-  <!-- Message Error -->
-
-  <!-- Login Form -->
+  <!-- Sign up Form -->
   <%= form_with(model: user, local: true) do |form| %>
   <div class="row mb-2">
     <div class="col-4">
       <label class="text-right">Email: <span class="text-danger">*</span</label>
                                                                     </div>
-    <%= form.text_field :email, class: "fadeIn second col-4",  id: "login", placeholder: "" %>
+    <%= form.email_field :email, required: true, class: "fadeIn second col-4",  id: "login", placeholder: "Email" %>
   </div>
   <div class="row mb-2">
     <div class="col-4">
       <label class="text-right">Password: <span class="text-danger">*</span</label>
                                                                        </div>
-    <%= form.password_field :password, id: "password", class: "fadeIn third col-4", placeholder: "" %>
+    <%= form.password_field :password, required: true, id: "password", class: "fadeIn third col-4", placeholder: "Password", pattern: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", title: "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters", onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters' : ''); if(this.checkValidity()) form.password_confirmation.pattern = this.value;" %>
   </div>
   <div class="row mb-2">
     <div class="col-4">
       <label class="text-right">Password Confirm: <span class="text-danger">*</spanc</label>                                                                              </div>
-    <%= form.password_field :password_confirmation, id: "password", class: "fadeIn third col-4", placeholder: "" %>
+    <%= form.password_field :password_confirmation, required: true, id: "password_confirmation", class: "fadeIn third col-4", placeholder: "Password Confirmation", pattern: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password' : '');" %>
   </div>
   <div class="mt-2 mb-2 text-center">
     <%= form.submit 'Sign Up', class: 'btn bg-blue-en4all text-light' %>
