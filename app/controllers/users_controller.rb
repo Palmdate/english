@@ -34,7 +34,7 @@ class UsersController < ApplicationController
         redirect_to signup_path
       end
     rescue ActiveRecord::RecordNotUnique
-      flash[:danger] = " #Your acoount {@user.email} have used. Please use it to login."
+      flash[:danger] = " #Your acoount #{@user.email} have used. Please use it to login."
       redirect_to login_path
     end
   end
