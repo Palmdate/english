@@ -11,12 +11,12 @@
 <%= render partial: 'home/header' %>
 
 
-<div class="container bg-white p-2">
+<div class="container bg-white shadow p-2">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Course</a></li>
-      <li class="breadcrumb-item"><a href="#">Schedule</a></li>
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/home/course">Course</a></li>
+      <li class="breadcrumb-item"><a href="">Schedule</a></li>
       <li class="breadcrumb-item active" aria-current="page">Write From Dictation</li>
     </ol>
   </nav>
@@ -49,7 +49,7 @@
             <%= audio_tag "#{sens.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
           </div>
           <div class="md-form" data-ng-init="anyFunction()">
-            <textarea layout-fill id="sens-content<%= k - 1%>" class="md-textarea left form-control"></textarea>
+            <textarea layout-fill id="sens-content<%= k - 1%>" class="md-textarea left form-control" placeholder="Enter word is here after you heard ..."></textarea>
             <h1 layout-fill id="sens-content-right" class="md-textarea right form-control" style="display: none;"><%= sens.result%></h1>
             
             <!-- Modal result-->

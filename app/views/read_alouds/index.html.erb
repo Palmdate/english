@@ -1,18 +1,42 @@
 <%= render 'home/header' %>
 
-<div class="container bg-white p-2">
+<div class="container bg-white shadow p-2">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
       <li class="breadcrumb-item"><a href="#">Speaking</a></li>
       <li class="breadcrumb-item active" aria-current="page">Read alouds</li>
     </ol>
   </nav>
   <h6 class="font-weight-bold font-italic">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
+  <div class="pb-4">
+    <ol class="progtrckr">
+      <li class="progtrckr-done no-hl" value="0"><em>1</em><span>01</span></li>
+      <li class="progtrckr-done no-hl" value="1"><em>2</em><span>02</span></li>
+      <li class="progtrckr-done no-hl" value="2"><em>3</em><span>03</span></li>
+      <li class="progtrckr-done no-hl" value="3"><em>4</em><span>04</span></li>
+      <li class="progtrckr-done no-hl" value="4"><em>5</em><span>05</span></li>
+      <li class="progtrckr-failed no-hl" value="5"><em>6</em><span>06</span></li>
+      <li class="progtrckr-done no-hl" value="6"><em>7</em><span>07</span></li>
+      <li class="progtrckr-done no-hl" value="7"><em>8</em><span>08</span></li>
+      <li class="progtrckr-done no-hl" value="8"><em>9</em><span>09</span></li>
+      <li class="progtrckr-done no-hl" value="9"><em>10</em><span>10</span></li>
+      <li class="progtrckr-failed no-hl" value="10"><em>11</em><span>11</span></li>
+      <li class="progtrckr-done no-hl" value="11"><em>12</em><span>12</span></li>
+      <li class="progtrckr-done no-hl" value="12"><em>13</em><span>13</span></li>
+      <li class="progtrckr-done no-hl" value="13"><em>14</em><span>14</span></li>
+      <li class="progtrckr-done no-hl" value="14"><em>15</em><span>15</span></li>
+      <li class="progtrckr-done no-hl" value="15"><em>16</em><span>16</span></li>
+      <li class="progtrckr-doing no-hl" value="16"><em>17</em><span>17</span></li>
+      <li class="progtrckr-todo no-hl" value="17"><em>18</em><span>18</span></li>
+      <li class="progtrckr-todo no-hl" value="18"><em>19</em><span>19</span></li>
+      <li class="progtrckr-todo no-hl" value="19"><em>20</em><span>20</span></li>
+    </ol>
+  </div>
   <div class="record-tool">
     <div class="status rounded shadow">
-      <h6 class="font-weight-bold text-danger">STATUS</h6>
-      <p class="font-italic text-danger" id="time-prepaire">Begining in <span id="timePrepaire"> 00:40</span> seconds</p>
+      <h6 class="font-weight-bold text-success">STATUS</h6>
+      <p class="font-italic text-info" id="time-prepaire">Begining in <span id="timePrepaire"> 00:40</span> seconds</p>
       <p class="font-italic text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:40</span> seconds</p>
       <p class="font-italic text-danger d-none" id="time-out">Time out</p>
     </div>
@@ -64,6 +88,8 @@ function startTimer(duration, display) {
 
             $("#btnAgain").removeAttr("disabled");
             $("#btnNext").removeAttr("disabled");
+
+            $('#time-out').css("cssText", "display: block !important");
           }
 
           stopRecord = true;
