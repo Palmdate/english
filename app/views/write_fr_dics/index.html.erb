@@ -2,14 +2,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js"></script>
-<script src="http://rawgit.com/google/diff-match-patch/master/javascript/diff_match_patch.js"></script>
-<script src="http://rawgit.com/amweiss/angular-diff-match-patch/v0.7.0/angular-diff-match-patch.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js"></script>
+<script src="//rawgit.com/google/diff-match-patch/master/javascript/diff_match_patch.js"></script>
+<script src="//rawgit.com/amweiss/angular-diff-match-patch/v0.7.0/angular-diff-match-patch.js"></script>
 
 <%= render partial: 'home/header' %>
-
 
 <div class="container bg-white shadow p-2">
   <nav aria-label="breadcrumb">
@@ -114,17 +114,18 @@
   </div>
 </div>
 <!-- Model errors -->
+
 <script>
   
   $(document).on('turbolinks:load', function() {
     // Reload page once to fix errors don't show angular-diff-math-path 
-    if(document.URL.indexOf("#")==-1){
-      // Set the URL to whatever it was plus "#loaded".
-      url = document.URL+"#loaded";
-      location = "#loaded";
-      //Reload the page using reload() method
-      location.reload(true);
-    };
+      if(document.URL.indexOf("#")==-1){
+          // Set the URL to whatever it was plus "#loaded".
+          url = document.URL+"#loaded";
+          location = "#loaded";
+          //Reload the page using reload() method
+          location.reload(true);
+      };
 
     // count time to do test
     var interval1, count, min, sec;
