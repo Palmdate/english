@@ -1,12 +1,5 @@
 <%= render 'header' %>
 <div class="container bg-white shadow p-2">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Course</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Schedule</li>
-    </ol>
-  </nav>
   <div class="student-grade-table p-4">
       <% if current_user.id %>
         <% course = Course.where(user_id: current_user.id) %>

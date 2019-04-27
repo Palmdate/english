@@ -16,15 +16,25 @@
 .record-tool {
     text-align: center;
     .status{
-        //background-color: #52738b;
         display: inline-block;
-        padding: 30px;
+        border: solid .5px #003359;
+        padding: 20px;
+        border-radius: 65px;
+        color: #d2322d;
     }
 }
 
 .result-read {
     background-color: #fdfdfd;
-    
+    p {
+        font-size: 1.2em;
+    }
+}
+
+.data-source {
+    p{
+        font-size: 1.2em;
+    }
 }
 
 /*

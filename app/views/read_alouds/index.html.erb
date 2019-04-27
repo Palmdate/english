@@ -1,44 +1,12 @@
 <%= render 'home/header' %>
 
-<div class="container bg-white shadow p-2">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Speaking</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Read alouds</li>
-    </ol>
-  </nav>
-  <h6 class="font-weight-bold font-italic">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
-  <div class="pb-4">
-    <ol class="progtrckr">
-      <li class="progtrckr-done no-hl" value="0"><em>1</em><span>01</span></li>
-      <li class="progtrckr-done no-hl" value="1"><em>2</em><span>02</span></li>
-      <li class="progtrckr-done no-hl" value="2"><em>3</em><span>03</span></li>
-      <li class="progtrckr-done no-hl" value="3"><em>4</em><span>04</span></li>
-      <li class="progtrckr-done no-hl" value="4"><em>5</em><span>05</span></li>
-      <li class="progtrckr-failed no-hl" value="5"><em>6</em><span>06</span></li>
-      <li class="progtrckr-done no-hl" value="6"><em>7</em><span>07</span></li>
-      <li class="progtrckr-done no-hl" value="7"><em>8</em><span>08</span></li>
-      <li class="progtrckr-done no-hl" value="8"><em>9</em><span>09</span></li>
-      <li class="progtrckr-done no-hl" value="9"><em>10</em><span>10</span></li>
-      <li class="progtrckr-failed no-hl" value="10"><em>11</em><span>11</span></li>
-      <li class="progtrckr-done no-hl" value="11"><em>12</em><span>12</span></li>
-      <li class="progtrckr-done no-hl" value="12"><em>13</em><span>13</span></li>
-      <li class="progtrckr-done no-hl" value="13"><em>14</em><span>14</span></li>
-      <li class="progtrckr-done no-hl" value="14"><em>15</em><span>15</span></li>
-      <li class="progtrckr-done no-hl" value="15"><em>16</em><span>16</span></li>
-      <li class="progtrckr-doing no-hl" value="16"><em>17</em><span>17</span></li>
-      <li class="progtrckr-todo no-hl" value="17"><em>18</em><span>18</span></li>
-      <li class="progtrckr-todo no-hl" value="18"><em>19</em><span>19</span></li>
-      <li class="progtrckr-todo no-hl" value="19"><em>20</em><span>20</span></li>
-    </ol>
-  </div>
-  <div class="record-tool">
-    <div class="status rounded shadow">
-      <h6 class="font-weight-bold text-success">STATUS</h6>
-      <p class="font-italic text-info" id="time-prepaire">Begining in <span id="timePrepaire"> 00:40</span> seconds</p>
-      <p class="font-italic text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:40</span> seconds</p>
-      <p class="font-italic text-danger d-none" id="time-out">Time out</p>
+<div class="read-alouds container bg-white shadow p-2">
+  <h6 class="font-weight-bold mb-4">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
+  <div class="record-tool mb-4">
+    <div class="status">
+      <h5 class="text-info" id="time-prepaire">Begining in <span id="timePrepaire"> 00:00</span> seconds</h5>
+      <h5 class="text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:00</span> seconds</h5>
+      <h5 class="text-danger d-none" id="time-out">Time out</h5>
     </div>
   </div>
   <div style="width: 80%; margin: auto">
@@ -56,58 +24,147 @@
 </div>
 <div class="action-bottom">
   <div class="float-right">
-    <button class="edit btn bg-blue-en4all text-light mr-2" id="btnAgain" disabled onclick="reload()">AGAIN</button>
-    <button class="edit btn bg-blue-en4all text-light" id="btnNext" disabled>NEXT</button>
+    <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart" onclick="start_Record()">START</button>
+    <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnStop" onclick="stop_Record()">STOP</button>
+    <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnAgain" onclick="reload_Record()">AGAIN</button>
+    <button class="edit btn bg-blue-en4all text-light d-none" id="btnNext" onclick="next_Record()">NEXT</button>
   </div>
 </div>
 
 <script>
-function startTimer(duration, display) {
-  var timer = duration, minutes, seconds;
-  var stopRecord = false;
-  setInterval(function () {
+
+var timePre;
+var timePost;
+var pre;
+var post;
+
+function startTimerPre() {
+  var timer = timePre, minutes, seconds;
+  pre = setInterval(function () {
       minutes = parseInt(timer / 60, 10)
       seconds = parseInt(timer % 60, 10);
 
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
-      display.textContent = minutes + ":" + seconds;
+      document.querySelector('#timePrepaire').textContent = minutes + ":" + seconds;
 
       if (--timer < 0) {
-          timer = duration;
-          
-          display = document.querySelector('#timeProgess');
+        $("#time-prepaire").addClass("d-none");
+        $("#time-progess").removeClass("d-none");
+        
 
-          $("#time-prepaire").css("display", "none");
-          $("#time-progess").css("cssText", "display: block !important");
+        $('#btnStart').addClass("d-none");
+        $('#btnStop').removeClass("d-none");
+        clearInterval(pre);
 
-          if(stopRecord) {
-            $("#time-prepaire").css("cssText", "display: none !important");
-            $("#time-progess").css("cssText", "display: none !important");
-
-            $("#btnAgain").removeAttr("disabled");
-            $("#btnNext").removeAttr("disabled");
-
-            $('#time-out').css("cssText", "display: block !important");
-          }
-
-          stopRecord = true;
+        startTimerPost();
       }
   }, 1000);
 }
 
-function reload() {
-  var fiveMinutes = 40,
-      display = document.querySelector('#timePrepaire');
-  startTimer(fiveMinutes, display);
+function startTimerPost() {
+  var timer = timePost, minutes, seconds;
+  post = setInterval(function () {
+      minutes = parseInt(timer / 60, 10)
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      document.querySelector('#timeProgess').textContent = minutes + ":" + seconds;
+
+      if (--timer < 0) {
+        $("#time-prepaire").addClass("d-none");
+        $("#time-progess").addClass("d-none");
+        $('#time-out').removeClass("d-none");
+
+        $('#btnStop').addClass("d-none");
+        $('#btnAgain').removeClass("d-none");
+        $('#btnNext').removeClass("d-none");
+
+        clearInterval(post);
+      }
+      else {}
+  }, 1000);
 }
 
-window.onload = function () {
+function start_Record(){
+  document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+  document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
+  $('#btnStart').addClass("d-none");
+  $('#btnStop').removeClass("d-none");
+
+  $('#time-prepaire').addClass("d-none");
+  $('#time-progess').removeClass("d-none");
+  $('#time-out').addClass("d-none");
+
+  clearInterval(pre);
+  clearInterval(post);
+  startTimerPost();
+}
+
+function stop_Record(){
+  document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+  document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
+  $('#btnStop').addClass("d-none");
+
+  $('#btnAgain').removeClass("d-none");
+  $('#btnNext').removeClass("d-none");
+
+  $('#time-prepaire').addClass("d-none");
+  $('#time-progess').addClass("d-none");
+  $('#time-out').removeClass("d-none");
+
+  clearInterval(pre);
+  clearInterval(post);
+}
+
+function reload_Record() {
+  document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+  document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
+  $('#btnAgain').addClass("d-none");
+  $('#btnNext').addClass("d-none");
+  $('#btnStart').removeClass("d-none");
+  
+  $('#time-prepaire').removeClass("d-none");
+  $('#time-progess').addClass("d-none");
+  $('#time-out').addClass("d-none");
+
+  clearInterval(pre);
+  clearInterval(post);
+  startTimerPre();
+}
+
+function next_Record() {
+  clearInterval(pre);
+  clearInterval(post);
+  
+  timePre = 40;
+  timePost = 40;
+
+  document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+  document.querySelector('#timeProgess').textContent = "00:" + timePost;
+  
+  startTimerPre();
+}
+
+$(document).ready(function() {
+  clearInterval(pre);
+  clearInterval(post);
+  
+  timePre = 40;
+  timePost = 40;
+
   var height = $(".data-source").height();
   $(".result-read").css("min-height", height);
-  var fiveMinutes = 40,
-      display = document.querySelector('#timePrepaire');
-  startTimer(fiveMinutes, display);
-};
+
+  document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+  document.querySelector('#timeProgess').textContent = "00:" + timePost;
+  
+  startTimerPre();
+});
 </script>
