@@ -11,6 +11,7 @@
     width: 100%;
     padding: 10px;
     bottom: 0;
+    z-index: 999;
 }
 
 .record-tool {
@@ -26,14 +27,23 @@
 
 .result-read {
     background-color: #fdfdfd;
-    p {
-        font-size: 1.2em;
+    .your-record-audio-play,
+    .your-record-audio-pause,
+    .your-record-audio-origin-pause,
+    .your-record-audio-origin-play {
+        cursor: pointer;
+    }
+
+    .waveform wave {
+        height: 80px !important;
     }
 }
 
 .data-source {
+    border-radius: 5px;
+    border: 1px solid black;
     p{
-        font-size: 1.2em;
+        font-size: 1.4em;
     }
 }
 
