@@ -1,4 +1,8 @@
 $(document).on('turbolinks:load', function() {
+  var result = document.getElementById('result');
+  if('webkitSpeechRecognition' in window) {
+    var speechRecognizer = new webkitSpeechRecognition();
+  };
   // Play, download recoring
   function WzRecorder(config) {
     config = config || {};
@@ -302,53 +306,65 @@ $(document).on('turbolinks:load', function() {
   // Play, download recoring
 
   // Speech to text
-  var result = document.getElementById('result');
-  if('webkitSpeechRecognition' in window) {
-		var speechRecognizer = new webkitSpeechRecognition();
-  };
 
   function startConverting () {
 
-	  if('webkitSpeechRecognition' in window) {
-		 
-		  speechRecognizer.continuous = true;
-		  speechRecognizer.interimResults = true;
-		  speechRecognizer.lang = 'en-US';
-		  speechRecognizer.start();
+    if('webkitSpeechRecognition' in window) {
 
-		  var finalTranscripts = '';
+      speechRecognizer.continuous = true;
+      speechRecognizer.interimResults = true;
+      speechRecognizer.lang = 'en-US';
+      speechRecognizer.start();
 
-		  speechRecognizer.onresult = function(event) {
-			  var interimTranscripts = '';
-			  for(var i = event.resultIndex; i < event.results.length; i++){
-				  var transcript = event.results[i][0].transcript;
-				  transcript.replace("\n", "<br>");
-				  if(event.results[i].isFinal) {
-					  finalTranscripts += transcript;
-				  }else{
-					  interimTranscripts += transcript;
-				  }
-			  }
-			  result.innerHTML = finalTranscripts + '<span style="color: #999">' + interimTranscripts + '</span>';
-		  };
-		  speechRecognizer.onerror = function (event) {
+      var finalTranscripts = '';
 
-		  };
-	  }else {
-		  result.innerHTML = 'Your browser is not supported. Please download Google chrome or Update your Google chrome!!';
-	  }
+      speechRecognizer.onresult = function(event) {
+        var interimTranscripts = '';
+        for(var i = event.resultIndex; i < event.results.length; i++){
+          var transcript = event.results[i][0].transcript;
+          transcript.replace("\n", "<br>");
+          if(event.results[i].isFinal) {
+            finalTranscripts += transcript;
+          }else{
+            interimTranscripts += transcript;
+          }
+        }
+        result.innerHTML = finalTranscripts + '<span style="color: #999">' + interimTranscripts + '</span>';
+      };
+      speechRecognizer.onerror = function (event) {
+
+      };
+    }else {
+      result.innerHTML = 'Your browser is not supported. Please download Google chrome or Update your Google chrome!!';
+    }
   };
   function stopConverting () {
     speechRecognizer.stop();
   };
   // ------------Speech to text
 
-  
-  // main function
-  $('#hatest').click(function() {
-    recorder.toggleRecording();
-  });
 
+  // main function
+  $('#btnStart').click(function() {
+    start_Record();
+  });
+  $('#btnStop').click(function() {
+    stop_Record();
+    let originalHTML = $('#result').text();
+    let newHTML = "This is a simple demo showing a blog post's most recent editing history.";
+    // Diff HTML strings
+    let output = htmldiff(originalHTML, newHTML);
+
+    // Show HTML diff output as HTML
+    
+    document.getElementById("output").innerHTML = output; 
+  });
+  $('#btnAgain').click(function() {
+    reload_Record();
+  });
+  $('#btnNext').click(function() {
+    next_Record();
+  });
   // Text to speech
   var utterance = new window.SpeechSynthesisUtterance();
   utterance.volume = 1;
@@ -356,8 +372,8 @@ $(document).on('turbolinks:load', function() {
   utterance.pitch = 1;
   utterance.lang = 'en-US';
   var words = new SpeechSynthesisUtterance( $("#textbox").val() );
- 
-  
+
+
   // document.getElementById("btn")
 
   // $('la').on('click', function(){
@@ -365,31 +381,286 @@ $(document).on('turbolinks:load', function() {
   //   speechSynthesis.speak(words);
   // });
   // let originalHTML = `
-//   <div>
-//   <h1>Article Title</h1>
-//   <p>This is a rudimentary demo of showing a blog post's most recent edit history as it renders.</p>
-//   <p><a href="http://example.com">This is a link test.</a></p>
-//   </div>
-//   `;
+  //   <div>
+  //   <h1>Article Title</h1>
+  //   <p>This is a rudimentary demo of showing a blog post's most recent edit history as it renders.</p>
+  //   <p><a href="http://example.com">This is a link test.</a></p>
+  //   </div>
+  //   `;
 
-//   let newHTML = `
-// <div>
-// <h1>Article Title &ndash; Revision 2</h1>
-// <p>This is a simple demo showing a blog post's most recent editing history.</p>
-// <p><a href="http://example.com">This is a sample link.</a></p>
-// </div>
-// `;
-  let originalHTML = "This is a rudimentary demo of showing a blog post's most recent edit history as it renders";
-  let newHTML = "This is a simple demo showing a blog post's most recent editing history.";
-  // Diff HTML strings
-  let output = htmldiff(originalHTML, newHTML);
+  //   let newHTML = `
+  // <div>
+  // <h1>Article Title &ndash; Revision 2</h1>
+  // <p>This is a simple demo showing a blog post's most recent editing history.</p>
+  // <p><a href="http://example.com">This is a sample link.</a></p>
+  // </div>
+  // `;
+  function result () {
+    let originalHTML = $('#result').text();
+    let newHTML = "This is a simple demo showing a blog post's most recent editing history.";
+    // Diff HTML strings
+    let output = htmldiff(originalHTML, newHTML);
 
-  // Show HTML diff output as HTML
-  $('#demo').click(function() {
+    // Show HTML diff output as HTML
+   
     document.getElementById("output").innerHTML = output; 
-  });
+    
+  };
   
+
   // text to speech
+  // cong
+  function toHHMMSS(seconds) {
+    var sec_num = parseInt(seconds, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    //return hours + ':' + minutes + ':' + seconds;
+    return minutes + ':' + seconds;
+  }
+
+  var wavesurferorigin;
+  var wavesurfer;
+
+  wavesurferorigin = WaveSurfer.create({
+    container: '#waveformorigin',
+    waveColor: 'gray',
+    progressColor: '#003359',
+    height: 50
+  });
+
+
+  $(".your-record-audio-origin-play").on('click', function(){
+    $(".your-record-audio-origin-play").addClass("d-none");
+    $(".your-record-audio-origin-pause").removeClass("d-none");
+    var durationTimeOrigin = wavesurferorigin.getDuration();
+
+    setInterval(function () {
+      var currentTimeOrigin = wavesurferorigin.getCurrentTime();
+
+      document.querySelector('#timeOrigin').textContent = toHHMMSS(currentTimeOrigin) + "/" + toHHMMSS(durationTimeOrigin);
+
+      if (currentTimeOrigin == durationTimeOrigin){
+        $(".your-record-audio-origin-pause").addClass("d-none");
+        $(".your-record-audio-origin-play").removeClass("d-none");
+      }
+    }, durationTimeOrigin);
+
+
+    wavesurferorigin.playPause();
+  });
+
+  $(".your-record-audio-origin-pause").on('click', function(){
+    $(".your-record-audio-origin-pause").addClass("d-none");
+    $(".your-record-audio-origin-play").removeClass("d-none");
+
+    var durationTimeOrigin = wavesurferorigin.getDuration();
+
+    setInterval(function () {
+      var currentTimeOrigin = wavesurferorigin.getCurrentTime();
+
+      document.querySelector('#timeOrigin').textContent = toHHMMSS(currentTimeOrigin) + "/" + toHHMMSS(durationTimeOrigin);
+    }, durationTimeOrigin);
+
+    wavesurferorigin.playPause();
+  });
+
+  wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: 'gray',
+    progressColor: '#003359',
+    height: 50
+  });
+
+
+  $(".your-record-audio-play").on('click', function(){
+    $(".your-record-audio-play").addClass("d-none");
+    $(".your-record-audio-pause").removeClass("d-none");
+
+    var durationTime = wavesurfer.getDuration();
+
+    setInterval(function () {
+      var currentTime = wavesurfer.getCurrentTime();
+
+      document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+
+      if (currentTime == durationTime){
+        $(".your-record-audio-pause").addClass("d-none");
+        $(".your-record-audio-play").removeClass("d-none");
+      }
+    }, durationTime);
+
+    wavesurfer.playPause();
+  });
+
+  $(".your-record-audio-pause").on('click', function(){
+    $(".your-record-audio-pause").addClass("d-none");
+    $(".your-record-audio-play").removeClass("d-none");
+
+    var durationTime = wavesurfer.getDuration();
+
+    setInterval(function () {
+      var currentTime = wavesurfer.getCurrentTime();
+
+      document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+    }, durationTime);
+
+    wavesurfer.playPause();
+  });
+
+  var timePre;
+  var timePost;
+  var pre;
+  var post;
+
+  function startTimerPre() {
+    var timer = timePre, minutes, seconds;
+    pre = setInterval(function () {
+      minutes = parseInt(timer / 60, 10)
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      document.querySelector('#timePrepaire').textContent = minutes + ":" + seconds;
+
+      if (--timer < 0) {
+        $("#time-prepaire").addClass("d-none");
+        $("#time-progess").removeClass("d-none");
+
+
+        $('#btnStart').addClass("d-none");
+        $('#btnStop').removeClass("d-none");
+        clearInterval(pre);
+        recorder.start();
+        startTimerPost();
+      }
+    }, 1000);
+  }
+
+  function startTimerPost() {
+    var timer = timePost, minutes, seconds;
+    post = setInterval(function () {
+      minutes = parseInt(timer / 60, 10)
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      document.querySelector('#timeProgess').textContent = minutes + ":" + seconds;
+
+      if (--timer < 0) {
+        $("#time-prepaire").addClass("d-none");
+        $("#time-progess").addClass("d-none");
+        $('#time-out').removeClass("d-none");
+
+        $('#btnStop').addClass("d-none");
+        $('#btnAgain').removeClass("d-none");
+        $('#btnNext').removeClass("d-none");
+
+        $('.origin-audio').removeClass("d-none");
+        $('.record-audio').removeClass("d-none");
+
+        wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+        wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+
+        clearInterval(post);
+        recorder.stop();
+      }
+      else {}
+    }, 1000);
+  }
+
+  function start_Record(){
+    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
+    $('#btnStart').addClass("d-none");
+    $('#btnStop').removeClass("d-none");
+
+    $('#time-prepaire').addClass("d-none");
+    $('#time-progess').removeClass("d-none");
+    $('#time-out').addClass("d-none");
+
+    clearInterval(pre);
+    clearInterval(post);
+    startTimerPost();
+    recorder.start();
+  }
+
+  function stop_Record(){
+    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
+    $('#btnStop').addClass("d-none");
+
+    $('#btnAgain').removeClass("d-none");
+    $('#btnNext').removeClass("d-none");
+
+    $('#time-prepaire').addClass("d-none");
+    $('#time-progess').addClass("d-none");
+    $('#time-out').removeClass("d-none");
+
+    $('.origin-audio').removeClass("d-none");
+    $('.record-audio').removeClass("d-none");
+
+    wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+    wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+
+    clearInterval(pre);
+    clearInterval(post);
+    recorder.stop();
+  }
+
+  function reload_Record() {
+    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
+    $('#btnAgain').addClass("d-none");
+    $('#btnNext').addClass("d-none");
+    $('#btnStart').removeClass("d-none");
+
+    $('#time-prepaire').removeClass("d-none");
+    $('#time-progess').addClass("d-none");
+    $('#time-out').addClass("d-none");
+
+    $('.origin-audio').addClass("d-none");
+    $('.record-audio').addClass("d-none");
+
+    clearInterval(pre);
+    clearInterval(post);
+    startTimerPre();
+  }
+
+  function next_Record() {
+    clearInterval(pre);
+    clearInterval(post);
+
+    timePre = 40;
+    timePost = 40;
+
+    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
+    startTimerPre();
+  }
+
+  $(document).ready(function() {
+    clearInterval(pre);
+    clearInterval(post);
+
+    timePre = 40;
+    timePost = 40;
+
+    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
+    startTimerPre();
+  });
 });
 
 
