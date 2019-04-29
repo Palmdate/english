@@ -76,6 +76,7 @@ Now you can visit [`localhost:3000`](http://localhost:3000) from your browser.
 
 
 Board team: https://eng4all.leankit.com/board/823861460.
+Board team: https://trello.com/b/RGwAAYVj 
 
 # Task Process
 
