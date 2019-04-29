@@ -1,7 +1,8 @@
 <%= render 'home/header' %>
 
 <div class="read-alouds container bg-white shadow p-2">
-    <h6 class="font-weight-bold mb-4">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
+  <h6 class="font-weight-bold mb-4">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
+  <div id="result"></div>
     <div class="record-tool mb-4">
         <div class="status">
             <h5 class="text-info" id="time-prepaire">Begining in <span id="timePrepaire"> 00:00</span> seconds</h5>
@@ -46,9 +47,9 @@
                
                 <canvas id="myCanvas" width="280" height="200"></canvas>
 
-	              <div id="result"></div>
+	              <div id="result" style="display: none"></div>
                 <div id='output'></div>
-                <p id="demo" >Click me to change my HTML content (innerHTML).</p>
+                
             </div>
         </div>
 

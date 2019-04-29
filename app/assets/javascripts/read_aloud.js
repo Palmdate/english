@@ -340,6 +340,7 @@ $(document).on('turbolinks:load', function() {
   };
   function stopConverting () {
     speechRecognizer.stop();
+    speechRecognizer.continuous = false;
   };
   // ------------Speech to text
 
@@ -347,6 +348,7 @@ $(document).on('turbolinks:load', function() {
   // main function
   $('#btnStart').click(function() {
     start_Record();
+    startConverting();
   });
   $('#btnStop').click(function() {
     stop_Record();
