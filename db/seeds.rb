@@ -320,15 +320,15 @@ wfd = { "Mar19_1.mp3" => "Archaeologists discovered tools and artifacts in ancie
         "Library_8_.mp3" => "Science is found in society all around the world.",
         "Library_9_.mp3" => "Scientists learned through the observations and the analysis of the human behaviour.",
         "Library_10_.mp3" => "Sea levels are expected to rise during the next century.",
-        "Library_10_.mp3" => "She received a scholarship from the state library.",
-        "Library_10_.mp3" => "Some people are motivated by competition while others prefer to collaborate.",
-        "Library_10_.mp3" => "Some people believe that education should be free for all.",
-        "Library_10_.mp3" => "Students are encouraged to monitor their own attendance.",
-        "Library_10_.mp3" => "Students are encouraged to think carefully about their accommodation needs.",
-        "Library_10_.mp3" => "Students should have an awareness of how the business develops globally.",
-        "Library_10_.mp3" => "Students should have awareness of how the business develops globally.",
-        "Library_10_.mp3" => "Studies show there is a positive correlation between two variables.",
-        "Library_10_.mp3" => "The ability to work with fellow students cannot be stressed enough.",
+        "Library_11_.mp3" => "She received a scholarship from the state library.",
+        "Library_12_.mp3" => "Some people are motivated by competition while others prefer to collaborate.",
+        "Library_13_.mp3" => "Some people believe that education should be free for all.",
+        "Library_14_.mp3" => "Students are encouraged to monitor their own attendance.",
+        "Library_15_.mp3" => "Students are encouraged to think carefully about their accommodation needs.",
+        "Library_16_.mp3" => "Students should have an awareness of how the business develops globally.",
+        "Library_17_.mp3" => "Students should have awareness of how the business develops globally.",
+        "Library_18_.mp3" => "Studies show there is a positive correlation between two variables.",
+        "Library_19_.mp3" => "The ability to work with fellow students cannot be stressed enough.",
         "Library_20_.mp3" => "The architectural numbers vary in that experiment.",
         "Library_21_.mp3" => "The artists and conservative politicians earn their rule of politics.",
         "Library_22_.mp3" => "The assessment of this course will begin next week",
@@ -441,12 +441,28 @@ wfd = { "Mar19_1.mp3" => "Archaeologists discovered tools and artifacts in ancie
 
 # Database for Read Aloud Skills
 #  Example: read_aloud = [" ", " ", ...]
-read_aloud_easy = ["Life expectancy and infant mortality rates are two of the best indicators of overall health.",
-                   "Applicants for this course preferably have a preference over English and journalism."
+read_aloud_easy = ["Computers which are capable of teaching themselves to predict premature death could greatly improve preventative healthcare in the future, a new study suggests.",
+		   "A synaesthesia-like effect in which people 'hear' silent flashes or movement, such as in popular 'noisy GIFs' and memes, could be due to a reduction of inhibition of signals that travel between visual and auditory areas of the brain, according to a new study. It was also found that musicians taking part in the study were significantly more likely to report experiencing visual ear than non-musician participants.",
+		   "To arrive at this destination, we had to take a ferry from the mainland, a journey which lasted roughly one hour.",
+		   "Last summer, my family went on a vacation to Cat Ba island, which is located in Hai Phong city and I was really impressed with the beach.",
+		   "Biophysicists have used an automated method to model a living system -- the dynamics of a worm perceiving and escaping pain. The model makes accurate predictions about the dynamics of the worm behavior, and these predictions are biologically interpretable and have been experimentally verified.",
+		   "Researchers have found a new way to make cathodes for lithium batteries, offering improvements in the amount of power for both a given weight and a given volume.",
+		   "New research suggests that deep groundwater could still be active on Mars and could originate surface streams in some near-equatorial areas on Mars.",
+		   "One important requirement to see quantum effects is to remove all thermal energy from the particle motion, i.e. to cool it as close as possible to absolute zero temperature. Researchers are now one step closer to reaching this goal by demonstrating a new method for cooling levitated nanoparticles.",
+		   "An enzyme-blocking molecule can extend the lifespan of Caenorhabditis elegans roundworms by as much as 45 percent, largely by modulating a cannabinoid biological pathway, according to a new study.",
+		   "A woman in Scotland can feel virtually no pain due to a mutation in a previously-unidentified gene, according to a research article. She also experiences very little anxiety and fear, and may have enhanced wound healing due to the mutation, which the researchers say could help guide new treatments for a range of conditions."
                   ]
 
-read_aloud_hard = ["Life expectancy and infant mortality rates are two of the best indicators of overall health.",
-                   "Applicants for this course preferably have a preference over English and journalism."
+read_aloud_hard = ["“Thompson recognized and exploited all the ingredients of a successful amusement ride,” write Judith A. Adams in the American Amusement Park Industry. “His coasters combined an appearance of danger with actual safety, thrilled riders with exhilarating speed, and allowed the public to intimately experience the Industrial Revolution’s new technologies of gears, steel, and dazzling electric lights.”",
+		   "Over the centuries, the holiday evolved, and by the 18th century, gift-giving and exchanging handmade cards on Valentine’s Day had become common in England. Handmade Valentine’s cards made of lace, ribbons, and featuring cupids and hearts eventually spread to the American colonies. The tradition of Valentine’s cards did not become widespread in the United States, however, until the 1850s.",
+		   "Although Botswana’s economic outlook remains strong, the devastation that AIDS has caused threatens to destroy the country’s future. In 2001, Botswana has the highest rate of HIV infection in the world. With the help of international donors it launched an ambitious national campaign that provided free antiviral drugs to anyone who needed them, and by March 2004, Botswana’s infection rate has dropped significantly.",
+		   "Global warming is deﬁned as an increase in the average temperature of the earth's atmosphere. This trend began in the middle of the 20th century and is one of the major environmental concerns of scientists and governmental ofﬁcials worldwide. The changes in temperature result mostly from the effect of increased concentrations of greenhouse gasses in the atmosphere.",
+		   "In the photo, the wild cat‘s huge paws are clamped onto the side of the white safari Jeep in which Chappell was a passenger. Almost as tall as the Jeep on her hind legs, she appears to be forcing her muzzle into the back window.",
+		   "Who do you think is the most glamorous person? A biotechnologist who led his company in international research, an ordinary welder who gained international fame through his work, or a photographer complimented widely for a series of photos?",
+		   "This ﬁnding is understandable in certain cases in spite of its high significance; that is because energy efﬁciency of building operation just represents a single aspect of sustainability.",
+		   "Three professors from Hamburg University's medical faculty travelled last month to Ingeborg's sitting room in East Berlin to test her on the work she carried out in pre-war Germany.",
+		   "Akimbo, this must be one of the odder—looking words in the language and puzzles us in part because it doesn’t seem to have any relatives. What‘s more, it is now virtually a fossil word, until recently almost invariably found in arms akimbo, a posture in which a person stands with hands on hips and elbows sharply bent outward, one that signals impatience, hostility or contempt.",
+		   "New research suggests that environmental contaminants found in the home and diet have the same adverse effects on male fertility in both humans and in domestic dogs. There has been increasing concern over declining human male fertility in recent decades with studies showing a 50 global reduction in sperm quality in the past 80 years."
                   ]
 
 # Remove old database
