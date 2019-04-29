@@ -6,6 +6,7 @@
 #
 #   movies => Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+# Datatbase for Write From Dictation Skill
 wfd = { "Mar19_1.mp3" => "Archaeologists discovered tools and artifacts in ancient tombs.",
         "Mar19_2.mp3" => "Blue whale is the largest mammal that ever lived.",
         "Mar19_3.mp3" => "Children conquer their first language without any efforts.",
@@ -438,11 +439,22 @@ wfd = { "Mar19_1.mp3" => "Archaeologists discovered tools and artifacts in ancie
         "longwfd_57.wav" => "Life expectancy and infant mortality rates are two of the best indicators of overall health."
       }
 
+# Database for Read Aloud Skills
+#  Example: read_aloud = [" ", " ", ...]
+read_aloud_easy = ["Life expectancy and infant mortality rates are two of the best indicators of overall health.",
+                   "Applicants for this course preferably have a preference over English and journalism."
+                  ]
+
+read_aloud_hard = ["Life expectancy and infant mortality rates are two of the best indicators of overall health.",
+                   "Applicants for this course preferably have a preference over English and journalism."
+                  ]
+
+# Remove old database
 WriteFrDic.all.each do |k|
   k.destroy
 end
 
-
+# Create Write From Dictation database 
 wfd.each do |name, content|
   
   WriteFrDic.create(audio: name, result: content)
