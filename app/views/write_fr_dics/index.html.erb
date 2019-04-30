@@ -41,7 +41,7 @@
             <%= audio_tag "#{sens.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
           </div>
           <div class="md-form" data-ng-init="anyFunction()">
-            <textarea layout-fill id="sens-content<%= k - 1%>" class="md-textarea left form-control" placeholder="Enter word is here after you heard ..."></textarea>
+            <textarea layout-fill id="sens-content<%= k - 1%>" class="left form-control p-4" rows="4"></textarea>
             <h1 layout-fill id="sens-content-right" class="md-textarea right form-control" style="display: none;"><%= sens.result%></h1>
             
             <!-- Modal result-->
@@ -49,11 +49,13 @@
               <div class="modal-dialog" role="document">
                 <!-- Modal result-->
                 <div class="modal-content" >
-                  <div class="modal-header" style="background-color:wheat;">
-                    <h5 class="modal-title" id="exampleModalLabel">CONGRATULATE</h5>
+                  <div class="modal-header bg-blue-en4all">
+                    <h5 class="modal-title" id="exampleModalLabel">YOUR RESULT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
                   <div class="modal-body" style="padding:40px 50px;">
-                    THIS IS YOUR RESULT
                     <form role="form">
                       <div class="form-group" >
                         <ol >
@@ -63,9 +65,9 @@
                       </div>                        
                     </form>
                   </div>
-                  <div class="modal-footer" style="justify-content: space-between;">
-                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" ng-click="clear()" onclick="location.reload()"><span class="fa fa-rotate-left"></span></button>
-                    <%= link_to '<span class="fa fa-align-justify"></span>'.html_safe, home_course_path,  class: "btn btn-default pull-left", style: "color:white;"%>
+                  <div class="modal-footer">
+                    <%= link_to 'Schedule'.html_safe, home_course_path,  class: "btn btn-secondary pull-left mr-2", style: "color:white;"%>
+                    <button type="button" class="btn bg-blue-en4all text-light pull-left" data-dismiss="modal" ng-click="clear()" onclick="location.reload()">Listen again</span></button>
                   </div>
                 </div>
               </div>
@@ -117,7 +119,7 @@
           location = "#loaded";
           //Reload the page using reload() method
           location.reload(true);
-      };
+    };
 
     // count time to do test
     var interval1, count, min, sec;
@@ -214,9 +216,6 @@
       }), 1000);
     });
   });
-
-</script>
-<script>
   
   var app = angular.module('diffDemo', ['ngMaterial', 'diff-match-patch']);
   app.config(function($mdThemingProvider) {
