@@ -1,91 +1,101 @@
+<script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+<script src='//code.responsivevoice.org/responsivevoice.js'></script>
 <%= render 'home/header' %>
 
 <div class="read-alouds container bg-white shadow p-2">
   <h6 class="font-weight-bold mb-4">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
-  <div id="result"></div>
-    <div class="record-tool mb-4">
-        <div class="status">
-            <h5 class="text-info" id="time-prepaire">Begining in <span id="timePrepaire"> 00:00</span> seconds</h5>
-            <h5 class="text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:00</span> seconds</h5>
-            <h5 class="text-danger d-none" id="time-out">Time out</h5>
-        </div>
+  <% k = 0 %>
+  <div class="record-tool mb-4">
+    <div class="status">
+      <h5 class="text-info" id="time-prepaire">Begining in <span id="timePrepaire"> 00:00</span> seconds</h5>
+      <h5 class="text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:00</span> seconds</h5>
+      <h5 class="text-danger d-none" id="time-out">Time out</h5>
     </div>
-    <div style="width: 80%; margin: auto">
-        <div class="row mb-4 origin-audio d-none">
-            <div class="col-sm-2 text-right font-weight-bold">
-                Origin audio:
+  </div>
+  <% ReadAloud.all.each do |read| %>
+  <div style="display: none; width: 80%; margin: auto" id="next-read<%= k %>">
+    <div class="row mb-4 origin-audio d-none">
+      <div class="col-sm-2 text-right font-weight-bold">
+        Origin audio:
+      </div>
+      <div class="col-sm">
+        <div class="result-read rounded">
+          <div class="row">
+            
+            <div class="col-sm-2 text-center">
+              <div style="display: grid; width: max-content">
+                <span class="la your-record-audio-origin-play fa fa-play-circle-o fa-4x"></span>
+                <span class="your-record-audio-origin-pause fa fa-pause-circle-o fa-4x d-none"></span>
+                <!-- <span id="timeOrigin">00:00/00:00</span> -->
+              </div>
             </div>
-            <div class="col-sm">
-                <div class="result-read rounded">
-                    <div class="row">
-                        <div class="col-sm-2 text-center">
-                            <div style="display: grid; width: max-content">
-                                <span class="your-record-audio-origin-play fa fa-play-circle-o fa-4x"></span>
-                                <span class="your-record-audio-origin-pause fa fa-pause-circle-o fa-4x d-none"></span>
-                                <span id="timeOrigin">00:00/00:00</span>
-                            </div>
-                        </div>
-                        <div class="col-sm-10">
-                            <div id="waveformorigin"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-sm-10">
+              <div id="waveformorigin"></div>
             </div>
+          </div>
         </div>
-        
-        <div class="row mb-4 paragraph">
-            <div class="col-sm-2 text-right font-weight-bold">
-                
-            </div>
-            <div class="data-source p-2 col-sm">
-                <p class="text-justify">
-                    5G networks that transform entertainment, communication and transportation may still be years away. But in manufacturing, the technology is already making a difference.
-                </p>
-                <p>
-                    Duration: <span id="duration">0ms</span>
-                </p>
-               
-                <canvas id="myCanvas" width="280" height="200"></canvas>
-
-	              <div id="result" style="display: none"></div>
-                <div id='output'></div>
-                
-            </div>
-        </div>
-
-        <div class="row mb-4 record-audio d-none">
-            <div class="col-sm-2 text-right font-weight-bold">
-                Your record audio:
-            </div>
-            <div class="col-sm">
-                <div class="result-read rounded">
-                    <div class="row">
-                        <div class="col-sm-2 text-center">
-                            <!-- <div style="display: grid; width: max-content">
-                                 <span class="your-record-audio-play fa fa-play-circle-o fa-4x"></span>
-                                 <span class="your-record-audio-pause fa fa-pause-circle-o fa-4x d-none"></span>
-                                 <span id="timeRecord">00:00/00:00</span>
-                                 </div> -->
-                            <p>
-                                <audio id="player" controls></audio>
-                            </p>
-                        </div>
-                        <div class="col-sm-10">
-                            <div id="waveform"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    
+    <div class="row mb-4 paragraph" id="paragraph<%= k %>">
+      
+      <div class="col-sm-2 text-right font-weight-bold">
+      </div>
+      <div class="data-source p-2 col-sm">
+        <p id="content<%= k %>" class="text-justify">
+          <%= read.content %>
+        </p>
+        <p>Duration: <span id="duration<%= k %>">0ms</span></p> 
+        <canvas id="myCanvas<%= k %>" width="280" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="row mb-4 record-audio d-none">
+      <div class="col-sm-2 text-right font-weight-bold">
+        Your record audio:
+      </div>
+      <div class="col-sm">
+        <div class="result-read rounded">
+          <div class="row">
+            <div class="col-sm-2 text-center">
+             
+              <!-- <div style="display: grid; width: max-content">
+                   <span class="your-record-audio-play fa fa-play-circle-o fa-4x"></span>
+                   <span class="your-record-audio-pause fa fa-pause-circle-o fa-4x d-none"></span>
+                   <span id="timeRecord">00:00/00:00</span>
+              </div> -->
+              <p>
+                <audio id="player<%= k %>" controls></audio>
+              </p>
+            </div>
+            <div class="col-sm-10">
+              
+              <div id="waveform"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4 record-audio d-none">
+      <div class="col-sm-2 text-right font-weight-bold">
+        Your result:
+      </div>
+      <div class="col-sm">
+        <p id="result<%= k %>" class="text-justify"></p>
+        <div id="output<%= k %>"></div>
+      </div>
+    </div>
+  </div>
+  <% k = k + 1%>
+  <% end %>
 </div>
+
 <div class="action-bottom">
-    <div class="float-right">
-        <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart">START</button>
-        <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnStop">STOP</button>
-        <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnAgain">AGAIN</button>
-        <button class="edit btn bg-blue-en4all text-light d-none" id="btnNext">NEXT</button>
-    </div>
+  <div class="float-right">
+    <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart">START</button>
+    <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnStop">STOP</button>
+    <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnAgain">AGAIN</button>
+    <button class="edit btn bg-blue-en4all text-light d-none" id="btnNext">NEXT</button>
+  </div>
 </div>
-
-

@@ -1,8 +1,10 @@
 $(document).on('turbolinks:load', function() {
-  var result = document.getElementById('result');
-  if('webkitSpeechRecognition' in window) {
-    var speechRecognizer = new webkitSpeechRecognition();
-  };
+  var readCounter = 1;
+  // $('p#content0').show();
+  $('#next-read0').show();
+  var newHTML = $('p#content0').text();
+  var result = document.getElementById('result0');
+  
   // Play, download recoring
   function WzRecorder(config) {
     config = config || {};
@@ -43,7 +45,7 @@ $(document).on('turbolinks:load', function() {
         .getUserMedia({ audio: true })
         .then(onMicrophoneCaptured)
         .catch(onMicrophoneError);
-      startConverting ();
+      startConverting();
     };
 
     this.stop = function() {
@@ -51,7 +53,7 @@ $(document).on('turbolinks:load', function() {
         self.blob = blob;
         config.onRecordingStop && config.onRecordingStop(blob);
       });
-      stopConverting();
+      // stopConverting();
     };
 
     this.upload = function(url, params, callback) {
@@ -294,23 +296,24 @@ $(document).on('turbolinks:load', function() {
 
   var recorder = new WzRecorder({
     onRecordingStop: function(blob) {
-      document.getElementById("player").src = URL.createObjectURL(blob);  
+      document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
     },
     onRecording: function(milliseconds) {
-      document.getElementById("duration").innerText = milliseconds + "ms";
+      document.getElementById("duration" + (readCounter - 1)).innerText = milliseconds + "ms";
     },
     visualizer: {
-      element: document.getElementById('myCanvas')
+      element: document.getElementById('myCanvas' + (readCounter - 1))
     }
   });
   // Play, download recoring
 
   // Speech to text
-
+  
   function startConverting () {
 
     if('webkitSpeechRecognition' in window) {
-
+      var speechRecognizer = new webkitSpeechRecognition();
+      speechRecognizer.stop();
       speechRecognizer.continuous = true;
       speechRecognizer.interimResults = true;
       speechRecognizer.lang = 'en-US';
@@ -335,37 +338,58 @@ $(document).on('turbolinks:load', function() {
 
       };
     }else {
-      result.innerHTML = 'Your browser is not supported. Please download Google chrome or Update your Google chrome!!';
+      confirm("Please set: \n media.webspeech.recognition.enable in about:config \n to get all feature of web");
     }
   };
-  function stopConverting () {
-    speechRecognizer.stop();
-    speechRecognizer.continuous = false;
-  };
+  // function stopConverting () {
+  //    if('webkitSpeechRecognition' in window) {
+      
+  //      speechRecognizer.stop();
+  //      speechRecognizer.continuous = false;
+  //    }
+  // };
   // ------------Speech to text
 
 
   // main function
   $('#btnStart').click(function() {
+    
     start_Record();
     startConverting();
+
   });
   $('#btnStop').click(function() {
     stop_Record();
-    let originalHTML = $('#result').text();
-    let newHTML = "This is a simple demo showing a blog post's most recent editing history.";
+
+    let originalHTML = $('#result'+ (readCounter - 1)).text();
+    newHTML = $("p#content" + (readCounter - 1)).text();
     // Diff HTML strings
     let output = htmldiff(originalHTML, newHTML);
 
     // Show HTML diff output as HTML
     
-    document.getElementById("output").innerHTML = output; 
+    document.getElementById("output" + (readCounter - 1)).innerHTML = output; 
   });
   $('#btnAgain').click(function() {
     reload_Record();
   });
   $('#btnNext').click(function() {
-    next_Record();
+    // next_Record();
+    
+    
+    $('#next-read' + (readCounter - 1)).hide();
+    $('#next-read' + readCounter).show();
+    // $("p#content" + (readCounter - 1)).hide();
+    // $("p#content" + readCounter).show();
+    // $('#paragrap' + (readCounter - 1)).hide();
+    // $('#paragrap' + readCounter).show();
+
+    result = document.getElementById('result' + readCounter);
+    readCounter ++;
+   
+    reload_Record();
+    
+    
   });
   // Text to speech
   var utterance = new window.SpeechSynthesisUtterance();
@@ -378,10 +402,21 @@ $(document).on('turbolinks:load', function() {
 
   // document.getElementById("btn")
 
-  // $('la').on('click', function(){
-  //   var words = new SpeechSynthesisUtterance( $("#textbox").val() );
-  //   speechSynthesis.speak(words);
-  // });
+  $('span.la').on('click', function(){
+    if ($('span.la').hasClass('fa-play-circle-o'))
+    {
+      $('span.la').removeClass('fa-play-circle-o');
+      $('span.la').addClass('fa-pause-circle-o');
+      var words = new SpeechSynthesisUtterance( $("#content" + (readCounter - 1)).text() );
+      speechSynthesis.speak(words);
+    }
+    else
+    {
+      $('span.la').removeClass('fa-pause-circle-o');
+      $('span.la').addClass('fa-play-circle-o');
+      speechSynthesis.cancel();
+    }
+  });
   // let originalHTML = `
   //   <div>
   //   <h1>Article Title</h1>
@@ -399,7 +434,7 @@ $(document).on('turbolinks:load', function() {
   // `;
   function result () {
     let originalHTML = $('#result').text();
-    let newHTML = "This is a simple demo showing a blog post's most recent editing history.";
+    
     // Diff HTML strings
     let output = htmldiff(originalHTML, newHTML);
 
@@ -423,96 +458,96 @@ $(document).on('turbolinks:load', function() {
     if (seconds < 10) {seconds = "0"+seconds;}
     //return hours + ':' + minutes + ':' + seconds;
     return minutes + ':' + seconds;
-  }
+  };
 
-  var wavesurferorigin;
-  var wavesurfer;
+  // var wavesurferorigin;
+  // var wavesurfer;
 
-  wavesurferorigin = WaveSurfer.create({
-    container: '#waveformorigin',
-    waveColor: 'gray',
-    progressColor: '#003359',
-    height: 50
-  });
-
-
-  $(".your-record-audio-origin-play").on('click', function(){
-    $(".your-record-audio-origin-play").addClass("d-none");
-    $(".your-record-audio-origin-pause").removeClass("d-none");
-    var durationTimeOrigin = wavesurferorigin.getDuration();
-
-    setInterval(function () {
-      var currentTimeOrigin = wavesurferorigin.getCurrentTime();
-
-      document.querySelector('#timeOrigin').textContent = toHHMMSS(currentTimeOrigin) + "/" + toHHMMSS(durationTimeOrigin);
-
-      if (currentTimeOrigin == durationTimeOrigin){
-        $(".your-record-audio-origin-pause").addClass("d-none");
-        $(".your-record-audio-origin-play").removeClass("d-none");
-      }
-    }, durationTimeOrigin);
+  // wavesurferorigin = WaveSurfer.create({
+  //   container: '#waveformorigin',
+  //   waveColor: 'gray',
+  //   progressColor: '#003359',
+  //   height: 50
+  // });
 
 
-    wavesurferorigin.playPause();
-  });
+  // $(".your-record-audio-origin-play").on('click', function(){
+  //   $(".your-record-audio-origin-play").addClass("d-none");
+  //   $(".your-record-audio-origin-pause").removeClass("d-none");
+  //   var durationTimeOrigin = wavesurferorigin.getDuration();
 
-  $(".your-record-audio-origin-pause").on('click', function(){
-    $(".your-record-audio-origin-pause").addClass("d-none");
-    $(".your-record-audio-origin-play").removeClass("d-none");
+  //   setInterval(function () {
+  //     var currentTimeOrigin = wavesurferorigin.getCurrentTime();
 
-    var durationTimeOrigin = wavesurferorigin.getDuration();
+  //     document.querySelector('#timeOrigin').textContent = toHHMMSS(currentTimeOrigin) + "/" + toHHMMSS(durationTimeOrigin);
 
-    setInterval(function () {
-      var currentTimeOrigin = wavesurferorigin.getCurrentTime();
-
-      document.querySelector('#timeOrigin').textContent = toHHMMSS(currentTimeOrigin) + "/" + toHHMMSS(durationTimeOrigin);
-    }, durationTimeOrigin);
-
-    wavesurferorigin.playPause();
-  });
-
-  wavesurfer = WaveSurfer.create({
-    container: '#waveform',
-    waveColor: 'gray',
-    progressColor: '#003359',
-    height: 50
-  });
+  //     if (currentTimeOrigin == durationTimeOrigin){
+  //       $(".your-record-audio-origin-pause").addClass("d-none");
+  //       $(".your-record-audio-origin-play").removeClass("d-none");
+  //     }
+  //   }, durationTimeOrigin);
 
 
-  $(".your-record-audio-play").on('click', function(){
-    $(".your-record-audio-play").addClass("d-none");
-    $(".your-record-audio-pause").removeClass("d-none");
+  //   wavesurferorigin.playPause();
+  // });
 
-    var durationTime = wavesurfer.getDuration();
+  // $(".your-record-audio-origin-pause").on('click', function(){
+  //   $(".your-record-audio-origin-pause").addClass("d-none");
+  //   $(".your-record-audio-origin-play").removeClass("d-none");
 
-    setInterval(function () {
-      var currentTime = wavesurfer.getCurrentTime();
+  //   var durationTimeOrigin = wavesurferorigin.getDuration();
 
-      document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+  //   setInterval(function () {
+  //     var currentTimeOrigin = wavesurferorigin.getCurrentTime();
 
-      if (currentTime == durationTime){
-        $(".your-record-audio-pause").addClass("d-none");
-        $(".your-record-audio-play").removeClass("d-none");
-      }
-    }, durationTime);
+  //     document.querySelector('#timeOrigin').textContent = toHHMMSS(currentTimeOrigin) + "/" + toHHMMSS(durationTimeOrigin);
+  //   }, durationTimeOrigin);
 
-    wavesurfer.playPause();
-  });
+  //   wavesurferorigin.playPause();
+  // });
 
-  $(".your-record-audio-pause").on('click', function(){
-    $(".your-record-audio-pause").addClass("d-none");
-    $(".your-record-audio-play").removeClass("d-none");
+  // wavesurfer = WaveSurfer.create({
+  //   container: '#waveform',
+  //   waveColor: 'gray',
+  //   progressColor: '#003359',
+  //   height: 50
+  // });
 
-    var durationTime = wavesurfer.getDuration();
 
-    setInterval(function () {
-      var currentTime = wavesurfer.getCurrentTime();
+  // $(".your-record-audio-play").on('click', function(){
+  //   $(".your-record-audio-play").addClass("d-none");
+  //   $(".your-record-audio-pause").removeClass("d-none");
 
-      document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
-    }, durationTime);
+  //   var durationTime = wavesurfer.getDuration();
 
-    wavesurfer.playPause();
-  });
+  //   setInterval(function () {
+  //     var currentTime = wavesurfer.getCurrentTime();
+
+  //     document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+
+  //     if (currentTime == durationTime){
+  //       $(".your-record-audio-pause").addClass("d-none");
+  //       $(".your-record-audio-play").removeClass("d-none");
+  //     }
+  //   }, durationTime);
+
+  //   wavesurfer.playPause();
+  // });
+
+  // $(".your-record-audio-pause").on('click', function(){
+  //   $(".your-record-audio-pause").addClass("d-none");
+  //   $(".your-record-audio-play").removeClass("d-none");
+
+  //   var durationTime = wavesurfer.getDuration();
+
+  //   setInterval(function () {
+  //     var currentTime = wavesurfer.getCurrentTime();
+
+  //     document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+  //   }, durationTime);
+
+  //   wavesurfer.playPause();
+  // });
 
   var timePre;
   var timePost;
@@ -542,7 +577,7 @@ $(document).on('turbolinks:load', function() {
         startTimerPost();
       }
     }, 1000);
-  }
+  };
 
   function startTimerPost() {
     var timer = timePost, minutes, seconds;
@@ -567,17 +602,18 @@ $(document).on('turbolinks:load', function() {
         $('.origin-audio').removeClass("d-none");
         $('.record-audio').removeClass("d-none");
 
-        wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
-        wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+        // wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+        // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
 
         clearInterval(post);
         recorder.stop();
       }
       else {}
     }, 1000);
-  }
+  };
 
   function start_Record(){
+    recorder.start();
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
     document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
@@ -591,8 +627,8 @@ $(document).on('turbolinks:load', function() {
     clearInterval(pre);
     clearInterval(post);
     startTimerPost();
-    recorder.start();
-  }
+    
+  };
 
   function stop_Record(){
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
@@ -610,13 +646,14 @@ $(document).on('turbolinks:load', function() {
     $('.origin-audio').removeClass("d-none");
     $('.record-audio').removeClass("d-none");
 
-    wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
-    wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+    // wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+    // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
 
     clearInterval(pre);
     clearInterval(post);
     recorder.stop();
-  }
+
+  };
 
   function reload_Record() {
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
@@ -636,9 +673,18 @@ $(document).on('turbolinks:load', function() {
     clearInterval(pre);
     clearInterval(post);
     startTimerPre();
-  }
+  };
 
   function next_Record() {
+    newHTML = $("p#content" + readCounter).text();
+    $('#next-read' + (readCounter - 1)).hide();
+    $('#next-read' + readCounter).show();
+    // $("p#content" + (readCounter - 1)).hide();
+    // $("p#content" + readCounter).show();
+    // $('#paragrap' + (readCounter - 1)).hide();
+    // $('#paragrap' + readCounter).show();
+    readCounter ++;
+    
     clearInterval(pre);
     clearInterval(post);
 
@@ -649,9 +695,9 @@ $(document).on('turbolinks:load', function() {
     document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     startTimerPre();
-  }
+  };
 
-  $(document).ready(function() {
+  function init() {
     clearInterval(pre);
     clearInterval(post);
 
@@ -662,7 +708,8 @@ $(document).on('turbolinks:load', function() {
     document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     startTimerPre();
-  });
+  };
+  init();
 });
 
 

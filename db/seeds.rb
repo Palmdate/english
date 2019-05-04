@@ -453,7 +453,7 @@ read_aloud_easy = ["Computers which are capable of teaching themselves to predic
 		   "A woman in Scotland can feel virtually no pain due to a mutation in a previously-unidentified gene, according to a research article. She also experiences very little anxiety and fear, and may have enhanced wound healing due to the mutation, which the researchers say could help guide new treatments for a range of conditions."
                   ]
 
-read_aloud_hard = ["“Thompson recognized and exploited all the ingredients of a successful amusement ride,” write Judith A. Adams in the American Amusement Park Industry. “His coasters combined an appearance of danger with actual safety, thrilled riders with exhilarating speed, and allowed the public to intimately experience the Industrial Revolution’s new technologies of gears, steel, and dazzling electric lights.”",
+read_aloud_hard = ["Thompson recognized and exploited all the ingredients of a successful amusement ride,” write Judith A. Adams in the American Amusement Park Industry. “His coasters combined an appearance of danger with actual safety, thrilled riders with exhilarating speed, and allowed the public to intimately experience the Industrial Revolution’s new technologies of gears, steel, and dazzling electric lights.",
 		   "Over the centuries, the holiday evolved, and by the 18th century, gift-giving and exchanging handmade cards on Valentine’s Day had become common in England. Handmade Valentine’s cards made of lace, ribbons, and featuring cupids and hearts eventually spread to the American colonies. The tradition of Valentine’s cards did not become widespread in the United States, however, until the 1850s.",
 		   "Although Botswana’s economic outlook remains strong, the devastation that AIDS has caused threatens to destroy the country’s future. In 2001, Botswana has the highest rate of HIV infection in the world. With the help of international donors it launched an ambitious national campaign that provided free antiviral drugs to anyone who needed them, and by March 2004, Botswana’s infection rate has dropped significantly.",
 		   "Global warming is deﬁned as an increase in the average temperature of the earth's atmosphere. This trend began in the middle of the 20th century and is one of the major environmental concerns of scientists and governmental ofﬁcials worldwide. The changes in temperature result mostly from the effect of increased concentrations of greenhouse gasses in the atmosphere.",
@@ -469,10 +469,18 @@ read_aloud_hard = ["“Thompson recognized and exploited all the ingredients of 
 WriteFrDic.all.each do |k|
   k.destroy
 end
+ReadAloud.all.each do |k|
+  k.destroy
+end
 
 # Create Write From Dictation database 
 wfd.each do |name, content|
   
   WriteFrDic.create(audio: name, result: content)
 
+end
+
+# Create Read Aloud database
+read_aloud_hard.each do |content|
+  ReadAloud.create(content: content)
 end
