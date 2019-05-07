@@ -572,3 +572,7 @@ end
 read_aloud_hard.each do |content|
   ReadAloud.create(content: content)
 end
+
+read_aloud_easy.each do |content|
+  ReadAloud.create(content: content)
+end

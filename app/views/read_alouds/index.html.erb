@@ -14,7 +14,7 @@
       <h5 class="text-danger d-none" id="time-out">Time out</h5>
     </div>
   </div>
-  <% ReadAloud.all.each do |read| %>
+  <% ReadAloud.all.sample(ReadAloud.all.count).each do |read| %>
  
   <div style="display: none; width: 80%; margin: auto" id="next-read<%= k %>">
     <div class="row mb-4 origin-audio d-none">
