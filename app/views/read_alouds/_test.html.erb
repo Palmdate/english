@@ -1,32 +1,117 @@
 <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
-<script src='http://code.responsivevoice.org/responsivevoice.js'></script>
+<script src='//code.responsivevoice.org/responsivevoice.js'></script>
 
-<div class="container" style="margin:3rem">
-    <p>
-        <button id=record class="btn btn-dark">Toggle recording</button>
-    </p>
-    <p>
-        Duration: <span id="duration">0ms</span>
-    </p>
-    <p>
-        <audio id="player" controls></audio>
-    </p>
-    <canvas id="myCanvas" width="280" height="200"></canvas>
-    <!-- Speech to text -->
-    <h3 align="center">Speech to text converter JavaScript</h3>
-	  <div id="result"></div>
-	  <button type="button" id="hatest""><i class="fa fa-microphone btn btn-danger" aria-hidden="true"></i></button>
-</div>
+<%= render 'home/header' %>
 
-<div id="wrapper"><div style="width: 80%; margin: 0 auto; font-size: 1.4em; line-height: 1.3em; font-family: Arial, Helvetica; color: gray;"><h2>Text to Speech Demo</h2><p style="width: 100%; font-size: .8em; line-height: .95em; color: black; text-align: left">Text entered below will be read aloud when the button is clicked / pressed.  Give it a try!  This works in iOS and Android... <br><br>so now I can use geoLocation to detect speed and if the user is driving I can read aloud new text content (json) from my web service.<br></p></div>
-    <textarea id="textbox">
-Hello user... You are in the matrix now.
-    </textarea>
+<div class="read-alouds container bg-white shadow p-2">
+  <h6 class="font-weight-bold mb-4">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
+  <% k = 0 %>
+  <div class="record-tool mb-4">
+    <div class="status">
+      <h5 class="text-info" id="time-prepaire">Begining in <span id="timePrepaire"> 00:00</span> seconds</h5>
+      <h5 class="text-danger d-none" id="time-progess">Stop in <span id="timeProgess"> 00:00</span> seconds</h5>
+      <h5 class="text-danger d-none" id="time-out">Time out</h5>
+    </div>
+  </div>
+  <% ReadAloud.all.each do |read| %>
+ 
+  <div style="display: none; width: 80%; margin: auto" id="next-read<%= k %>">
+    <div class="row mb-4 origin-audio d-none">
+      <div class="col-sm-2 text-right font-weight-bold">
+        Origin audio:
+      </div>
+      <div class="col-sm">
+        <div class="result-read rounded">
+          <div class="row">
+            
+            <div class="col-sm-2 text-center">
+              <div style="display: grid; width: max-content">
+                <span class="la your-record-audio-origin-play fa fa-play-circle-o fa-4x"></span>
+                <span class="your-record-audio-origin-pause fa fa-pause-circle-o fa-4x d-none"></span>
+                <!-- <span id="timeOrigin">00:00/00:00</span> -->
+              </div>
+            </div>
+            <div class="col-sm-10 row justify-content-end">
+              
+              <p>
+                <input id="toggle-1" class="checkbox-toggle checkbox-toggle-round" type="checkbox" />
+                <label for="toggle-1" data-on="Female" data-off="Male" ></label>
+              </p>
+
+              <div id="waveformorigin"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     
-    <!-- <audio class="btn" controls></p></audio> -->
+    <div class="row mb-4 paragraph" id="paragraph<%= k %>">
+      
+      <div class="col-sm-2 text-right font-weight-bold">
+      </div>
+      <div class="data-source p-2 col-sm">
+        <p id="content<%= k %>" class="text-justify">
+          <%= read.content %>
+        </p>
+        <p>Duration: <span id="duration<%= k %>">0ms</span></p> 
+        <!-- <canvas id="myCanvas<%= k %>" width="280" height="200"></canvas> -->
+      </div>
+    </div>
+
+    <div class="row mb-4 record-audio d-none">
+      <div class="col-sm-2 text-right font-weight-bold">
+        Your record audio:
+      </div>
+      <div class="col-sm">
+        <div class="result-read rounded">
+          <div class="row">
+            <div class="col-sm-2 text-center">
+             
+              <!-- <div style="display: grid; width: max-content">
+                   <span class="your-record-audio-play fa fa-play-circle-o fa-4x"></span>
+                   <span class="your-record-audio-pause fa fa-pause-circle-o fa-4x d-none"></span>
+                   <span id="timeRecord">00:00/00:00</span>
+              </div> -->
+              <p>
+                <audio id="player<%= k %>" controls></audio>
+              </p>
+            </div>
+            <div class="col-sm-10">
+              
+              <div id="waveform"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4 record-audio d-none">
+      <div class="col-sm-2 text-right font-weight-bold">
+        Your result:
+      </div>
+      <div class="col-sm">
+        <p id="result<%= k %>" class="text-justify"></p>
+        <div id="output<%= k %>"></div>
+      </div>
+    </div>
+    <div class="row mb-4 record-audio d-none">
+      <div class="col-sm-2 text-right font-weight-bold">
+       Accuracy of your reading:
+      </div>
+      <div class="col-sm" style="display: flex">
+        <meter id="accuracy<%= k %>"></meter>
+        <p id="text_accuracy<%= k %>"><strong></strong></p>
+      </div>
+    </div>
+  </div>
+  <% k = k + 1%>
+  <% end %>
 </div>
-    
-                                                                                                  
-<div id='output'></div>
-<p id="demo" >Click me to change my HTML content (innerHTML).</p>
+<div class="action-bottom">
+  <div class="float-right">
+    <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart">START</button>
+    <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnStop">STOP</button>
+    <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnAgain">AGAIN</button>
+    <button class="edit btn bg-blue-en4all text-light d-none" id="btnNext">NEXT</button>
+  </div>
+</div>
