@@ -1,6 +1,7 @@
 <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
 <script src='//code.responsivevoice.org/responsivevoice.js'></script>
+
 <%= render 'home/header' %>
 
 <div class="read-alouds container bg-white shadow p-2">
@@ -14,6 +15,7 @@
     </div>
   </div>
   <% ReadAloud.all.each do |read| %>
+ 
   <div style="display: none; width: 80%; margin: auto" id="next-read<%= k %>">
     <div class="row mb-4 origin-audio d-none">
       <div class="col-sm-2 text-right font-weight-bold">
@@ -47,7 +49,7 @@
           <%= read.content %>
         </p>
         <p>Duration: <span id="duration<%= k %>">0ms</span></p> 
-        <canvas id="myCanvas<%= k %>" width="280" height="200"></canvas>
+        <!-- <canvas id="myCanvas<%= k %>" width="280" height="200"></canvas> -->
       </div>
     </div>
 
@@ -86,11 +88,19 @@
         <div id="output<%= k %>"></div>
       </div>
     </div>
+    <div class="row mb-4 record-audio d-none">
+      <div class="col-sm-2 text-right font-weight-bold">
+       Accuracy of your reading:
+      </div>
+      <div class="col-sm" style="display: flex">
+        <meter id="accuracy<%= k %>"></meter>
+        <p id="text_accuracy<%= k %>"><strong></strong></p>
+      </div>
+    </div>
   </div>
   <% k = k + 1%>
   <% end %>
 </div>
-
 <div class="action-bottom">
   <div class="float-right">
     <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart">START</button>
