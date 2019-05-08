@@ -87,7 +87,7 @@
                 <audio id="player<%= k %>" controls></audio>
               </p>
             </div>
-            <div class="col-sm-10">
+            <div class="col-sm-10 d-none">
               
               <div id="waveform"></div>
             </div>
@@ -100,6 +100,7 @@
         Your result:
       </div>
       <div class="final-data p-2 col-sm">
+        <p id="result<%= k %>" class="text-justify d-none"></p>
         <p id="output<%= k %>" class="text-justify"></p>
       </div>
     </div>

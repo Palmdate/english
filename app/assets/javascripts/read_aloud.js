@@ -6,7 +6,7 @@ $(document).on('turbolinks:load', function() {
   var result = document.getElementById('result0');
   var speechRecognizer;
 
-  
+
   // Play, download recoring
   function WzRecorder(config) {
     config = config || {};
@@ -310,7 +310,7 @@ $(document).on('turbolinks:load', function() {
   // Play, download recoring
 
   // Speech to text
-  
+
   function startConverting () {
 
     if('webkitSpeechRecognition' in window) {
@@ -343,12 +343,12 @@ $(document).on('turbolinks:load', function() {
     // }
   };
   function stopConverting () {
-     if('webkitSpeechRecognition' in window) {
-       
-       speechRecognizer.stop();
-       speechRecognizer.continuous = false;
-     }
-    
+    if('webkitSpeechRecognition' in window) {
+
+      speechRecognizer.stop();
+      speechRecognizer.continuous = false;
+    }
+
   };
   // ------------Speech to text
 
@@ -369,14 +369,14 @@ $(document).on('turbolinks:load', function() {
 
   $('#btnNext').click(function() {
     // next_Record();
-    
-    
+
+
     $('#next-read' + (readCounter - 1)).hide();
     $('#next-read' + readCounter).show();
 
     result = document.getElementById('result' + readCounter);
     readCounter ++;
-   
+
     reload_Record();
   });
 
@@ -385,10 +385,12 @@ $(document).on('turbolinks:load', function() {
     newHTML = $("p#content" + (readCounter - 1)).text();
     // Diff HTML strings
     let output = htmldiff(originalHTML, newHTML);
-
-    // Show HTML diff output as HTML
     
+    // Show HTML diff output as HTML
+    let similarity = compareTwoStrings(originalHTML, newHTML);
     document.getElementById("output" + (readCounter - 1)).innerHTML = output;
+    $("#accuracy" + (readCounter - 1)).attr('value', similarity);
+    document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
   }
 
   // Text to speech
@@ -435,7 +437,7 @@ $(document).on('turbolinks:load', function() {
 
   var wavesurferorigin;
   var wavesurfer;
-  
+
   wavesurferorigin = WaveSurfer.create({
     container: '#waveformorigin',
     waveColor: 'gray',
@@ -543,9 +545,9 @@ $(document).on('turbolinks:load', function() {
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
-      
+
       $('#timePrepaire').text(minutes + ":" + seconds);
-      
+
       document.querySelector('#timePrepaire').textContent = minutes + ":" + seconds;
 
 
@@ -571,10 +573,10 @@ $(document).on('turbolinks:load', function() {
 
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
-      
+
       percent = 100 - ((timer/40)*100);
 
-      
+
       $('#timeProgess').text( minutes + ":" + seconds );
 
       $('#time-progess-bar').width(percent + '%');
@@ -624,7 +626,7 @@ $(document).on('turbolinks:load', function() {
     clearInterval(pre);
     clearInterval(post);
     startTimerPost();
-    
+
   };
 
   function stop_Record(){
@@ -683,7 +685,7 @@ $(document).on('turbolinks:load', function() {
     // $('#paragrap' + (readCounter - 1)).hide();
     // $('#paragrap' + readCounter).show();
     readCounter ++;
-    
+
     clearInterval(pre);
     clearInterval(post);
 
@@ -699,7 +701,7 @@ $(document).on('turbolinks:load', function() {
   function init() {
     clearInterval(pre);
     clearInterval(post);
-    
+
     timePre = 40;
     timePost = 40;
 
