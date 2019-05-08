@@ -1,7 +1,8 @@
 # coding: utf-8
 Rails.application.routes.draw do
   get 'build/index'
-  resources :read_alouds
+  resources :read_alouds, only: [:index, :chart]
+  get 'read_alouds/chart'
   get 'course/create'
   post 'course/store'
   resources :course, only: [:edit, :update, :destroy]

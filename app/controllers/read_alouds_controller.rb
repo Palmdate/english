@@ -3,6 +3,9 @@ class ReadAloudsController < ApplicationController
 
   # GET /read_alouds
   # GET /read_alouds.json
+  def chart
+  end
+  
   def index
     @read_alouds = ReadAloud.all
   end
