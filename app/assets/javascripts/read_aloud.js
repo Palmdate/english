@@ -301,7 +301,7 @@ $(document).on('turbolinks:load', function() {
       document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
     },
     onRecording: function(milliseconds) {
-      document.getElementById("duration" + (readCounter - 1)).innerText = milliseconds + "ms";
+      //document.getElementById("duration" + (readCounter - 1)).innerText = milliseconds + "ms";
     },
     visualizer: {
       element: document.getElementById('myCanvas' + (readCounter - 1))
@@ -355,30 +355,18 @@ $(document).on('turbolinks:load', function() {
 
   // main function
   $('#btnStart').click(function() {
-    
     start_Record();
     startConverting();
-
   });
+
   $('#btnStop').click(function() {
     stop_Record();
-
-    let originalHTML = $('#result'+ (readCounter - 1)).text();
-    newHTML = $("p#content" + (readCounter - 1)).text();
-    // Diff HTML strings
-    let output = htmldiff(originalHTML, newHTML);
-    // Count % matching
-    let similarity = compareTwoStrings(originalHTML, newHTML);
-
-    // Show HTML diff output as HTML
-    document.getElementById("output" + (readCounter - 1)).innerHTML = output;
-    $("#accuracy" + (readCounter - 1)).attr('value', similarity);
-    document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
   });
-  
+
   $('#btnAgain').click(function() {
     reload_Record();
   });
+
   $('#btnNext').click(function() {
     // next_Record();
     
@@ -389,9 +377,20 @@ $(document).on('turbolinks:load', function() {
     result = document.getElementById('result' + readCounter);
     readCounter ++;
    
-    reload_Record();    
+    reload_Record();
   });
-  
+
+  function CompareResult() {
+    let originalHTML = $('#result'+ (readCounter - 1)).text();
+    newHTML = $("p#content" + (readCounter - 1)).text();
+    // Diff HTML strings
+    let output = htmldiff(originalHTML, newHTML);
+
+    // Show HTML diff output as HTML
+    
+    document.getElementById("output" + (readCounter - 1)).innerHTML = output;
+  }
+
   // Text to speech
   // var utterance = new window.SpeechSynthesisUtterance();
   // utterance.volume = 1;
@@ -434,15 +433,22 @@ $(document).on('turbolinks:load', function() {
     return minutes + ':' + seconds;
   };
 
-  // var wavesurferorigin;
-  // var wavesurfer;
+  var wavesurferorigin;
+  var wavesurfer;
+  
+  wavesurferorigin = WaveSurfer.create({
+    container: '#waveformorigin',
+    waveColor: 'gray',
+    progressColor: '#003359',
+    height: 50
+  });
 
-  // wavesurferorigin = WaveSurfer.create({
-  //   container: '#waveformorigin',
-  //   waveColor: 'gray',
-  //   progressColor: '#003359',
-  //   height: 50
-  // });
+  wavesurferorigin = WaveSurfer.create({
+    container: '#waveformorigin',
+    waveColor: 'gray',
+    progressColor: '#003359',
+    height: 50
+  });
 
 
   // $(".your-record-audio-origin-play").on('click', function(){
@@ -537,7 +543,11 @@ $(document).on('turbolinks:load', function() {
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
+      
       $('#timePrepaire').text(minutes + ":" + seconds);
+      
+      document.querySelector('#timePrepaire').textContent = minutes + ":" + seconds;
+
 
       if (--timer < 0) {
         $("#time-prepaire").addClass("d-none");
@@ -561,8 +571,16 @@ $(document).on('turbolinks:load', function() {
 
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
+      
+      percent = 100 - ((timer/40)*100);
 
+      
       $('#timeProgess').text( minutes + ":" + seconds );
+
+      $('#time-progess-bar').width(percent + '%');
+      $('#myCanvas' + (readCounter - 1)).removeClass("d-none");
+      //document.querySelector('#timeProgess').textContent = minutes + ":" + seconds;
+
 
       if (--timer < 0) {
         $("#time-prepaire").addClass("d-none");
@@ -575,6 +593,10 @@ $(document).on('turbolinks:load', function() {
 
         $('.origin-audio').removeClass("d-none");
         $('.record-audio').removeClass("d-none");
+
+        $('#myCanvas' + (readCounter - 1)).addClass("d-none");
+
+        CompareResult();
 
         // wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
         // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
@@ -589,12 +611,13 @@ $(document).on('turbolinks:load', function() {
   function start_Record(){
     recorder.start();
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     $('#btnStart').addClass("d-none");
     $('#btnStop').removeClass("d-none");
 
     $('#time-prepaire').addClass("d-none");
+    $('#time-prepaire-bar').width('100%');
     $('#time-progess').removeClass("d-none");
     $('#time-out').addClass("d-none");
 
@@ -606,7 +629,7 @@ $(document).on('turbolinks:load', function() {
 
   function stop_Record(){
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     $('#btnStop').addClass("d-none");
 
@@ -615,23 +638,25 @@ $(document).on('turbolinks:load', function() {
 
     $('#time-prepaire').addClass("d-none");
     $('#time-progess').addClass("d-none");
+    $('#time-progess-bar').width('0%');
     $('#time-out').removeClass("d-none");
 
     $('.origin-audio').removeClass("d-none");
     $('.record-audio').removeClass("d-none");
 
-    // wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+    // wavesurferorigin.load(speechSynthesis.speak(words));
     // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+
+    CompareResult();
 
     clearInterval(pre);
     clearInterval(post);
     recorder.stop();
-
   };
 
   function reload_Record() {
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     $('#btnAgain').addClass("d-none");
     $('#btnNext').addClass("d-none");
@@ -666,7 +691,7 @@ $(document).on('turbolinks:load', function() {
     timePost = 40;
 
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     startTimerPre();
   };
@@ -674,12 +699,15 @@ $(document).on('turbolinks:load', function() {
   function init() {
     clearInterval(pre);
     clearInterval(post);
-
+    
     timePre = 40;
     timePost = 40;
 
     $('#timePrepaire').text( "00:" + timePre );
     $('#timeProgess').text( "00:" + timePost);
+
+    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     startTimerPre();
   };
