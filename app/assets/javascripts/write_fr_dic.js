@@ -12,7 +12,7 @@ $(document).on('turbolinks:load', function() {
     clearInterval(interval1);
 
     interval1 = setInterval( function() {
-      var timer = $('.clock').html();
+      var timer = $('.clock').text();
       timer = timer.split(':');
       var minutes = timer[0];
       var seconds = timer[1];
@@ -28,7 +28,8 @@ $(document).on('turbolinks:load', function() {
 
       if (minutes == 0 && seconds == 0)
       {
-        $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false});
+       
+        // $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false});
         clearInterval(interval1);
       };
     }, 1000);
@@ -49,10 +50,13 @@ $(document).on('turbolinks:load', function() {
     $('.timer').text(timer);
     if (timer === 0) {
       Pause();
-      document.getElementById('timer-beep').play();
+      text_to_speech();
+      // document.getElementById('timer-beep').play();
       clearInterval(interval);
     }
   }), 1000);
+ 
+  
   $('.next-button').prop('disabled', true);
   $('.prev-button').prop('disabled', true);
   setTimeout((function() {
@@ -68,6 +72,10 @@ $(document).on('turbolinks:load', function() {
   };
   // Analyze click next, previous, finish button
   $('.next-button').click(function() {
+    senCounter ++;
+    $('.result-hatest').hide();
+    $('.audio').removeClass('fa-edit');
+    $('.audio').addClass('fa-play-circle-o');
     var current, next;
     current = $(this).parent();
     next = $(this).parent().next();
@@ -88,19 +96,40 @@ $(document).on('turbolinks:load', function() {
       $('.timer').text(timer);
       if (timer === 0) {
         Pause();
-        $('.timer-beep').get($('fieldset').index(next)).play();
+       
+        text_to_speech();
+        // $('.timer-beep').get($('fieldset').index(next)).play();
         clearInterval(interval);
       }
     }), 1000);
+    
   });
-
-  var senCouter;
+  
+  var senCounter = 1;
   // Text to Speech
   function text_to_speech(){
-    var words = new SpeechSynthesisUtterance( $("#content" + (senCounter - 1)).text() );
-    speechSynthesis.speak(words);
+    $('.audio').removeClass('fa-play-circle-o');
+    $('.audio').addClass('fa-edit');
+    var words = new SpeechSynthesisUtterance( $("#content" + senCounter).text() );
+    speechSynthesis.speak(words);    
   }
-  $('.audio').click(function() {
-    text_to_speech();
+
+  function sentence_result(){
+    let originalHTML = document.getElementById('sens-content' + senCounter).value;
+    let newHTML = $("p#content" + senCounter).text();
+    // Diff HTML strings
+    let output = htmldiff(originalHTML, newHTML);
+    // Count % matching
+    let similarity = compareTwoStrings(originalHTML, newHTML);
+
+    // Show HTML diff output as HTML
+    document.getElementById("output").innerHTML = output;
+    $("#accuracy").attr('value', similarity);
+    document.getElementById("text_accuracy").innerHTML = (Math.round(similarity * 100)).toString() + "%";
+  }
+  
+  $('.infor').click(function() {
+    $('.result-hatest').show();
+    sentence_result();
   });
 });

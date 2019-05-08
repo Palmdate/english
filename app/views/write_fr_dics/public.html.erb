@@ -1,3 +1,4 @@
+<script src='/assets/write_fr_dic.js' type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -10,7 +11,7 @@
 <script src="//rawgit.com/amweiss/angular-diff-match-patch/v0.7.0/angular-diff-match-patch.js"></script>
 
 <%= render partial: 'home/header' %>
-
+<% k = 0 %>
 <div class="container bg-white shadow p-2">
   <div id="placement" class="text-center"><h1 class="clock countDown"></h1></div>
   <div class="panel panel-default">
@@ -18,7 +19,7 @@
     <!--form-content-->
     <form id="form-id">
       <!--Progressbar-->
-      <% k = 0 %>
+      
       <!-- Progress bar sentence -->
       <!-- <ul class='progress' style="height: 1.3rem;"> -->
         <!--   <li class="active"></li> -->
@@ -30,7 +31,7 @@
         <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
 
         <fieldset>
-          <h2 class='title'>Sentence <%= k = k + 1 %> / <%= @count %> </h2>
+          <h2 class='title'>Sentence <%= k = k + 1 %></h2>
           <h3 class='sub-title'>
             <div class="page-header">
 	            <span class="minutes">This audio will auto play after </span><span class="timer">05</span><span>s</span>
@@ -38,11 +39,11 @@
           </h3>
           
           <div class="page-header">
-            <input id="content<% k %>"><%= sens.result%></input>
+            <p id="content<%= k %>"><%= sens.result%></p>
             <span class="audio fa fa-play-circle-o fa-4x"></span>
           </div>
           <div class="md-form" data-ng-init="anyFunction()">
-            <textarea layout-fill id="sens-content<%= k - 1%>" class="left form-control p-4" rows="4"></textarea>
+            <textarea layout-fill id="sens-content<%= k %>" class="left form-control p-4" rows="4"></textarea>
             <h1 layout-fill id="sens-content-right" class="md-textarea right form-control" style="display: none;"><%= sens.result%></h1>
             
             <!-- Modal result-->
@@ -109,6 +110,16 @@
   </div>
 </div>
 <!-- Model errors -->
+<i class="infor fa fa-info-circle" style="font-size:36px"></i>
+<div class="result-hatest" style="display: none; padding: 5% 0 0 10%;">
+  <details open>
+    <summary>Overview</summary>
+
+    <div id="output"></div>
+    <meter id="accuracy"></meter>
+    <p id="text_accuracy"><strong></strong></p>
+  </details>
+</div>
 
 <script>
   
