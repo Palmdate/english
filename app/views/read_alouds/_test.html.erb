@@ -1,0 +1,32 @@
+<script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+<script src='http://code.responsivevoice.org/responsivevoice.js'></script>
+
+<div class="container" style="margin:3rem">
+    <p>
+        <button id=record class="btn btn-dark">Toggle recording</button>
+    </p>
+    <p>
+        Duration: <span id="duration">0ms</span>
+    </p>
+    <p>
+        <audio id="player" controls></audio>
+    </p>
+    <canvas id="myCanvas" width="280" height="200"></canvas>
+    <!-- Speech to text -->
+    <h3 align="center">Speech to text converter JavaScript</h3>
+	  <div id="result"></div>
+	  <button type="button" id="hatest""><i class="fa fa-microphone btn btn-danger" aria-hidden="true"></i></button>
+</div>
+
+<div id="wrapper"><div style="width: 80%; margin: 0 auto; font-size: 1.4em; line-height: 1.3em; font-family: Arial, Helvetica; color: gray;"><h2>Text to Speech Demo</h2><p style="width: 100%; font-size: .8em; line-height: .95em; color: black; text-align: left">Text entered below will be read aloud when the button is clicked / pressed.  Give it a try!  This works in iOS and Android... <br><br>so now I can use geoLocation to detect speed and if the user is driving I can read aloud new text content (json) from my web service.<br></p></div>
+    <textarea id="textbox">
+Hello user... You are in the matrix now.
+    </textarea>
+    
+    <!-- <audio class="btn" controls></p></audio> -->
+</div>
+    
+                                                                                                  
+<div id='output'></div>
+<p id="demo" >Click me to change my HTML content (innerHTML).</p>

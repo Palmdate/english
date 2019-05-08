@@ -1,19 +1,12 @@
 <%= render 'header' %>
 <div class="container bg-white shadow p-2">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Course</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Schedule</li>
-    </ol>
-  </nav>
   <div class="student-grade-table p-4">
       <% if current_user.id %>
         <% course = Course.where(user_id: current_user.id) %>
         <div class="row mb-4">
             <div class="col-6 col-md-1 font-weight-bold">DAY</div>
             <div class="col-6 col-md-4 font-weight-bold">SKILL</div>
-            <div class="col-6 col-md-2 font-weight-bold">QUALITY</div>
+            <div class="col-6 col-md-2 font-weight-bold">QUANTITY</div>
             <div class="col-6 col-md-2 font-weight-bold">STATUS</div>
             <div class="col-6 col-md-3 font-weight-bold">ACTIONS</div>
         </div>
