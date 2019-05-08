@@ -22,7 +22,7 @@
                       <div class="col-6 col-md-3">
                           <a class="edit btn-sm btn-warning" style="display: unset;color: white;"><span class="fa fa-pencil"></span></a>
                           <% if (c.skill == "Write From Dictation") %>
-                            <%= link_to '<span class="fa fa-tv"></span>'.html_safe, write_fr_dics_path(:audio => c.quality), :class => "test btn-sm btn-info", :style => "display: unset;color: white;"%>
+                            <%= link_to '<span class="fa fa-tv"></span>'.html_safe, write_fr_dics_path(:audio => c.quality), :class => "test btn-sm btn-info", :style => "display: unset;color: white;", :"data-turbolinks" => false %>
                           <% else %>
                             <a class="test btn-sm btn-info" style="display: unset;color: white;" href="#"><span class="fa fa-tv"></span></a>
                           <% end %>
