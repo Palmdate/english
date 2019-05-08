@@ -4,6 +4,8 @@ $(document).on('turbolinks:load', function() {
   $('#next-read0').show();
   var newHTML = $('p#content0').text();
   var result = document.getElementById('result0');
+  var speechRecognizer;
+
   
   // Play, download recoring
   function WzRecorder(config) {
@@ -53,7 +55,7 @@ $(document).on('turbolinks:load', function() {
         self.blob = blob;
         config.onRecordingStop && config.onRecordingStop(blob);
       });
-      // stopConverting();
+      stopConverting();
     };
 
     this.upload = function(url, params, callback) {
@@ -312,8 +314,7 @@ $(document).on('turbolinks:load', function() {
   function startConverting () {
 
     if('webkitSpeechRecognition' in window) {
-      var speechRecognizer = new webkitSpeechRecognition();
-      speechRecognizer.stop();
+      speechRecognizer = new webkitSpeechRecognition();
       speechRecognizer.continuous = true;
       speechRecognizer.interimResults = true;
       speechRecognizer.lang = 'en-US';
@@ -337,17 +338,18 @@ $(document).on('turbolinks:load', function() {
       speechRecognizer.onerror = function (event) {
 
       };
-    }else {
-      confirm("Please set: \n media.webspeech.recognition.enable in about:config \n to get all feature of web");
-    }
+    }// else {
+    //   confirm("Please set: \n media.webspeech.recognition.enable in about:config \n to get all feature of web");
+    // }
   };
-  // function stopConverting () {
-  //    if('webkitSpeechRecognition' in window) {
-      
-  //      speechRecognizer.stop();
-  //      speechRecognizer.continuous = false;
-  //    }
-  // };
+  function stopConverting () {
+     if('webkitSpeechRecognition' in window) {
+       
+       speechRecognizer.stop();
+       speechRecognizer.continuous = false;
+     }
+    
+  };
   // ------------Speech to text
 
 
@@ -365,11 +367,15 @@ $(document).on('turbolinks:load', function() {
     newHTML = $("p#content" + (readCounter - 1)).text();
     // Diff HTML strings
     let output = htmldiff(originalHTML, newHTML);
+    // Count % matching
+    let similarity = compareTwoStrings(originalHTML, newHTML);
 
     // Show HTML diff output as HTML
-    
-    document.getElementById("output" + (readCounter - 1)).innerHTML = output; 
+    document.getElementById("output" + (readCounter - 1)).innerHTML = output;
+    $("#accuracy" + (readCounter - 1)).attr('value', similarity);
+    document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
   });
+  
   $('#btnAgain').click(function() {
     reload_Record();
   });
@@ -379,25 +385,20 @@ $(document).on('turbolinks:load', function() {
     
     $('#next-read' + (readCounter - 1)).hide();
     $('#next-read' + readCounter).show();
-    // $("p#content" + (readCounter - 1)).hide();
-    // $("p#content" + readCounter).show();
-    // $('#paragrap' + (readCounter - 1)).hide();
-    // $('#paragrap' + readCounter).show();
 
     result = document.getElementById('result' + readCounter);
     readCounter ++;
    
-    reload_Record();
-    
-    
+    reload_Record();    
   });
+  
   // Text to speech
-  var utterance = new window.SpeechSynthesisUtterance();
-  utterance.volume = 1;
-  utterance.rate = 1;
-  utterance.pitch = 1;
-  utterance.lang = 'en-US';
-  var words = new SpeechSynthesisUtterance( $("#textbox").val() );
+  // var utterance = new window.SpeechSynthesisUtterance();
+  // utterance.volume = 1;
+  // utterance.rate = 1;
+  // utterance.pitch = 1;
+  // utterance.lang = 'en-US';
+  // var words = new SpeechSynthesisUtterance( $("#textbox").val() );
 
 
   // document.getElementById("btn")
@@ -417,33 +418,6 @@ $(document).on('turbolinks:load', function() {
       speechSynthesis.cancel();
     }
   });
-  // let originalHTML = `
-  //   <div>
-  //   <h1>Article Title</h1>
-  //   <p>This is a rudimentary demo of showing a blog post's most recent edit history as it renders.</p>
-  //   <p><a href="http://example.com">This is a link test.</a></p>
-  //   </div>
-  //   `;
-
-  //   let newHTML = `
-  // <div>
-  // <h1>Article Title &ndash; Revision 2</h1>
-  // <p>This is a simple demo showing a blog post's most recent editing history.</p>
-  // <p><a href="http://example.com">This is a sample link.</a></p>
-  // </div>
-  // `;
-  function result () {
-    let originalHTML = $('#result').text();
-    
-    // Diff HTML strings
-    let output = htmldiff(originalHTML, newHTML);
-
-    // Show HTML diff output as HTML
-   
-    document.getElementById("output").innerHTML = output; 
-    
-  };
-  
 
   // text to speech
   // cong
@@ -563,7 +537,7 @@ $(document).on('turbolinks:load', function() {
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
-      document.querySelector('#timePrepaire').textContent = minutes + ":" + seconds;
+      $('#timePrepaire').text(minutes + ":" + seconds);
 
       if (--timer < 0) {
         $("#time-prepaire").addClass("d-none");
@@ -588,7 +562,7 @@ $(document).on('turbolinks:load', function() {
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
-      document.querySelector('#timeProgess').textContent = minutes + ":" + seconds;
+      $('#timeProgess').text( minutes + ":" + seconds );
 
       if (--timer < 0) {
         $("#time-prepaire").addClass("d-none");
@@ -704,12 +678,10 @@ $(document).on('turbolinks:load', function() {
     timePre = 40;
     timePost = 40;
 
-    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    $('#timePrepaire').text( "00:" + timePre );
+    $('#timeProgess').text( "00:" + timePost);
 
     startTimerPre();
   };
   init();
 });
-
-
