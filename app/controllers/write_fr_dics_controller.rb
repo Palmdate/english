@@ -8,6 +8,11 @@ class WriteFrDicsController < ApplicationController
     @count = params[:audio]
   end
 
+  def public
+    @write_fr_dics_result = WriteFrDic.select(:id, :result)
+    @count = params[:audio]
+  end
+
   # GET /write_fr_dics/1
   # GET /write_fr_dics/1.json
   def show
@@ -64,7 +69,7 @@ class WriteFrDicsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_write_fr_dic

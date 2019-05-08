@@ -1,0 +1,176 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-animate.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-aria.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js"></script>
+<script src="//rawgit.com/google/diff-match-patch/master/javascript/diff_match_patch.js"></script>
+<script src="//rawgit.com/amweiss/angular-diff-match-patch/v0.7.0/angular-diff-match-patch.js"></script>
+
+<%= render partial: 'home/header' %>
+
+<div class="container bg-white shadow p-2">
+  <div id="placement" class="text-center"><h1 class="clock countDown"></h1></div>
+  <div class="panel panel-default">
+    
+    <!--form-content-->
+    <form id="form-id">
+      <!--Progressbar-->
+      <% k = 0 %>
+      <!-- Progress bar sentence -->
+      <!-- <ul class='progress' style="height: 1.3rem;"> -->
+        <!--   <li class="active"></li> -->
+        <!--   <% (2..@count.to_i). each do |sentence| %> -->
+        <!--   <li><% sentence %></li> -->
+        <!--   <% end %> -->
+        <!-- </ul> -->
+      <div id="ng-app" ng-app="diffDemo" layout="column" flex ng-controller="diffCtrl">
+        <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
+
+        <fieldset>
+          <h2 class='title'>Sentence <%= k = k + 1 %> / <%= @count %> </h2>
+          <h3 class='sub-title'>
+            <div class="page-header">
+	            <span class="minutes">This audio will auto play after </span><span class="timer">05</span><span>s</span>
+            </div>
+          </h3>
+          
+          <div class="page-header">
+            <input id="content<% k %>"><%= sens.result%></input>
+            <span class="audio fa fa-play-circle-o fa-4x"></span>
+          </div>
+          <div class="md-form" data-ng-init="anyFunction()">
+            <textarea layout-fill id="sens-content<%= k - 1%>" class="left form-control p-4" rows="4"></textarea>
+            <h1 layout-fill id="sens-content-right" class="md-textarea right form-control" style="display: none;"><%= sens.result%></h1>
+            
+            <!-- Modal result-->
+            <div class="modal fade" id="myModal<%= k %>" role="dialog" >
+              <div class="modal-dialog" role="document">
+                <!-- Modal result-->
+                <div class="modal-content" >
+                  <div class="modal-header bg-blue-en4all">
+                    <h5 class="modal-title" id="exampleModalLabel">YOUR RESULT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" style="padding:40px 50px;">
+                    <form role="form">
+                      <div class="form-group" >
+                        <ol >
+                          <li ng-repeat="x in products"><pre class="textdiff" processing-diff left-obj="x.left" right-obj="x.right" options="options"></pre></li>
+                          
+                        </ol>
+                      </div>                        
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <%= link_to 'Schedule'.html_safe, home_course_path,  class: "btn btn-secondary pull-left mr-2", style: "color:white;"%>
+                    <button type="button" class="btn bg-blue-en4all text-light pull-left" data-dismiss="modal" ng-click="clear()" onclick="location.reload()">Listen again</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>              
+          </div>
+          <!-- Modl result -->
+          
+          <% if (k == @count.to_i) %>
+          <input type='button' value='Finish' ng-click="result()" class="custom-button finish" onclick="$('#myModal<%= k %>').modal({backdrop: 'static', keyboard: false})">
+          <% else %>
+          <input type='button' name='next' class='next-button custom-button' value="Next">
+          <% end %>
+        </fieldset>
+        <% end %>
+    </form>
+    <!-- end form -->
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Model errors -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:red;">
+        <h5 class="modal-title" id="exampleModalLongTitle">TIMEOUT</h5>
+      </div>
+      <div class="modal-body">
+        You didn't finished this test!!!
+        Please chosse do this again or back to course
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="clear()" onclick="location.reload()"><span class="fa fa-rotate-left"></span></button>
+        <%= link_to '<span class="fa fa-align-justify"></span>'.html_safe, home_course_path,  class: "btn btn-secondary pull-left", style: "color:white;"%>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Model errors -->
+
+<script>
+  
+  
+  var app = angular.module('diffDemo', ['ngMaterial', 'diff-match-patch']);
+  app.config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+      .primaryPalette('indigo')
+      .accentPalette('blue');
+  });
+  
+  app.controller('diffCtrl', ['$scope', function($scope) {
+    
+    $scope.anyFunction = function(){
+      
+      $scope.left = "";
+      $scope.right = "";
+      
+      $scope.options = {
+        editCost: 4,
+        interLineDiff: true,
+        ignoreTrailingNewLines: true,
+        attrs: {
+          insert: {
+            'data-attr': 'insert',
+            'class': 'insertion'
+          },
+          delete: {
+            'data-attr': 'delete'
+          },
+          equal: {
+            'data-attr': 'equal'
+          }
+        }
+      };
+      
+    };
+    
+    $scope.clear = function() {
+      $scope.products = [];
+       $('fieldset').each(function(i) {
+         document.getElementById('sens-content'+ i).value = ""
+      });
+    };
+
+    $scope.result = function() {
+      $scope.products = [];
+      $('fieldset').each(function(i) {
+        $scope.addMe1 = document.getElementById('sens-content'+ i).value;
+        
+        $scope.addMe2 = $('.right')[i].innerText;
+
+        $scope.products.push({"left":$scope.addMe1, "right":$scope.addMe2});
+        
+      });
+      
+    };
+    
+  }]);
+
+  
+
+</script>
+
+
