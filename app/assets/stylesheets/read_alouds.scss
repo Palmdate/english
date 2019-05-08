@@ -306,9 +306,12 @@
     }
 }
 
-.data-source {
+.data-source,
+.final-data {
     p{
         font-size: 1.4em;
+        font-family: initial;
+        background-color: none;
     }
 }
 
@@ -455,6 +458,7 @@ del {
   color: #555;
 }
 
+
 input.checkbox-toggle {
   position: absolute;
   left: -9999px;
@@ -574,3 +578,9 @@ input.checkbox-toggle-round-flat:checked + label:after {
   margin-left: 48px;
   background-color: #fbb6c2;
 }
+
+.progress{
+  margin-bottom: 0 !important;
+  width: 250px;
+}
+
