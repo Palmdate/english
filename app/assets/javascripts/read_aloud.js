@@ -5,6 +5,7 @@ $(document).on('turbolinks:load', function() {
   var newHTML = $('p#content0').text();
   var result = document.getElementById('result0');
   var speechRecognizer;
+  var chart_sent, chart_rate;
 
 
   // Play, download recoring
@@ -370,7 +371,7 @@ $(document).on('turbolinks:load', function() {
   $('#btnNext').click(function() {
     // next_Record();
 
-
+    onReceive(chart_rate, chart_sent);
     $('#next-read' + (readCounter - 1)).hide();
     $('#next-read' + readCounter).show();
 
@@ -379,31 +380,41 @@ $(document).on('turbolinks:load', function() {
 
     reload_Record();
   });
-
+  var name;
   function CompareResult() {
     let originalHTML = $('#result'+ (readCounter - 1)).text();
     newHTML = $("p#content" + (readCounter - 1)).text();
+    sentence = Number($("p#read_id" + (readCounter - 1)).text());
     // Diff HTML strings
     let output = htmldiff(originalHTML, newHTML);
-    
+    $('#accuracy0').val(name);
     // Show HTML diff output as HTML
     let similarity = compareTwoStrings(originalHTML, newHTML);
+
     document.getElementById("output" + (readCounter - 1)).innerHTML = output;
     $("#accuracy" + (readCounter - 1)).attr('value', similarity);
     document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
+    get_data_chart(Math.round(similarity * 100), sentence);
   }
+  // get data for charts
+  function get_data_chart(rate, sentence){
 
-  // Text to speech
-  // var utterance = new window.SpeechSynthesisUtterance();
-  // utterance.volume = 1;
-  // utterance.rate = 1;
-  // utterance.pitch = 1;
-  // utterance.lang = 'en-US';
-  // var words = new SpeechSynthesisUtterance( $("#textbox").val() );
-
-
-  // document.getElementById("btn")
-
+    chart_rate = rate;
+    chart_sent = sentence;
+  }
+  
+  function onReceive(rate, sentence){
+    $.ajax({
+      url: "/read_alouds/chart", // Route to the Script Controller method
+      type: "GET",
+      dataType: "html",
+      data: { rate: rate,  // This goes to Controller in params hash, i.e. params[:file_name]
+              sentence: sentence
+            }
+    });
+  }
+  
+  // ---------------------------
   $('span.la').on('click', function(){
     if ($('span.la').hasClass('fa-play-circle-o'))
     {

@@ -32,5 +32,5 @@ class User < ApplicationRecord
   validates :password, confirmation: true
   has_secure_password
   has_many :courses, dependent: :destroy
-
+  has_many :read_aloud_charts, dependent: :destroy
 end

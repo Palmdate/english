@@ -1,7 +1,7 @@
 <%= render 'home/header' %>
 <div class="read-alouds container bg-white shadow p-2">
   <div class="can-toggle">
-    <input id="toggle-chart" type="checkbox" onchange="toggleCheckbox()">
+    <input id="toggle-chart" type="checkbox" onchange="toggleCheckbox() checked">
     <label for="toggle-chart">
       <div class="can-toggle__switch" data-checked="Today" data-unchecked="All"></div>
       <div class="can-toggle__label-text"></div>
@@ -39,21 +39,29 @@
 
   function showTodayChart() {
     var ctx = document.getElementById('todayChart').getContext('2d');
+    var list_rate = '<%= get_list_rate() %>';
+    var list_sent = '<%= get_list_sentence() %>';
+
     todayChart = new Chart(ctx, {
       // The type of chart we want to create
       type: 'bar',
 
       // The data for our dataset
       data: {
-        labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
-                 '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-                ],
+        // labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+        //          '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+        //         ],
+        // labels: (JSON.parse(list_sent)).map(String),
+        labels: JSON.parse(list_sent.replace(/&quot;/g,'"')),
+
         datasets: [
           // Jun
           {
-            data: [50, 55, 56, 58, 60, 55, 60, 55, 54, 58, 
-                   59, 53, 53, 55, 60, 65, 55, 54, 53, 52
-                  ],
+            // data: [50, 55, 56, 58, 60, 55, 60, 55, 54, 58, 
+            //        59, 53, 53, 55, 60, 65, 55, 54, 53, 52
+            //       ],
+            label: "Accuracy (%)",
+            data: JSON.parse(list_rate),
             backgroundColor: [
               'rgba(95, 192, 84, 0.2)',
               'rgba(95, 192, 84, 0.2)',
@@ -265,6 +273,10 @@
   }
 
   $(document).ready(function() {
-    showAllChart();  
+    // showAllChart();
+    $("#allChart").addClass("d-none");
+    $("#todayChart").removeClass("d-none");
+    
+    showTodayChart();
   });
 </script>

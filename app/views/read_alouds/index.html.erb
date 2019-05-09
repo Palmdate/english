@@ -66,6 +66,7 @@
         <p id="content<%= k %>" class="text-justify">
           <%= read.content %>
         </p>
+        <p id="read_id<%= k %>"class="d-none"><%= read.id %></p>
       </div>
     </div>
 
@@ -117,6 +118,8 @@
   <% k = k + 1%>
   <% end %>
 </div>
+
+<%= @similarity%>
 <div class="action-bottom">
   <div class="float-right">
     <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart">START</button>

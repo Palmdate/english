@@ -4,6 +4,10 @@ class ReadAloudsController < ApplicationController
   # GET /read_alouds
   # GET /read_alouds.json
   def chart
+    unless params[:rate] == nil
+      ha = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence])
+      ha.save!
+    end
   end
   
   def index
