@@ -5,8 +5,6 @@ $(document).on('turbolinks:load', function() {
   var newHTML = $('p#content0').text();
   var result = document.getElementById('result0');
   var speechRecognizer;
-  var chart_sent, chart_rate;
-
 
   // Play, download recoring
   function WzRecorder(config) {
@@ -361,6 +359,7 @@ $(document).on('turbolinks:load', function() {
   });
 
   $('#btnStop').click(function() {
+    // onReceive(chart_rate, chart_sent);
     stop_Record();
   });
 
@@ -371,7 +370,7 @@ $(document).on('turbolinks:load', function() {
   $('#btnNext').click(function() {
     // next_Record();
 
-    onReceive(chart_rate, chart_sent);
+    
     $('#next-read' + (readCounter - 1)).hide();
     $('#next-read' + readCounter).show();
 
@@ -380,7 +379,7 @@ $(document).on('turbolinks:load', function() {
 
     reload_Record();
   });
-  var name;
+
   function CompareResult() {
     let originalHTML = $('#result'+ (readCounter - 1)).text();
     newHTML = $("p#content" + (readCounter - 1)).text();
@@ -394,15 +393,10 @@ $(document).on('turbolinks:load', function() {
     document.getElementById("output" + (readCounter - 1)).innerHTML = output;
     $("#accuracy" + (readCounter - 1)).attr('value', similarity);
     document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
-    get_data_chart(Math.round(similarity * 100), sentence);
+    onReceive(Math.round(similarity * 100), sentence);
   }
   // get data for charts
-  function get_data_chart(rate, sentence){
 
-    chart_rate = rate;
-    chart_sent = sentence;
-  }
-  
   function onReceive(rate, sentence){
     $.ajax({
       url: "/read_alouds/chart", // Route to the Script Controller method

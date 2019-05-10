@@ -4,9 +4,14 @@ class ReadAloudsController < ApplicationController
   # GET /read_alouds
   # GET /read_alouds.json
   def chart
-    unless params[:rate] == nil
-      ha = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence])
-      ha.save!
+    last_result = ReadAloudChart.where(user_id:current_user.id).order('updated_at DESC').first
+    if last_result != nil && last_result.sentence.to_s == params[:sentence]
+      return last_result.update(:rate => params[:rate])
+    else
+      unless params[:rate] == nil
+        result = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence])
+        result.save!
+      end
     end
   end
   
