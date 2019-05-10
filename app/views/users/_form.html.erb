@@ -3,7 +3,13 @@
 <% end %>
 <div class="container">
   <!-- Icon -->
+  
+  <!-- Tabs Titles -->
 
+  <!-- Icon -->
+  <div style="padding-left: 45%;">
+    <img src="https://img.icons8.com/clouds/100/000000/lock.png">
+  </div>
   <!-- Sign up Form -->
   <%= form_with(model: user, local: true) do |form| %>
   <div class="row mb-2">
@@ -21,10 +27,11 @@
   <div class="row mb-2">
     <div class="col-4">
       <label class="text-right">Password Confirm: <span class="text-danger">*</spanc</label>                                                                              </div>
-    <%= form.password_field :password_confirmation, required: true, id: "password_confirmation", class: "fadeIn third col-4", placeholder: "Password Confirmation", pattern: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password' : '');" %>
+                                                                                                                                                                          <%= form.password_field :password_confirmation, required: true, id: "password_confirmation", class: "fadeIn third col-4", placeholder: "Password Confirmation", pattern: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password' : '');" %>
   </div>
   <div class="mt-2 mb-2 text-center">
     <%= form.submit 'Sign Up', class: 'btn bg-blue-en4all text-light' %>
   </div>
   <% end %>
+
 </div>
