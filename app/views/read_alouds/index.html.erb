@@ -2,7 +2,7 @@
 <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
 <script src='//code.responsivevoice.org/responsivevoice.js'></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://unpkg.com/wavesurfer.js"></script>
 
 <%= render 'home/header' %>
@@ -35,10 +35,13 @@
     <div class="row mb-4 origin-audio d-none">
       <div class="col-sm-2 text-right font-weight-bold">
         Origin audio:
-        <p>
-          <input id="toggle-1" class="checkbox-toggle checkbox-toggle-round" type="checkbox" />
-          <label for="toggle-1" data-on="Female" data-off="Male" ></label>
-        </p>
+        <div class="can-toggle mt-4">
+          <input id="toggle-voice-<%= k %>" type="checkbox">
+          <label for="toggle-voice-<%= k %>">
+            <div class="can-toggle__switch" data-checked="Female" data-unchecked="Male"></div>
+            <div class="can-toggle__label-text"></div>
+          </label>
+        </div>
       </div>
       <div class="col-sm">
         <div class="result-read rounded">
@@ -79,18 +82,15 @@
           <div class="row">
             <div class="col-sm-2 text-center">
              
-              <!-- <div style="display: grid; width: max-content">
+              <div style="display: grid; width: max-content">
                    <span class="your-record-audio-play fa fa-play-circle-o fa-4x"></span>
                    <span class="your-record-audio-pause fa fa-pause-circle-o fa-4x d-none"></span>
-                   <span id="timeRecord">00:00/00:00</span>
-              </div> -->
-              <p>
-                <audio id="player<%= k %>" controls></audio>
-              </p>
+                   <span id="timeRecord-<%= k %>">00:00/00:00</span>
+              </div>
+             
             </div>
-            <div class="col-sm-10 d-none">
-              
-              <div id="waveform"></div>
+            <div class="col-sm-10">
+              <div id="waveform-<%= k %>"></div>
             </div>
           </div>
         </div>
@@ -107,11 +107,14 @@
     </div>
     <div class="row mb-4 record-audio d-none">
       <div class="col-sm-2 text-right font-weight-bold">
-       Accuracy of your reading:
+       Pronounciation result:
       </div>
       <div class="col-sm" style="display: flex">
-        <meter id="accuracy<%= k %>"></meter>
-        <p id="text_accuracy<%= k %>"><strong></strong></p>
+      <div style="width: 150px; height: 150px">
+        <canvas id="accuracy<%= k %>"></canvas>
+      </div>
+        <meter id="accuracy<%= k %>" class="d-none"></meter>
+        <p id="text_accuracy<%= k %>" class="d-none"><strong></strong></p>
       </div>
     </div>
   </div>

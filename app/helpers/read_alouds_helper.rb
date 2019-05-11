@@ -16,8 +16,8 @@ module ReadAloudsHelper
     rates =  data.pluck(:rate)
     if rates.count < 30
       rates = [0] * (30 - rates.count) + rates
-    else
-      rates.order(':updated_at ASC').last(30)
+    #else
+     # rates.order(':updated_at ASC').last(30)
     end
   end
 
@@ -28,8 +28,8 @@ module ReadAloudsHelper
     sents =  data.pluck(:sentence).map{|x| "Sentence " + x.to_s}
     if sents.count < 30
       sents = ["No data"] * (30 - sents.count) + sents
-    else
-      sents.order(':updated_at ASC').last(30)
+    #else
+     # sents.order(':updated_at ASC').last(30)
     end
   end
   

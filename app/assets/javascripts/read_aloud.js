@@ -1,5 +1,8 @@
 $(document).on('turbolinks:load', function() {
   var readCounter = 1;
+  var linkRecord = "";
+  var wavesurfer;
+  var wavesurferorigin;
   // $('p#content0').show();
   $('#next-read0').show();
   var newHTML = $('p#content0').text();
@@ -126,7 +129,6 @@ $(document).on('turbolinks:load', function() {
     }
 
     function onMicrophoneError(e) {
-      console.log(e);
       alert("Unable to access the microphone.");
     }
 
@@ -297,7 +299,18 @@ $(document).on('turbolinks:load', function() {
 
   var recorder = new WzRecorder({
     onRecordingStop: function(blob) {
-      document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
+      linkRecord = URL.createObjectURL(blob);
+      $('#waveform-' + (readCounter - 1))[0].innerHTML = ''
+
+      wavesurfer = WaveSurfer.create({
+        container: '#waveform-' + (readCounter - 1),
+        waveColor: 'gray',
+        progressColor: '#003359',
+        height: 50
+      });
+
+      wavesurfer.load(linkRecord);
+      //document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
     },
     onRecording: function(milliseconds) {
       //document.getElementById("duration" + (readCounter - 1)).innerText = milliseconds + "ms";
@@ -393,6 +406,20 @@ $(document).on('turbolinks:load', function() {
     document.getElementById("output" + (readCounter - 1)).innerHTML = output;
     $("#accuracy" + (readCounter - 1)).attr('value', similarity);
     document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
+    var rs = (Math.round(similarity * 100));
+    var ctx = document.getElementById('accuracy' + (readCounter - 1)).getContext('2d');
+    var accuracyChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        datasets: [{
+            data: [rs, 100-rs],
+            backgroundColor: ['#57b0f3']
+        }],
+      },
+      options: {
+        cutoutPercentage: 50
+      }
+    });
     onReceive(Math.round(similarity * 100), sentence);
   }
   // get data for charts
@@ -415,6 +442,17 @@ $(document).on('turbolinks:load', function() {
       $('span.la').removeClass('fa-play-circle-o');
       $('span.la').addClass('fa-pause-circle-o');
       var words = new SpeechSynthesisUtterance( $("#content" + (readCounter - 1)).text() );
+
+      var checkVoice = document.getElementById("toggle-voice-" + (readCounter - 1)).checked;
+      var voiceMale = "Microsoft David Desktop - English (United States)";
+      var voiceFemale = "Microsoft Zira Desktop - English (United States)";
+
+      if(checkVoice){
+        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceFemale; })[0];
+      }
+      else{
+        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMale; })[0];
+      }
       speechSynthesis.speak(words);
     }
     else
@@ -424,7 +462,7 @@ $(document).on('turbolinks:load', function() {
       speechSynthesis.cancel();
     }
   });
-
+ 
   // text to speech
   // cong
   function toHHMMSS(seconds) {
@@ -440,27 +478,31 @@ $(document).on('turbolinks:load', function() {
     return minutes + ':' + seconds;
   };
 
-  var wavesurferorigin;
-  var wavesurfer;
-
-  wavesurferorigin = WaveSurfer.create({
-    container: '#waveformorigin',
-    waveColor: 'gray',
-    progressColor: '#003359',
-    height: 50
-  });
-
-  wavesurferorigin = WaveSurfer.create({
-    container: '#waveformorigin',
-    waveColor: 'gray',
-    progressColor: '#003359',
-    height: 50
-  });
-
-
   // $(".your-record-audio-origin-play").on('click', function(){
   //   $(".your-record-audio-origin-play").addClass("d-none");
   //   $(".your-record-audio-origin-pause").removeClass("d-none");
+  //   var words = new SpeechSynthesisUtterance( $("#content" + (readCounter - 1)).text() );
+
+  //   var checkVoice = document.getElementById("toggle-voice-" + (readCounter - 1)).checked;
+  //   var voiceMale = "Microsoft David Desktop - English (United States)";
+  //   var voiceFemale = "Microsoft Zira Desktop - English (United States)";
+
+  //   if(checkVoice){
+  //     words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceFemale; })[0];
+  //   }
+  //   else{
+  //     words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMale; })[0];
+  //   }
+  //   speechSynthesis.speak(words);
+
+  //   wavesurferorigin = WaveSurfer.create({
+  //     container: '#waveformorigin',
+  //     waveColor: 'gray',
+  //     progressColor: '#003359',
+  //     height: 50
+  //   });
+  //   wavesurferorigin.load(speechSynthesis.speak(words));
+
   //   var durationTimeOrigin = wavesurferorigin.getDuration();
 
   //   setInterval(function () {
@@ -493,48 +535,41 @@ $(document).on('turbolinks:load', function() {
   //   wavesurferorigin.playPause();
   // });
 
-  // wavesurfer = WaveSurfer.create({
-  //   container: '#waveform',
-  //   waveColor: 'gray',
-  //   progressColor: '#003359',
-  //   height: 50
-  // });
+  
+  $(".your-record-audio-play").on('click', function(){
+    $(".your-record-audio-play").addClass("d-none");
+    $(".your-record-audio-pause").removeClass("d-none");
 
+    var durationTime = wavesurfer.getDuration();
 
-  // $(".your-record-audio-play").on('click', function(){
-  //   $(".your-record-audio-play").addClass("d-none");
-  //   $(".your-record-audio-pause").removeClass("d-none");
+    setInterval(function () {
+      var currentTime = wavesurfer.getCurrentTime();
 
-  //   var durationTime = wavesurfer.getDuration();
+      document.querySelector('#timeRecord-' + (readCounter - 1)).textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
 
-  //   setInterval(function () {
-  //     var currentTime = wavesurfer.getCurrentTime();
+      if (currentTime == durationTime){
+        $(".your-record-audio-pause").addClass("d-none");
+        $(".your-record-audio-play").removeClass("d-none");
+      }
+    }, durationTime);
 
-  //     document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+    wavesurfer.playPause();
+  });
 
-  //     if (currentTime == durationTime){
-  //       $(".your-record-audio-pause").addClass("d-none");
-  //       $(".your-record-audio-play").removeClass("d-none");
-  //     }
-  //   }, durationTime);
+  $(".your-record-audio-pause").on('click', function(){
+    $(".your-record-audio-pause").addClass("d-none");
+    $(".your-record-audio-play").removeClass("d-none");
 
-  //   wavesurfer.playPause();
-  // });
+    var durationTime = wavesurfer.getDuration();
 
-  // $(".your-record-audio-pause").on('click', function(){
-  //   $(".your-record-audio-pause").addClass("d-none");
-  //   $(".your-record-audio-play").removeClass("d-none");
+    setInterval(function () {
+      var currentTime = wavesurfer.getCurrentTime();
 
-  //   var durationTime = wavesurfer.getDuration();
+      document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+    }, durationTime);
 
-  //   setInterval(function () {
-  //     var currentTime = wavesurfer.getCurrentTime();
-
-  //     document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
-  //   }, durationTime);
-
-  //   wavesurfer.playPause();
-  // });
+    wavesurfer.playPause();
+  });
 
   var timePre;
   var timePost;
@@ -604,7 +639,7 @@ $(document).on('turbolinks:load', function() {
         $('#myCanvas' + (readCounter - 1)).addClass("d-none");
 
         CompareResult();
-
+        
         // wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
         // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
 
@@ -676,30 +711,16 @@ $(document).on('turbolinks:load', function() {
     $('.origin-audio').addClass("d-none");
     $('.record-audio').addClass("d-none");
 
-    clearInterval(pre);
-    clearInterval(post);
-    startTimerPre();
-  };
+    $(".your-record-audio-pause").addClass("d-none");
+    $(".your-record-audio-play").removeClass("d-none");
 
-  function next_Record() {
-    newHTML = $("p#content" + readCounter).text();
-    $('#next-read' + (readCounter - 1)).hide();
-    $('#next-read' + readCounter).show();
-    // $("p#content" + (readCounter - 1)).hide();
-    // $("p#content" + readCounter).show();
-    // $('#paragrap' + (readCounter - 1)).hide();
-    // $('#paragrap' + readCounter).show();
-    readCounter ++;
+    $('span.la').removeClass('fa-pause-circle-o');
+    $('span.la').addClass('fa-play-circle-o');
+    
+    speechSynthesis.cancel();
 
     clearInterval(pre);
     clearInterval(post);
-
-    timePre = 40;
-    timePost = 40;
-
-    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
-
     startTimerPre();
   };
 
@@ -719,4 +740,12 @@ $(document).on('turbolinks:load', function() {
     startTimerPre();
   };
   init();
+
+  window.addEventListener("keydown", event => {
+    if (event.keyCode == 116) {
+      if(speechSynthesis.speaking){
+        speechSynthesis.cancel();
+      }
+    }
+  });
 });

@@ -83,4 +83,8 @@
   if(pathName === "/")
     //$("#home").addClass("d-none");
     $("#home").attr('disabled', 'disabled')
+
+  if(pathName !== "/read_alouds"){
+    speechSynthesis.cancel();
+  }
 </script>
