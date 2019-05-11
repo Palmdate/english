@@ -379,24 +379,44 @@ $(document).on('turbolinks:load', function() {
 
     reload_Record();
   });
+  // Function to calculate the similarity
 
+  function compare() {
+    $('#compare').find("ins").remove();
+    $('#compare').find("del").remove();
+    let result = $("#compare").text().split(' ');
+    let words =  result.filter(function(item) { return item !== "" });
+
+    return words.length;
+  }
+  
   function CompareResult() {
     let originalHTML = $('#result'+ (readCounter - 1)).text();
     newHTML = $("p#content" + (readCounter - 1)).text();
+    let length_ofnew = newHTML.split(' ').filter(function(item) { return item !== "" }).length;
     sentence = Number($("p#read_id" + (readCounter - 1)).text());
+    
     // Diff HTML strings
-    let output = htmldiff(originalHTML, newHTML);
+    var output;
+    if (originalHTML != "") {
+      output = htmldiff(originalHTML[0].toUpperCase() + originalHTML.slice(1), newHTML);
+    } else {
+      output = htmldiff(originalHTML, newHTML);
+    }
     $('#accuracy0').val(name);
+    
+    // Calculate the percent
+    document.getElementById("compare").innerHTML = output;
+    let similarity = compare()/(length_ofnew - 1);
     // Show HTML diff output as HTML
-    let similarity = compareTwoStrings(originalHTML, newHTML);
-
     document.getElementById("output" + (readCounter - 1)).innerHTML = output;
     $("#accuracy" + (readCounter - 1)).attr('value', similarity);
     document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
     onReceive(Math.round(similarity * 100), sentence);
+    
   }
+  
   // get data for charts
-
   function onReceive(rate, sentence){
     $.ajax({
       url: "/read_alouds/chart", // Route to the Script Controller method
