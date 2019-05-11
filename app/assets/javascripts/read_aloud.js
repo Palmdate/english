@@ -301,6 +301,7 @@ $(document).on('turbolinks:load', function() {
     onRecordingStop: function(blob) {
       linkRecord = URL.createObjectURL(blob);
       $('#waveform-' + (readCounter - 1))[0].innerHTML = ''
+      
 
       wavesurfer = WaveSurfer.create({
         container: '#waveform-' + (readCounter - 1),
@@ -308,7 +309,7 @@ $(document).on('turbolinks:load', function() {
         progressColor: '#003359',
         height: 50
       });
-
+      
       wavesurfer.load(linkRecord);
       //document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
     },
@@ -426,6 +427,7 @@ $(document).on('turbolinks:load', function() {
     $("#accuracy" + (readCounter - 1)).attr('value', similarity);
     document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
     var rs = (Math.round(similarity * 100));
+    document.querySelector('#percent-' + (readCounter - 1)).textContent = rs;
     var ctx = document.getElementById('accuracy' + (readCounter - 1)).getContext('2d');
     var accuracyChart = new Chart(ctx, {
       type: 'pie',
@@ -473,7 +475,16 @@ $(document).on('turbolinks:load', function() {
       else{
         words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMale; })[0];
       }
-      speechSynthesis.speak(words);
+      wavesurferorigin = WaveSurfer.create({
+        container: '#waveformorigin-' + (readCounter - 1),
+        waveColor: 'gray',
+        progressColor: '#003359',
+        height: 50
+      });
+      console.log(words, typeof words);
+      
+      wavesurferorigin.load(speechSynthesis.speak(words));
+
     }
     else
     {
@@ -555,14 +566,18 @@ $(document).on('turbolinks:load', function() {
   //   wavesurferorigin.playPause();
   // });
 
-  
+  var timePre;
+  var timePost;
+  var pre;
+  var post;
+  var yourTimeRecord;
+
   $(".your-record-audio-play").on('click', function(){
     $(".your-record-audio-play").addClass("d-none");
     $(".your-record-audio-pause").removeClass("d-none");
 
     var durationTime = wavesurfer.getDuration();
-
-    setInterval(function () {
+    yourTimeRecord = setInterval(function () {
       var currentTime = wavesurfer.getCurrentTime();
 
       document.querySelector('#timeRecord-' + (readCounter - 1)).textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
@@ -582,19 +597,14 @@ $(document).on('turbolinks:load', function() {
 
     var durationTime = wavesurfer.getDuration();
 
-    setInterval(function () {
+    yourTimeRecord = setInterval(function () {
       var currentTime = wavesurfer.getCurrentTime();
 
-      document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+      document.querySelector('#timeRecord-' + (readCounter - 1)).textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
     }, durationTime);
 
     wavesurfer.playPause();
   });
-
-  var timePre;
-  var timePost;
-  var pre;
-  var post;
 
   function startTimerPre() {
     var timer = timePre, minutes, seconds;
@@ -619,6 +629,7 @@ $(document).on('turbolinks:load', function() {
         $('#btnStart').addClass("d-none");
         $('#btnStop').removeClass("d-none");
         clearInterval(pre);
+        clearInterval(yourTimeRecord);
         recorder.start();
         startTimerPost();
       }
@@ -664,6 +675,7 @@ $(document).on('turbolinks:load', function() {
         // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
 
         clearInterval(post);
+        clearInterval(yourTimeRecord);
         recorder.stop();
       }
       else {}
@@ -685,6 +697,8 @@ $(document).on('turbolinks:load', function() {
 
     clearInterval(pre);
     clearInterval(post);
+    clearInterval(yourTimeRecord);
+
     startTimerPost();
 
   };
@@ -713,6 +727,8 @@ $(document).on('turbolinks:load', function() {
 
     clearInterval(pre);
     clearInterval(post);
+    clearInterval(yourTimeRecord);
+
     recorder.stop();
   };
 
@@ -738,15 +754,19 @@ $(document).on('turbolinks:load', function() {
     $('span.la').addClass('fa-play-circle-o');
     
     speechSynthesis.cancel();
+    wavesurfer.stop();
 
     clearInterval(pre);
     clearInterval(post);
+    clearInterval(yourTimeRecord);
+
     startTimerPre();
   };
 
   function init() {
     clearInterval(pre);
     clearInterval(post);
+    clearInterval(yourTimeRecord);
 
     timePre = 40;
     timePost = 40;

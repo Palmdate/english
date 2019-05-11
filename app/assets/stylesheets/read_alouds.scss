@@ -128,8 +128,6 @@
   }
 }
 
-
-
 .can-toggle {
   position: relative;
   *, *:before, *:after { box-sizing: border-box; }
@@ -584,3 +582,10 @@ input.checkbox-toggle-round-flat:checked + label:after {
   width: 250px;
 }
 
+.percent{
+  position: absolute;
+  top: 35px;
+  left: 77px;
+  font-size: x-large;
+  color: #57b0f3;
+}
