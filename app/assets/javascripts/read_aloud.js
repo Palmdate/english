@@ -328,7 +328,6 @@ $(document).on('turbolinks:load', function() {
   // Speech to text
 
   function startConverting () {
-    $("#beepRecord")[0].play()
     if('webkitSpeechRecognition' in window) {
       speechRecognizer = new webkitSpeechRecognition();
       speechRecognizer.continuous = true;
@@ -371,8 +370,8 @@ $(document).on('turbolinks:load', function() {
 
   // main function
   $('#btnStart').click(function() {
-    startConverting();
     start_Record();
+    startConverting();
   });
 
   $('#btnStop').click(function() {
@@ -635,6 +634,7 @@ $(document).on('turbolinks:load', function() {
         $('#btnStop').removeClass("d-none");
         clearInterval(pre);
         clearInterval(yourTimeRecord);
+        $("#beepRecord")[0].play();
         recorder.start();
         startTimerPost();
       }
@@ -676,9 +676,6 @@ $(document).on('turbolinks:load', function() {
 
         CompareResult();
         
-        // wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
-        // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
-
         clearInterval(post);
         clearInterval(yourTimeRecord);
         recorder.stop();
@@ -688,6 +685,7 @@ $(document).on('turbolinks:load', function() {
   };
 
   function start_Record(){
+    $("#beepRecord")[0].play();
     recorder.start();
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
     //document.querySelector('#timeProgess').textContent = "00:" + timePost;

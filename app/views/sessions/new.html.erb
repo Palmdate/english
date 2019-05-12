@@ -1,3 +1,4 @@
+<%= render 'home/header' %>
 <% flash.each do |key, value| %>
 <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
@@ -14,9 +15,14 @@
     <%= form_tag sessions_path do |form| %>
     <%= text_field_tag :email, nil, class: "fadeIn second", id: "login", placeholder: "Email"%>
     <%= password_field_tag :password, nil, class: "fadeIn third", id: "password", placeholder: "Password"%>
-
+    <div 
+      class="g-recaptcha mb-4 mt-4" 
+      data-sitekey="6LctGKMUAAAAABFenO3Jk96C7k_0Vz9ygtpkbfbp"
+      data-callback="reCaptchaCallback"
+    >
+    </div>
     <div class="mt-2 mb-2">
-      <%= submit_tag 'Login', class: "btn bg-blue-en4all text-light"%>
+      <%= submit_tag 'Login', class: "btn bg-blue-en4all text-light", id: "btnLogin", disabled: true%>
     </div>
     <% end %>
 
@@ -30,3 +36,10 @@
 
   </div>
 </div>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  function reCaptchaCallback() {
+    $("#btnLogin").attr("disabled", false);
+  }
+</script>

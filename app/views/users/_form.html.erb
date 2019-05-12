@@ -1,7 +1,8 @@
+<%= render 'home/header' %>
 <% flash.each do |key, value| %>
 <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
-<div class="container">
+<div class="container signupPage p-4">
   <!-- Icon -->
   
   <!-- Tabs Titles -->
@@ -29,9 +30,21 @@
       <label class="text-right">Password Confirm: <span class="text-danger">*</spanc</label>                                                                              </div>
                                                                                                                                                                           <%= form.password_field :password_confirmation, required: true, id: "password_confirmation", class: "fadeIn third col-4", placeholder: "Password Confirmation", pattern: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password' : '');" %>
   </div>
+  <div 
+      class="g-recaptcha mb-4 mt-4 text-center" 
+      data-sitekey="6LctGKMUAAAAABFenO3Jk96C7k_0Vz9ygtpkbfbp"
+      data-callback="reCaptchaCallback"
+    >
+    </div>
   <div class="mt-2 mb-2 text-center">
-    <%= form.submit 'Sign Up', class: 'btn bg-blue-en4all text-light' %>
+    <%= form.submit 'Sign Up', class: 'btn bg-blue-en4all text-light', id: "btnSigup", disabled: true %>
   </div>
   <% end %>
-
 </div>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  function reCaptchaCallback() {
+    $("#btnSigup").attr("disabled", false);
+  }
+</script>
