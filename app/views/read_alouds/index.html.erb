@@ -111,11 +111,13 @@
     </div>
     <div class="row mb-4 record-audio d-none">
       <div class="col-sm-2 text-right font-weight-bold">
-       Pronounciation result:
+       Pronunciation result:
       </div>
       <div class="col-sm" style="display: flex">
-      <div style="width: 150px; height: 150px">
-        <div class="percent" id="percent-<%= k %>"></div>
+      <div style="width: 250px;">
+        <div class="percent">
+          <h5 id="percent-<%= k %>"></h5>
+        </div>
         <canvas id="accuracy<%= k %>"></canvas>
       </div>
         <meter id="accuracy<%= k %>" class="d-none"></meter>

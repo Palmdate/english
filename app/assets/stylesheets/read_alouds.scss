@@ -285,7 +285,7 @@
         display: inline-block;
         border: solid .5px #003359;
         padding: 20px;
-        border-radius: 65px;
+        border-radius: 10px;
         color: #d2322d;
     }
 }
@@ -584,10 +584,11 @@ input.checkbox-toggle-round-flat:checked + label:after {
 
 .percent{
   position: absolute;
-  top: 35px;
-  left: 77px;
-  font-size: x-large;
-  color: #57b0f3;
+    top: 55px;
+    left: 110px;
+    color: #57b0f3;
+    width: 60px;
+    text-align: center;
 }
 
 #downloadRecord {

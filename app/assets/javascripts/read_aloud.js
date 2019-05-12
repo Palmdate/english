@@ -371,8 +371,8 @@ $(document).on('turbolinks:load', function() {
 
   // main function
   $('#btnStart').click(function() {
-    start_Record();
     startConverting();
+    start_Record();
   });
 
   $('#btnStop').click(function() {
@@ -387,7 +387,6 @@ $(document).on('turbolinks:load', function() {
   $('#btnNext').click(function() {
     // next_Record();
 
-    
     $('#next-read' + (readCounter - 1)).hide();
     $('#next-read' + readCounter).show();
 
@@ -430,7 +429,7 @@ $(document).on('turbolinks:load', function() {
     $("#accuracy" + (readCounter - 1)).attr('value', similarity);
     document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
     var rs = (Math.round(similarity * 100));
-    document.querySelector('#percent-' + (readCounter - 1)).textContent = rs;
+    document.querySelector('#percent-' + (readCounter - 1)).textContent = rs + '%';
     var ctx = document.getElementById('accuracy' + (readCounter - 1)).getContext('2d');
     var accuracyChart = new Chart(ctx, {
       type: 'pie',
@@ -470,13 +469,15 @@ $(document).on('turbolinks:load', function() {
 
       var checkVoice = document.getElementById("toggle-voice-" + (readCounter - 1)).checked;
       var voiceMale = "Microsoft David Desktop - English (United States)";
+      var voiceMaleOpt = "Microsoft David - English (United States)";
       var voiceFemale = "Microsoft Zira Desktop - English (United States)";
+      var voiceFemaleOpt = "Microsoft Zira - English (United States)";
 
       if(checkVoice){
-        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceFemale; })[0];
+        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == speechSynthesis.getVoices()[1].name; })[0];
       }
       else{
-        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMale; })[0];
+        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == speechSynthesis.getVoices()[0].name; })[0];
       }
      /*  wavesurferorigin = WaveSurfer.create({
         container: '#waveformorigin-' + (readCounter - 1),
