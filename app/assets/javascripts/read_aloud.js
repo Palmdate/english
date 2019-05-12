@@ -1,12 +1,13 @@
 $(document).on('turbolinks:load', function() {
   var readCounter = 1;
+  var linkRecord = "";
+  var wavesurfer;
+  var wavesurferorigin;
   // $('p#content0').show();
   $('#next-read0').show();
   var newHTML = $('p#content0').text();
   var result = document.getElementById('result0');
   var speechRecognizer;
-  var chart_sent, chart_rate;
-
 
   // Play, download recoring
   function WzRecorder(config) {
@@ -128,7 +129,6 @@ $(document).on('turbolinks:load', function() {
     }
 
     function onMicrophoneError(e) {
-      console.log(e);
       alert("Unable to access the microphone.");
     }
 
@@ -299,7 +299,22 @@ $(document).on('turbolinks:load', function() {
 
   var recorder = new WzRecorder({
     onRecordingStop: function(blob) {
-      document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
+      linkRecord = URL.createObjectURL(blob);
+      $('#waveform-' + (readCounter - 1))[0].innerHTML = ''
+      
+
+      wavesurfer = WaveSurfer.create({
+        container: '#waveform-' + (readCounter - 1),
+        waveColor: 'gray',
+        progressColor: '#003359',
+        height: 50
+      });
+      
+      wavesurfer.load(linkRecord);
+
+      document.getElementById("downloadRecord").href = linkRecord;
+      document.getElementById("downloadRecord").download = linkRecord;
+      //document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
     },
     onRecording: function(milliseconds) {
       //document.getElementById("duration" + (readCounter - 1)).innerText = milliseconds + "ms";
@@ -313,7 +328,7 @@ $(document).on('turbolinks:load', function() {
   // Speech to text
 
   function startConverting () {
-
+    $("#beepRecord")[0].play()
     if('webkitSpeechRecognition' in window) {
       speechRecognizer = new webkitSpeechRecognition();
       speechRecognizer.continuous = true;
@@ -361,6 +376,7 @@ $(document).on('turbolinks:load', function() {
   });
 
   $('#btnStop').click(function() {
+    // onReceive(chart_rate, chart_sent);
     stop_Record();
   });
 
@@ -371,7 +387,7 @@ $(document).on('turbolinks:load', function() {
   $('#btnNext').click(function() {
     // next_Record();
 
-    onReceive(chart_rate, chart_sent);
+    
     $('#next-read' + (readCounter - 1)).hide();
     $('#next-read' + readCounter).show();
 
@@ -380,29 +396,59 @@ $(document).on('turbolinks:load', function() {
 
     reload_Record();
   });
-  var name;
+  // Function to calculate the similarity
+
+  function compare() {
+    $('#compare').find("ins").remove();
+    $('#compare').find("del").remove();
+    let result = $("#compare").text().split(' ');
+    let words =  result.filter(function(item) { return item !== "" });
+
+    return words.length;
+  }
+  
   function CompareResult() {
     let originalHTML = $('#result'+ (readCounter - 1)).text();
     newHTML = $("p#content" + (readCounter - 1)).text();
+    let length_ofnew = newHTML.split(' ').filter(function(item) { return item !== "" }).length;
     sentence = Number($("p#read_id" + (readCounter - 1)).text());
+    
     // Diff HTML strings
-    let output = htmldiff(originalHTML, newHTML);
+    var output;
+    if (originalHTML != "") {
+      output = htmldiff(originalHTML[0].toUpperCase() + originalHTML.slice(1), newHTML);
+    } else {
+      output = htmldiff(originalHTML, newHTML);
+    }
     $('#accuracy0').val(name);
+    
+    // Calculate the percent
+    document.getElementById("compare").innerHTML = output;
+    let similarity = compare()/(length_ofnew - 1);
     // Show HTML diff output as HTML
-    let similarity = compareTwoStrings(originalHTML, newHTML);
-
     document.getElementById("output" + (readCounter - 1)).innerHTML = output;
     $("#accuracy" + (readCounter - 1)).attr('value', similarity);
     document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
-    get_data_chart(Math.round(similarity * 100), sentence);
-  }
-  // get data for charts
-  function get_data_chart(rate, sentence){
-
-    chart_rate = rate;
-    chart_sent = sentence;
+    var rs = (Math.round(similarity * 100));
+    document.querySelector('#percent-' + (readCounter - 1)).textContent = rs;
+    var ctx = document.getElementById('accuracy' + (readCounter - 1)).getContext('2d');
+    var accuracyChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        datasets: [{
+            data: [rs, 100-rs],
+            backgroundColor: ['#57b0f3']
+        }],
+      },
+      options: {
+        cutoutPercentage: 50
+      }
+    });
+    onReceive(Math.round(similarity * 100), sentence);
+    
   }
   
+  // get data for charts
   function onReceive(rate, sentence){
     $.ajax({
       url: "/read_alouds/chart", // Route to the Script Controller method
@@ -421,7 +467,28 @@ $(document).on('turbolinks:load', function() {
       $('span.la').removeClass('fa-play-circle-o');
       $('span.la').addClass('fa-pause-circle-o');
       var words = new SpeechSynthesisUtterance( $("#content" + (readCounter - 1)).text() );
-      speechSynthesis.speak(words);
+
+      var checkVoice = document.getElementById("toggle-voice-" + (readCounter - 1)).checked;
+      var voiceMale = "Microsoft David Desktop - English (United States)";
+      var voiceFemale = "Microsoft Zira Desktop - English (United States)";
+
+      if(checkVoice){
+        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceFemale; })[0];
+      }
+      else{
+        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMale; })[0];
+      }
+     /*  wavesurferorigin = WaveSurfer.create({
+        container: '#waveformorigin-' + (readCounter - 1),
+        waveColor: 'gray',
+        progressColor: '#003359',
+        height: 50
+      });
+      
+      wavesurferorigin.load(speechSynthesis.speak(words)); */
+
+      speechSynthesis.speak(words)
+
     }
     else
     {
@@ -430,7 +497,7 @@ $(document).on('turbolinks:load', function() {
       speechSynthesis.cancel();
     }
   });
-
+ 
   // text to speech
   // cong
   function toHHMMSS(seconds) {
@@ -446,27 +513,31 @@ $(document).on('turbolinks:load', function() {
     return minutes + ':' + seconds;
   };
 
-  var wavesurferorigin;
-  var wavesurfer;
-
-  wavesurferorigin = WaveSurfer.create({
-    container: '#waveformorigin',
-    waveColor: 'gray',
-    progressColor: '#003359',
-    height: 50
-  });
-
-  wavesurferorigin = WaveSurfer.create({
-    container: '#waveformorigin',
-    waveColor: 'gray',
-    progressColor: '#003359',
-    height: 50
-  });
-
-
   // $(".your-record-audio-origin-play").on('click', function(){
   //   $(".your-record-audio-origin-play").addClass("d-none");
   //   $(".your-record-audio-origin-pause").removeClass("d-none");
+  //   var words = new SpeechSynthesisUtterance( $("#content" + (readCounter - 1)).text() );
+
+  //   var checkVoice = document.getElementById("toggle-voice-" + (readCounter - 1)).checked;
+  //   var voiceMale = "Microsoft David Desktop - English (United States)";
+  //   var voiceFemale = "Microsoft Zira Desktop - English (United States)";
+
+  //   if(checkVoice){
+  //     words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceFemale; })[0];
+  //   }
+  //   else{
+  //     words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMale; })[0];
+  //   }
+  //   speechSynthesis.speak(words);
+
+  //   wavesurferorigin = WaveSurfer.create({
+  //     container: '#waveformorigin',
+  //     waveColor: 'gray',
+  //     progressColor: '#003359',
+  //     height: 50
+  //   });
+  //   wavesurferorigin.load(speechSynthesis.speak(words));
+
   //   var durationTimeOrigin = wavesurferorigin.getDuration();
 
   //   setInterval(function () {
@@ -499,53 +570,45 @@ $(document).on('turbolinks:load', function() {
   //   wavesurferorigin.playPause();
   // });
 
-  // wavesurfer = WaveSurfer.create({
-  //   container: '#waveform',
-  //   waveColor: 'gray',
-  //   progressColor: '#003359',
-  //   height: 50
-  // });
-
-
-  // $(".your-record-audio-play").on('click', function(){
-  //   $(".your-record-audio-play").addClass("d-none");
-  //   $(".your-record-audio-pause").removeClass("d-none");
-
-  //   var durationTime = wavesurfer.getDuration();
-
-  //   setInterval(function () {
-  //     var currentTime = wavesurfer.getCurrentTime();
-
-  //     document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
-
-  //     if (currentTime == durationTime){
-  //       $(".your-record-audio-pause").addClass("d-none");
-  //       $(".your-record-audio-play").removeClass("d-none");
-  //     }
-  //   }, durationTime);
-
-  //   wavesurfer.playPause();
-  // });
-
-  // $(".your-record-audio-pause").on('click', function(){
-  //   $(".your-record-audio-pause").addClass("d-none");
-  //   $(".your-record-audio-play").removeClass("d-none");
-
-  //   var durationTime = wavesurfer.getDuration();
-
-  //   setInterval(function () {
-  //     var currentTime = wavesurfer.getCurrentTime();
-
-  //     document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
-  //   }, durationTime);
-
-  //   wavesurfer.playPause();
-  // });
-
   var timePre;
   var timePost;
   var pre;
   var post;
+  var yourTimeRecord;
+
+  $(".your-record-audio-play").on('click', function(){
+    $(".your-record-audio-play").addClass("d-none");
+    $(".your-record-audio-pause").removeClass("d-none");
+
+    var durationTime = wavesurfer.getDuration();
+    yourTimeRecord = setInterval(function () {
+      var currentTime = wavesurfer.getCurrentTime();
+
+      document.querySelector('#timeRecord-' + (readCounter - 1)).textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+
+      if (currentTime == durationTime){
+        $(".your-record-audio-pause").addClass("d-none");
+        $(".your-record-audio-play").removeClass("d-none");
+      }
+    }, durationTime);
+
+    wavesurfer.playPause();
+  });
+
+  $(".your-record-audio-pause").on('click', function(){
+    $(".your-record-audio-pause").addClass("d-none");
+    $(".your-record-audio-play").removeClass("d-none");
+
+    var durationTime = wavesurfer.getDuration();
+
+    yourTimeRecord = setInterval(function () {
+      var currentTime = wavesurfer.getCurrentTime();
+
+      document.querySelector('#timeRecord-' + (readCounter - 1)).textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+    }, durationTime);
+
+    wavesurfer.playPause();
+  });
 
   function startTimerPre() {
     var timer = timePre, minutes, seconds;
@@ -570,6 +633,7 @@ $(document).on('turbolinks:load', function() {
         $('#btnStart').addClass("d-none");
         $('#btnStop').removeClass("d-none");
         clearInterval(pre);
+        clearInterval(yourTimeRecord);
         recorder.start();
         startTimerPost();
       }
@@ -610,11 +674,12 @@ $(document).on('turbolinks:load', function() {
         $('#myCanvas' + (readCounter - 1)).addClass("d-none");
 
         CompareResult();
-
+        
         // wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
         // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
 
         clearInterval(post);
+        clearInterval(yourTimeRecord);
         recorder.stop();
       }
       else {}
@@ -636,6 +701,8 @@ $(document).on('turbolinks:load', function() {
 
     clearInterval(pre);
     clearInterval(post);
+    clearInterval(yourTimeRecord);
+
     startTimerPost();
 
   };
@@ -664,6 +731,8 @@ $(document).on('turbolinks:load', function() {
 
     clearInterval(pre);
     clearInterval(post);
+    clearInterval(yourTimeRecord);
+
     recorder.stop();
   };
 
@@ -682,29 +751,18 @@ $(document).on('turbolinks:load', function() {
     $('.origin-audio').addClass("d-none");
     $('.record-audio').addClass("d-none");
 
-    clearInterval(pre);
-    clearInterval(post);
-    startTimerPre();
-  };
+    $(".your-record-audio-pause").addClass("d-none");
+    $(".your-record-audio-play").removeClass("d-none");
 
-  function next_Record() {
-    newHTML = $("p#content" + readCounter).text();
-    $('#next-read' + (readCounter - 1)).hide();
-    $('#next-read' + readCounter).show();
-    // $("p#content" + (readCounter - 1)).hide();
-    // $("p#content" + readCounter).show();
-    // $('#paragrap' + (readCounter - 1)).hide();
-    // $('#paragrap' + readCounter).show();
-    readCounter ++;
+    $('span.la').removeClass('fa-pause-circle-o');
+    $('span.la').addClass('fa-play-circle-o');
+    
+    speechSynthesis.cancel();
+    wavesurfer.stop();
 
     clearInterval(pre);
     clearInterval(post);
-
-    timePre = 40;
-    timePost = 40;
-
-    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    clearInterval(yourTimeRecord);
 
     startTimerPre();
   };
@@ -712,6 +770,7 @@ $(document).on('turbolinks:load', function() {
   function init() {
     clearInterval(pre);
     clearInterval(post);
+    clearInterval(yourTimeRecord);
 
     timePre = 40;
     timePost = 40;
@@ -725,4 +784,12 @@ $(document).on('turbolinks:load', function() {
     startTimerPre();
   };
   init();
+
+  window.addEventListener("keydown", event => {
+    if (event.keyCode == 116) {
+      if(speechSynthesis.speaking){
+        speechSynthesis.cancel();
+      }
+    }
+  });
 });

@@ -1,12 +1,6 @@
 <%= render 'home/header' %>
 <div class="read-alouds container bg-white shadow p-2">
-  <div class="can-toggle">
-    <input id="toggle-chart" type="checkbox" onchange="toggleCheckbox() checked">
-    <label for="toggle-chart">
-      <div class="can-toggle__switch" data-checked="Today" data-unchecked="All"></div>
-      <div class="can-toggle__label-text"></div>
-    </label>
-  </div>
+  
 
   <canvas id="allChart"></canvas>
   
@@ -83,8 +77,48 @@
               'rgba(95, 192, 84, 0.2)',
               'rgba(95, 192, 84, 0.2)',
               'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
+              'rgba(95, 192, 84, 0.2)',
             ],
             borderColor: [
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
+              'rgba(95, 192, 84, 1)',
               'rgba(95, 192, 84, 1)',
               'rgba(95, 192, 84, 1)',
               'rgba(95, 192, 84, 1)',
@@ -114,8 +148,17 @@
       options: { 
         title: {
           display: true,
-          text: 'TODAY'
+          text: 'RESULT OF YOUR RECORD'
         },
+        scales: {
+          yAxes: [{
+            ticks: {
+              min: 0,
+              max: 100,
+              stepSize: 10
+            }
+          }]
+        }
       }
     })
   }

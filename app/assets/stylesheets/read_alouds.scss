@@ -5,7 +5,7 @@
 // Toggle
 @mixin can-toggle-branding(
   $can-toggle-off-color: #003359, 
-  $can-toggle-on-color: #5fc054,
+  $can-toggle-on-color: #003359,
   $can-toggle-inactive-text: rgba(white, 0.5),
   $can-toggle-transition: cubic-bezier(0,1,0.5,1)
 ) {
@@ -127,8 +127,6 @@
     } 
   }
 }
-
-
 
 .can-toggle {
   position: relative;
@@ -584,3 +582,14 @@ input.checkbox-toggle-round-flat:checked + label:after {
   width: 250px;
 }
 
+.percent{
+  position: absolute;
+  top: 35px;
+  left: 77px;
+  font-size: x-large;
+  color: #57b0f3;
+}
+
+#downloadRecord {
+  background-color: none;
+}
