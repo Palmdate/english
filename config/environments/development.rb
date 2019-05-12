@@ -41,10 +41,10 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
     port: 587,
-    domain: 'ex: gm.uit.edu.vn or gmail.com',
+    domain: 'gmail.com',
     authentication: :plain,
-    user_name: 'email address',
-    password: 'pass of email address'
+    user_name: 'penguin.teampr@gmail.com',
+    password: 'Abcd@1234'
   }
 
   
