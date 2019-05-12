@@ -474,20 +474,10 @@ $(document).on('turbolinks:load', function() {
       var voiceFemaleOpt = "Microsoft Zira - English (United States)";
 
       if(checkVoice){
-        try{
-          words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceFemale; })[0];
-        }
-        catch(e){
-          words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceFemaleOpt; })[0];
-        }
+        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == speechSynthesis.getVoices()[1].name; })[0];
       }
       else{
-        try{
-          words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMale; })[0];
-        }
-        catch(e){
-          words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMaleOpt; })[0];
-        }
+        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == speechSynthesis.getVoices()[0].name; })[0];
       }
      /*  wavesurferorigin = WaveSurfer.create({
         container: '#waveformorigin-' + (readCounter - 1),
