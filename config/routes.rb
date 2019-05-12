@@ -1,5 +1,6 @@
 # coding: utf-8
 Rails.application.routes.draw do
+
   get 'build/index'
   resources :read_alouds, only: [:index, :chart]
   get 'read_alouds/chart'
@@ -15,5 +16,7 @@ Rails.application.routes.draw do
   get "login", to: "sessions#new", as: "login"
   get "logout", to: "sessions#destroy", as: "logout"
   resources :write_fr_dics
+  resources :password_resets
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
