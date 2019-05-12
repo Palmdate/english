@@ -2,50 +2,50 @@
   <ul class="hList" style="list-style: none;">
 
     <li class="sub-menu-parent">
-      <a href="/" class="menu" id="home"><h2 class="menu-title">Home</h2></a>
+      <a data-turbolinks='false' href="/" class="menu" id="home"><h2 class="menu-title">Home</h2></a>
     </li>
 
     <li class="sub-menu-parent">
         <a href="#" class="menu"><h2 class="menu-title">speaking</h2></a>
         <ul class="sub-menu bg-blue-en4all">
           <li><a data-turbolinks='false' href="<%= read_alouds_chart_path %>" class="menu reset" >Read Aloud</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Repeat Sentence</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Describe Image</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Retell Lecture</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Answer Short Questions</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Repeat Sentence</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Describe Image</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Retell Lecture</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Answer Short Questions</a></li>
         </ul>
     </li>
 
     <li class="sub-menu-parent">
       <a href="#" class="menu"><h2 class="menu-title ">Writing</h2></a>
         <ul class="sub-menu bg-blue-en4all">
-          <li><a href="<%= build_index_path %>" class="menu">Summarize Written Text</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Essay</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Summarize Written Text</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Essay</a></li>
         </ul>
     </li>
 
     <li class="sub-menu-parent">
       <a href="#click" class="menu"><h2 class="menu-title ">Reading</h2></a>
         <ul class="sub-menu bg-blue-en4all">
-          <li><a href="<%= build_index_path %>" class="menu">Reading & Writing Fill in the blanks</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Multiple Choice, Multiple Answer</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Re-order Paragraph</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Fill in the blanks (Drap & Drop)</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Multiple Choice, Single Answer</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Reading & Writing Fill in the blanks</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Multiple Choice, Multiple Answer</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Re-order Paragraph</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Fill in the blanks (Drap & Drop)</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Multiple Choice, Single Answer</a></li>
         </ul>
     </li>
     
     <li class="sub-menu-parent">
       <a href="#click" class="menu"><h2 class="menu-title ">listening</h2></a>
         <ul class="sub-menu bg-blue-en4all">
-          <li><a href="<%= build_index_path %>" class="menu">Summarize Spoken Text</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Multiple Choice, Multiple Answer</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Fill in the blanks</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Highlight Correct Summary</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Multiple Choice, Single Answer</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Select Missing Word</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Highlight Incorrect Words</a></li>
-          <li><a href="<%= build_index_path %>" class="menu">Write from Dictation</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Summarize Spoken Text</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Multiple Choice, Multiple Answer</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Fill in the blanks</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Highlight Correct Summary</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Multiple Choice, Single Answer</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Select Missing Word</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Highlight Incorrect Words</a></li>
+          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Write from Dictation</a></li>
         </ul>
     </li>
 
@@ -53,9 +53,9 @@
       <a href="#" class="menu"><h2 class="menu-title">course</h2></a>
       <ul class="sub-menu bg-blue-en4all">
         <% if current_user %>
-          <li><a href="<%= home_course_path %>">Schedule</a></li>
+          <li><a data-turbolinks='false' href="<%= home_course_path %>">Schedule</a></li>
         <% else %>
-          <li><a href="<%= login_path %>">Schedule</a></li>
+          <li><a data-turbolinks='false' href="<%= login_path %>">Schedule</a></li>
         <% end %>
       </ul>
     </li>
@@ -66,12 +66,12 @@
         <a href="#" class="menu"></a>
           <h2><span class="text-light dropdown-toggle dropdown-toggle-split menu avatar-dropdown-toggle"></span></h2>
           <ul class="avatar-dropdown menu-dropdown sub-menu" style="top: 45px; right: -20px;">
-            <li><a href="<%= logout_path %>">Log out</a></li>
+            <li><a data-turbolinks='false' href="<%= logout_path %>">Log out</a></li>
           </ul>
       </li>
       <% else %>
         <li class="float-right" style="margin-right: 50px;">
-          <a href="<%= login_path %>" class="menu"><h2 class="menu-title text-white">Log in</h2></a>
+          <a data-turbolinks='false' href="<%= login_path %>" class="menu"><h2 class="menu-title text-white">Log in</h2></a>
         </li>
       <% end %>
   </ul>  

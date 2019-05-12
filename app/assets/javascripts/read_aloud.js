@@ -311,6 +311,9 @@ $(document).on('turbolinks:load', function() {
       });
       
       wavesurfer.load(linkRecord);
+
+      document.getElementById("downloadRecord").href = linkRecord;
+      document.getElementById("downloadRecord").download = linkRecord;
       //document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
     },
     onRecording: function(milliseconds) {
@@ -325,7 +328,7 @@ $(document).on('turbolinks:load', function() {
   // Speech to text
 
   function startConverting () {
-
+    $("#beepRecord")[0].play()
     if('webkitSpeechRecognition' in window) {
       speechRecognizer = new webkitSpeechRecognition();
       speechRecognizer.continuous = true;
@@ -475,15 +478,16 @@ $(document).on('turbolinks:load', function() {
       else{
         words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMale; })[0];
       }
-      wavesurferorigin = WaveSurfer.create({
+     /*  wavesurferorigin = WaveSurfer.create({
         container: '#waveformorigin-' + (readCounter - 1),
         waveColor: 'gray',
         progressColor: '#003359',
         height: 50
       });
-      console.log(words, typeof words);
       
-      wavesurferorigin.load(speechSynthesis.speak(words));
+      wavesurferorigin.load(speechSynthesis.speak(words)); */
+
+      speechSynthesis.speak(words)
 
     }
     else

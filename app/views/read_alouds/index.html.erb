@@ -6,8 +6,9 @@
 <script src="https://unpkg.com/wavesurfer.js"></script>
 
 <%= render 'home/header' %>
-<audio id="beepRecord" src="assets/sysAudio/beep.mp3"></audio>
+
 <div class="read-alouds container bg-white shadow p-2">
+<%= audio_tag "beep.mp3", controls: true, id: "beepRecord", class: "d-none"%>
   <h6 class="font-weight-bold mb-4">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
   <% k = 0 %>
   <div class="record-tool mb-4">
@@ -81,16 +82,19 @@
         <div class="result-read rounded">
           <div class="row">
             <div class="col-sm-2 text-center">
-             
               <div style="display: grid; width: max-content">
                    <span class="your-record-audio-play fa fa-play-circle-o fa-4x"></span>
                    <span class="your-record-audio-pause fa fa-pause-circle-o fa-4x d-none"></span>
                    <span id="timeRecord-<%= k %>">00:00/00:00</span>
               </div>
-             
             </div>
-            <div class="col-sm-10">
+            <div class="col-sm-9">
               <div id="waveform-<%= k %>"></div>
+            </div>
+            <div class="col-sm-1">
+              <a id="downloadRecord">
+                <span class="fa fa-download fa-3x"></span>
+              </a>
             </div>
           </div>
         </div>
