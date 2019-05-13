@@ -10,7 +10,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @greeting = "Hi"
     
-    mail to: user.email, :subject => 'Reset password instructions'
+    mail to: user.email, :subject => 'Reset password for En4pr account'
   end
 
 end
