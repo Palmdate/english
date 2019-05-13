@@ -406,44 +406,48 @@ $(document).on('turbolinks:load', function() {
   }
   
   function CompareResult() {
-    let originalHTML = $('#result'+ (readCounter - 1)).text();
-    newHTML = $("p#content" + (readCounter - 1)).text();
-    let length_ofnew = newHTML.split(' ').filter(function(item) { return item !== "" }).length;
-    sentence = Number($("p#read_id" + (readCounter - 1)).text());
-    
-    // Diff HTML strings
-    var output;
-    if (originalHTML != "") {
-      output = htmldiff(originalHTML[0].toUpperCase() + originalHTML.slice(1), newHTML);
-    } else {
-      output = htmldiff(originalHTML, newHTML);
-    }
-    $('#accuracy0').val(name);
-    
-    // Calculate the percent
-    document.getElementById("compare").innerHTML = output;
-    let similarity = compare()/(length_ofnew - 1);
-    // Show HTML diff output as HTML
-    document.getElementById("output" + (readCounter - 1)).innerHTML = output;
-    $("#accuracy" + (readCounter - 1)).attr('value', similarity);
-    document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
-    var rs = (Math.round(similarity * 100));
-    document.querySelector('#percent-' + (readCounter - 1)).textContent = rs + '%';
-    var ctx = document.getElementById('accuracy' + (readCounter - 1)).getContext('2d');
-    var accuracyChart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        datasets: [{
+    if('webkitSpeechRecognition' in window) {
+      let originalHTML = $('#result'+ (readCounter - 1)).text();
+      newHTML = $("p#content" + (readCounter - 1)).text();
+      let length_ofnew = newHTML.split(' ').filter(function(item) { return item !== "" }).length;
+      sentence = Number($("p#read_id" + (readCounter - 1)).text());
+      
+      // Diff HTML strings
+      var output;
+      if (originalHTML != "") {
+        output = htmldiff(originalHTML[0].toUpperCase() + originalHTML.slice(1), newHTML);
+      } else {
+        output = htmldiff(originalHTML, newHTML);
+      }
+      $('#accuracy0').val(name);
+      
+      // Calculate the percent
+      document.getElementById("compare").innerHTML = output;
+      let similarity = compare()/(length_ofnew - 1);
+      // Show HTML diff output as HTML
+      document.getElementById("output" + (readCounter - 1)).innerHTML = output;
+      $("#accuracy" + (readCounter - 1)).attr('value', similarity);
+      document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
+      var rs = (Math.round(similarity * 100));
+      document.querySelector('#percent-' + (readCounter - 1)).textContent = rs + '%';
+      var ctx = document.getElementById('accuracy' + (readCounter - 1)).getContext('2d');
+      var accuracyChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
             data: [rs, 100-rs],
             backgroundColor: ['#57b0f3']
-        }],
-      },
-      options: {
-        cutoutPercentage: 50
-      }
-    });
-    onReceive(Math.round(similarity * 100), sentence);
-    
+          }],
+        },
+        options: {
+          cutoutPercentage: 50
+        }
+      });
+      onReceive(Math.round(similarity * 100), sentence);
+      
+    } else {
+      $('.other-browser').hide();
+    }
   }
   
   // get data for charts
