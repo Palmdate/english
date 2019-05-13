@@ -376,6 +376,9 @@ $(document).on('turbolinks:load', function() {
 
   $('#btnStop').click(function() {
     // onReceive(chart_rate, chart_sent);
+    if(!('speechSynthesis' in window)){
+      $('.origin-audio').hide();
+    }
     stop_Record();
   });
 
