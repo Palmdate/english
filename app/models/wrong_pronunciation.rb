@@ -1,0 +1,2 @@
+class WrongPronunciation < ApplicationRecord
+end

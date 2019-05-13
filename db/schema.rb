@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_10_033850) do
+ActiveRecord::Schema.define(version: 2019_05_13_170328) do
 
   create_table "courses", force: :cascade do |t|
     t.text "skill"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(version: 2019_05_10_033850) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.integer "day_id"
+  end
+
+  create_table "has", force: :cascade do |t|
+    t.integer "cong_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "read_aloud_charts", force: :cascade do |t|
@@ -55,6 +61,14 @@ ActiveRecord::Schema.define(version: 2019_05_10_033850) do
     t.string "audio"
     t.text "content"
     t.text "result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wrong_pronunciations", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "wrong_words"
+    t.string "wrong_phonetic"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
