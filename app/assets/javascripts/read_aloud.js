@@ -408,14 +408,14 @@ $(document).on('turbolinks:load', function() {
   function CompareResult() {
     if('webkitSpeechRecognition' in window) {
       let originalHTML = $('#result'+ (readCounter - 1)).text();
-      newHTML = $("p#content" + (readCounter - 1)).text();
+      newHTML = $("p#content" + (readCounter - 1)).text().split(' ').filter(function(item) { return item !== "" }).slice(1).join(' ').toLowerCase();
       let length_ofnew = newHTML.split(' ').filter(function(item) { return item !== "" }).length;
       sentence = Number($("p#read_id" + (readCounter - 1)).text());
       
       // Diff HTML strings
       var output;
       if (originalHTML != "") {
-        output = htmldiff(originalHTML[0].toUpperCase() + originalHTML.slice(1), newHTML);
+        output = htmldiff(originalHTML[0].toUpperCase() + originalHTML.slice(1), newHTML[0].toUpperCase() + newHTML.slice(1));
       } else {
         output = htmldiff(originalHTML, newHTML);
       }
