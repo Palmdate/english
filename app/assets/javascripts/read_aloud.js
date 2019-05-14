@@ -410,7 +410,7 @@ $(document).on('turbolinks:load', function() {
   
   function CompareResult() {
     if('webkitSpeechRecognition' in window) {
-      let originalHTML = $('#result'+ (readCounter - 1)).text();
+      let originalHTML = $('#result'+ (readCounter - 1)).text().split(' ').filter(function(item) { return item !== "" }).slice().join(' ').toLowerCase();
       newHTML = $("p#content" + (readCounter - 1)).text().split(' ').filter(function(item) { return item !== "" }).slice(1).join(' ').toLowerCase();
       let length_ofnew = newHTML.split(' ').filter(function(item) { return item !== "" }).length;
       sentence = Number($("p#read_id" + (readCounter - 1)).text());
