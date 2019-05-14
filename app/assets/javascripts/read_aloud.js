@@ -467,24 +467,21 @@ $(document).on('turbolinks:load', function() {
   
   // ---------------------------
   $('span.la').on('click', function(){
+
     if ($('span.la').hasClass('fa-play-circle-o'))
     {
       $('span.la').removeClass('fa-play-circle-o');
       $('span.la').addClass('fa-pause-circle-o');
-      var words = new SpeechSynthesisUtterance( $("#content" + (readCounter - 1)).text() );
-
+      var words = $("#content" + (readCounter - 1)).text();
+      var voice;
       var checkVoice = document.getElementById("toggle-voice-" + (readCounter - 1)).checked;
-      var voiceMale = "Microsoft David Desktop - English (United States)";
-      var voiceMaleOpt = "Microsoft David - English (United States)";
-      var voiceFemale = "Microsoft Zira Desktop - English (United States)";
-      var voiceFemaleOpt = "Microsoft Zira - English (United States)";
-
       if(checkVoice){
-        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == "Samantha"; })[0];
+        voice = "UK English Female";
       }
       else{
-        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == "Alex"; })[0];
+        voice = "UK English Male";
       }
+      
      /*  wavesurferorigin = WaveSurfer.create({
         container: '#waveformorigin-' + (readCounter - 1),
         waveColor: 'gray',
@@ -494,8 +491,7 @@ $(document).on('turbolinks:load', function() {
       
       wavesurferorigin.load(speechSynthesis.speak(words)); */
 
-      speechSynthesis.speak(words)
-
+      responsiveVoice.speak(words, voice, { rate: 0.9 });
     }
     else
     {
