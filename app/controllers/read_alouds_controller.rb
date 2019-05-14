@@ -21,7 +21,7 @@ class ReadAloudsController < ApplicationController
   
   def index
     if current_user
-      @read_alouds = ReadAloud.all
+      @read_alouds = params[:audio].to_i
     else
       redirect_to login_path
     end

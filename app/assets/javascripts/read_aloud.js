@@ -380,6 +380,7 @@ $(document).on('turbolinks:load', function() {
       $('.origin-audio').hide();
     }
     stop_Record();
+
   });
 
   $('#btnAgain').click(function() {
@@ -397,6 +398,7 @@ $(document).on('turbolinks:load', function() {
 
     reload_Record();
   });
+  
   // Function to calculate the similarity
 
   function compare() {
