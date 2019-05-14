@@ -1,5 +1,5 @@
 <%= form_for(course, :html => {:class => 'panel-body', :style => 'display:none;' }) do |f| %>
-    <div class="row">
+    <div class="row mb-2">
         <div class="col-6 col-md-1"></div>
         <div class="col-6 col-md-4">
             <% grouped_options_skill = [['Speaking', ['Read Aloud','Repeat Sentence','Describe Image', 'Retell Lecture', 'Answer Short Question']],['Writing', ['Summarise Written Text','Essay']], ['Reading', ['Reading & Writing Fill In Blanks','Multiple Choice, Multiple Answer','Re-order Paragraph', 'Fill In Blanks (Drag & Drop)', 'Multiple Choice, Single Answer']], ['Listening', ['Summarize Spoken Text', 'Multiple Choice, Multiple Answer', 'Fill In Blanks', 'Highlight Correct Summary', 'Multiple Choice, Single Answer', 'Select Missing Word', 'Highlight Incorrect Words', 'Write From Dictation']]] %>
@@ -9,12 +9,12 @@
             <% grouped_options_quality = ['5', '6','7','8', '9', '10', '11', '12','13', '14'] %>
             <%= f.select :quality, options_for_select(grouped_options_quality, selected: course.quality), {}, {class: "grade-select form-control input-sm"} %>
         </div>
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-2">
             <% grouped_options_status = ['Done', 'In Progress','Not Starting'] %>
             <%= f.select :status, options_for_select(grouped_options_status, selected: course.status), {}, {class: "credits-select form-control input-sm"}%>
         </div>
-        <div class="col-6 col-md-2">
-            <%= f.submit "Save", class: "save btn-primary btn-md"%>
+        <div class="col-6 col-md-3">
+            <button type="submit" class="save btn-sm btn-success"><span class="fa fa-floppy-o"></span></button>
         </div>
     </div>
 <% end %>

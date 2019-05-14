@@ -3,6 +3,52 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+.sub-menu-parent { 
+  position: relative; 
+}
+
+.sub-menu-parent:first-child { 
+  padding-left: 50px;
+}
+
+.sub-menu { 
+  padding: 0px;
+  visibility: hidden; /* hides sub-menu */
+  opacity: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: max-content;
+  transform: translateY(-2em);
+  z-index: -1;
+  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+}
+
+.sub-menu li {
+  min-width: 120px;
+  width: 100%;
+  padding: 10px;
+}
+
+.sub-menu li:hover {
+  background-color:  #012744;
+}
+
+.sub-menu li a {
+  color: white;
+}
+
+.sub-menu-parent:focus .sub-menu,
+.sub-menu-parent:focus-within .sub-menu,
+.sub-menu-parent:hover .sub-menu {
+  visibility: visible; /* shows sub-menu */
+  opacity: 1;
+  z-index: 1;
+  transform: translateY(0%);
+  transition-delay: 0s, 0s, 0.3s; /* this removes the transition delay so the menu will be visible while the other styles transition */
+}
+
+nav ul li { list-style-type: none; padding: 0; margin: 0; }
 
 html {
     height: 100%;
@@ -11,8 +57,6 @@ html {
 
 body {
     overflow: hidden;
-    // height: 100%;
-    // width: 100%;
     margin: 0 auto;
     background-color: #ffffff;
     font-family: 'Roboto', sans-serif;
@@ -28,7 +72,7 @@ a {
 //   box-sizing: border-box;
 // }
 
-$menu_WIDTH: 150px;
+$menu_WIDTH: 120px;
 
 .menu {
     display: block;
@@ -40,35 +84,26 @@ $menu_WIDTH: 150px;
     display: block;
     width: $menu_WIDTH;
     height: 50px;
-    padding: 12px 0 0;
-    background: #9dc852;
+    padding: 15px 0 0;
+    margin: 0;
     text-align: center;
-    color: black;
+    color: white;
     font-weight: bold;
     text-transform: uppercase;
     transition: 0.3s background-color;
     font-family: initial;
-    font-size: 24px;
+    font-size: 1em;
+}
+.menu-title:hover {
+  .menu-dropdown{
+    display: block !important;
+  }
 }
 
-.menu-title:before {
-    content: "";
-    display: block;
-    height: 0;
-    border-top: 5px solid #9dc852;
-    border-left: ($menu_WIDTH / 2) solid transparent;
-    border-right: ($menu_WIDTH / 2) solid transparent;
-    border-bottom: 0 solid #dddddd;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 101;
-    transition:
-        0.2s 0.2s border-top ease-out,
-        0.3s border-top-color;
+.menu-title:hover { 
+  background-color:  #012744 !important;
 }
 
-.menu-title:hover { background: #8db842; }
 .menu-title:hover:before { border-top-color: #8db842; }
 
 .menu:hover > .menu-title:before {
@@ -76,20 +111,6 @@ $menu_WIDTH: 150px;
     transition:
         0.2s border-top-width ease-in,
         0.3s border-top-color;
-}
-
-.menu-title:after {
-    content: "";
-    display: block;
-    height: 0;
-    border-left: ($menu_WIDTH / 2) solid transparent;
-    border-right: ($menu_WIDTH / 2) solid transparent;
-    border-bottom: 0 solid #ebebeb;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 101;
-    transition: 0.2s border-bottom ease-in;
 }
 
 .menu:hover > .menu-title:after {
@@ -128,11 +149,10 @@ $menu_WIDTH: 150px;
 .menu-title_7th:hover:before { border-top-color: #c9adc6; }
 
 .menu-dropdown {
-    min-width: 100%;
-    padding: 15px 0;
+    padding: 0;
     position: absolute;
-    background: white;
     z-index: 100;
+    background-color: #003359 !important;
     transition:
         0.5s padding,
         0.5s background;
@@ -142,7 +162,6 @@ $menu_WIDTH: 150px;
     content: "";
     display: block;
     height: 0;
-    border-top: 5px solid #ebebeb;
     border-left: ($menu_WIDTH / 2) solid transparent;
     border-right: ($menu_WIDTH / 2) solid transparent;
     position: absolute;
@@ -153,8 +172,7 @@ $menu_WIDTH: 150px;
 }
 
 .menu:not(:hover) > .menu-dropdown {
-    padding: 4px 0;
-    background: #dddddd;
+    padding: 0 0;
     z-index: 99;
 }
 
@@ -168,10 +186,10 @@ $menu_WIDTH: 150px;
 
 .menu-dropdown > * {
     overflow: hidden;
-    height: 30px;
-    padding: 5px 10px;
+    height: 40px;
+    padding: 10px 10px;
     background: rgba(0,0,0,0);
-    color: black;
+    color: white;
     white-space: nowrap;
     transition: 
         0.5s height cubic-bezier(.73,.32,.34,1.5),
@@ -361,7 +379,9 @@ svg{
 //   transform: scale(0.95);
 // }
 
-input[type=text] {
+input[type=text],
+input[type=email],
+input[type=password] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -382,12 +402,16 @@ input[type=text] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus {
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=password] :focus {
   background-color: #fff;
-  border-bottom: 2px solid #5fbae9;
+  border-bottom: 2px solid #003359;
 }
 
-input[type=text]:placeholder {
+input[type=text]:placeholder,
+input[type=email]:placeholder,
+input[type=password] :placeholder {
   color: #cccccc;
 }
 
@@ -482,13 +506,14 @@ input[type=text]:placeholder {
   bottom: -10px;
   width: 0;
   height: 2px;
-  background-color: #56baed;
+  background-color: #003359;
   content: "";
   transition: width 0.2s;
 }
 
 .underlineHover:hover {
   color: #0d0d0d;
+  background-color: unset;
 }
 
 .underlineHover:hover:after{
@@ -507,3 +532,6 @@ input[type=text]:placeholder {
   width:60%;
 }
 
+.avatar-dropdown:hover{
+  cursor: pointer;
+}

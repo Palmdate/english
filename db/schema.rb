@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_143251) do
+ActiveRecord::Schema.define(version: 2019_05_10_033850) do
 
   create_table "courses", force: :cascade do |t|
     t.text "skill"
@@ -22,9 +22,22 @@ ActiveRecord::Schema.define(version: 2019_04_10_143251) do
     t.integer "day_id"
   end
 
+  create_table "read_aloud_charts", force: :cascade do |t|
+    t.integer "sentence"
+    t.integer "rate"
+    t.integer "total"
+    t.date "date"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "read_alouds", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.string "audio_user"
+    t.string "content"
   end
 
   create_table "users", force: :cascade do |t|
@@ -32,6 +45,9 @@ ActiveRecord::Schema.define(version: 2019_04_10_143251) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_reset_token"
+    t.datetime "password_reset_sent_at"
+    t.string "auth_token"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

@@ -1,9 +1,8 @@
 <%= form_with url: course_store_path, class: 'panel-body post-form' do |f| %>
-    <div class="row" style="border-top-style: double;padding-top: 15px;">
-        <div class="col-6 col-md-2" style="margin-top: -15px;">
-            <div class="md-form">
-                <%= f.text_field :day_id, class: "form-control", id: "input-char-counter"%>
-                <label for="input-char-counter" style="font-family: 'Roboto', sans-serif; font-size: 15px;">DAY</label>
+    <div class="row" style="border-top-style: double;padding-top: 15px; font-family: 'Roboto', sans-serif; font-size: 15px;">
+        <div class="col-6 col-md-1">
+            <div class="md-form" style="margin-top: unset">
+                <input class="form-control" id="input-char-counter" type="number" min="1" step="1" name="day_id" placeholder="Day" required>
           </div>
         </div>
         <div class="col-6 col-md-4">
@@ -11,15 +10,14 @@
             <%= f.select :skill, grouped_options_for_select(grouped_options_skill), {},{class: "course-select form-control input-sm"}%>
         </div>
         <div class="col-6 col-md-2">
-            <% grouped_options_quality = ['5', '6','7','8', '9', '10', '11', '12','13', '14'] %>
-            <%= f.select :quality, options_for_select(grouped_options_quality), {}, {class: "grade-select form-control input-sm"}%>
+            <%= f.number_field :quality, min: 1, class: "grade-select form-control input-sm", required: true%>
+        </div>
+        <div class="col-6 col-md-2">
+            <% grouped_options_status = ['Not Starting', 'In Progress', 'Done'] %>
+            <%= f.select :status, options_for_select(grouped_options_status, 'Not Starting'), {}, {class: "credits-select form-control input-sm"} %>
         </div>
         <div class="col-6 col-md-3">
-            <% grouped_options_status = ['Done', 'In Progress','Not Starting'] %>
-            <%= f.select :status, options_for_select(grouped_options_status), {}, {class: "credits-select form-control input-sm"} %>
-        </div>
-        <div class="col-6 col-md-1">
-            <%= f.submit "Add", class: "add btn-success btn-md" %>
+            <button type="submit" name="commit" class="test btn-sm btn-success"><span class="fa fa-plus"></span></button>
         </div>
     </div>
 <% end %>

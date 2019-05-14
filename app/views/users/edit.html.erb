@@ -1,6 +1,8 @@
-<h1>Editing User</h1>
+<%= render 'home/header'%>
+<div class="w-100">
+    <h4 class="text-center mb-4">Editting User</h4>
+    <%= render 'form', user: @user %>
+</div>
 
-<%= render 'form', user: @user %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+

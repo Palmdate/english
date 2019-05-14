@@ -1,0 +1,272 @@
+<div class="container bg-white shadow p-2">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/home/course">Course</a></li>
+      <li class="breadcrumb-item"><a href="">Schedule</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Write From Dictation</li>
+    </ol>
+  </nav>
+  <div id="placement" class="text-center"><h1 class="clock countDown"></h1></div>
+  <div class="panel panel-default">
+    
+    <!--form-content-->
+    <form id="form-id">
+      <!--Progressbar-->
+      <% k = 0 %>
+      <!-- Progress bar sentence -->
+      <!-- <ul class='progress' style="height: 1.3rem;"> -->
+        <!--   <li class="active"></li> -->
+        <!--   <% (2..@count.to_i). each do |sentence| %> -->
+        <!--   <li><% sentence %></li> -->
+        <!--   <% end %> -->
+        <!-- </ul> -->
+      <div id="ng-app" ng-app="diffDemo" layout="column" flex ng-controller="diffCtrl">
+        <% WriteFrDic.all.sample(@count.to_i).each do |sens| %>
+
+        <fieldset>
+          <h2 class='title'>Sentence <%= k = k + 1 %> / <%= @count %> </h2>
+          <h3 class='sub-title'>
+            <div class="page-header">
+	            <span class="minutes">This audio will auto play after </span><span class="timer">05</span><span>s</span>
+            </div>
+          </h3>
+          
+          <div class="page-header">
+            <%= audio_tag "#{sens.audio}", controls: true, id:"timer-beep", class: "timer-beep" %>
+          </div>
+          <div class="md-form" data-ng-init="anyFunction()">
+            <textarea layout-fill id="sens-content<%= k - 1%>" class="md-textarea left form-control" placeholder="Enter word is here after you heard ..."></textarea>
+            <h1 layout-fill id="sens-content-right" class="md-textarea right form-control" style="display: none;"><%= sens.result%></h1>
+            
+            <!-- Modal result-->
+            <div class="modal fade" id="myModal<%= k %>" role="dialog" >
+              <div class="modal-dialog" role="document">
+                <!-- Modal result-->
+                <div class="modal-content" >
+                  <div class="modal-header" style="background-color:wheat;">
+                    <h5 class="modal-title" id="exampleModalLabel">CONGRATULATE</h5>
+                  </div>
+                  <div class="modal-body" style="padding:40px 50px;">
+                    THIS IS YOUR RESULT
+                    <form role="form">
+                      <div class="form-group" >
+                        <ol >
+                          <li ng-repeat="x in products"><pre class="textdiff" processing-diff left-obj="x.left" right-obj="x.right" options="options"></pre></li>
+                          
+                        </ol>
+                      </div>                        
+                    </form>
+                  </div>
+                  <div class="modal-footer" style="justify-content: space-between;">
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" ng-click="clear()" onclick="location.reload()"><span class="fa fa-rotate-left"></span></button>
+                    <%= link_to '<span class="fa fa-align-justify"></span>'.html_safe, home_course_path,  class: "btn btn-default pull-left", style: "color:white;"%>
+                  </div>
+                </div>
+              </div>
+            </div>              
+          </div>
+          <!-- Modl result -->
+          
+          <% if (k == @count.to_i) %>
+          <input type='button' value='Finish' ng-click="result()" class="custom-button finish" onclick="$('#myModal<%= k %>').modal({backdrop: 'static', keyboard: false})">
+          <% else %>
+          <input type='button' name='next' class='next-button custom-button' value="Next">
+          <% end %>
+        </fieldset>
+        <% end %>
+    </form>
+    <!-- end form -->
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Model errors -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:red;">
+        <h5 class="modal-title" id="exampleModalLongTitle">TIMEOUT</h5>
+      </div>
+      <div class="modal-body">
+        You didn't finished this test!!!
+        Please chosse do this again or back to course
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="clear()" onclick="location.reload()"><span class="fa fa-rotate-left"></span></button>
+        <%= link_to '<span class="fa fa-align-justify"></span>'.html_safe, home_course_path,  class: "btn btn-secondary pull-left", style: "color:white;"%>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Model errors -->
+
+<script>
+  
+  $(document).on('turbolinks:load', function() {
+    // Reload page once to fix errors don't show angular-diff-math-path 
+      if(document.URL.indexOf("#")==-1){
+          // Set the URL to whatever it was plus "#loaded".
+          url = document.URL+"#loaded";
+          location = "#loaded";
+          //Reload the page using reload() method
+          location.reload(true);
+      };
+
+    // count time to do test
+    var interval1, count, min, sec;
+    count = $('fieldset').length * 30;
+    min = Math.floor(count/60)
+    sec = Math.floor(count%60)
+    
+    $('.clock').text(min.toString()+':'+sec.toString());
+    countdown();
+
+    function countdown() {
+      clearInterval(interval1);
+      
+      interval1 = setInterval( function() {
+        var timer = $('.clock').html();
+        timer = timer.split(':');
+        var minutes = timer[0];
+        var seconds = timer[1];
+        seconds -= 1;
+        if (minutes < 0) return;
+        else if (seconds < 0 && minutes != 0) {
+          minutes -= 1;
+          seconds = 59;
+        }
+        else if (seconds < 10 && length.seconds != 2) seconds = '0' + seconds;
+
+        $('.clock').html(minutes + ':' + seconds);
+
+        if (minutes == 0 && seconds == 0)
+        {
+          $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false});
+          clearInterval(interval1);
+        };
+      }, 1000);
+      
+    };
+    // --------------------
+    // open result when time out
+    $('.finish').click(function() {
+      clearInterval(interval1);
+    });
+    // ------------------------
+    // count time to play audio
+      
+    var Pause, interval, settime, timer, total_time;
+    timer = 5;
+    interval = setInterval((function() {
+      timer--;
+      $('.timer').text(timer);
+      if (timer === 0) {
+        Pause();
+        document.getElementById('timer-beep').play();
+        clearInterval(interval);
+      }
+    }), 1000);
+    $('.next-button').prop('disabled', true);
+    $('.prev-button').prop('disabled', true);
+    setTimeout((function() {
+      $('.next-button').prop('disabled', false);
+      $('.prev-button').prop('disabled', false);
+    }), 10000);
+    // -----------------------------
+    Pause = function() {
+      $('.timer-beep').each(function(i) {
+        $(this).get($('fieldset').index(i)).pause();
+        $(this).get($('fieldset').index(i)).currentTime = 0;
+      });
+    };
+    // Analyze click next, previous, finish button
+    $('.next-button').click(function() {
+      var current, next;
+      current = $(this).parent();
+      next = $(this).parent().next();
+      Pause();
+      current.hide();
+      next.show();
+      $('.next-button').prop('disabled', true);
+      $('.prev-button').prop('disabled', true);
+      $('.finish').prop('disabled', true);
+      setTimeout((function() {
+        $('.next-button').prop('disabled', false);
+        $('.prev-button').prop('disabled', false);
+        $('.finish').prop('disabled', false);
+      }), 10000);
+      timer = 5;
+      interval = setInterval((function() {
+        timer--;
+        $('.timer').text(timer);
+        if (timer === 0) {
+          Pause();
+          $('.timer-beep').get($('fieldset').index(next)).play();
+          clearInterval(interval);
+        }
+      }), 1000);
+    });
+  });
+
+</script>
+<script>
+  
+  var app = angular.module('diffDemo', ['ngMaterial', 'diff-match-patch']);
+  app.config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+      .primaryPalette('indigo')
+      .accentPalette('blue');
+  });
+  
+  app.controller('diffCtrl', ['$scope', function($scope) {
+    
+    $scope.anyFunction = function(){
+      
+      $scope.left = "";
+      $scope.right = "";
+      
+      $scope.options = {
+        editCost: 4,
+        interLineDiff: true,
+        ignoreTrailingNewLines: true,
+        attrs: {
+          insert: {
+            'data-attr': 'insert',
+            'class': 'insertion'
+          },
+          delete: {
+            'data-attr': 'delete'
+          },
+          equal: {
+            'data-attr': 'equal'
+          }
+        }
+      };
+      
+    };
+    
+    $scope.clear = function() {
+      $scope.products = [];
+       $('fieldset').each(function(i) {
+         document.getElementById('sens-content'+ i).value = ""
+      });
+    };
+
+    $scope.result = function() {
+      $scope.products = [];
+      $('fieldset').each(function(i) {
+        $scope.addMe1 = document.getElementById('sens-content'+ i).value;
+        
+        $scope.addMe2 = $('.right')[i].innerText;
+
+        $scope.products.push({"left":$scope.addMe1, "right":$scope.addMe2});
+        
+      });
+      
+    };
+    
+  }]);
+
+</script>
