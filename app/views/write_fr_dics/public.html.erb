@@ -7,7 +7,7 @@
 
 <%= render partial: 'home/header' %>
 <% k = 0 %>
-<div class="container bg-white shadow p-2">
+<div class="read-alouds container bg-white shadow p-2">
     <div id="placement" class="text-center"><h1 class="clock countDown"></h1></div>
     <div class="panel panel-default">
         
@@ -17,15 +17,15 @@
                 <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
 
                     <fieldset>
-                        <h2 class='title'>Sentence <%= k = k + 1 %></h2>
+                        <h2 class="text-blue-en4all">SENTENCE <%= k = k + 1 %></h2>
                         <h3 class='sub-title'>
                             <div class="page-header">
-	                              <span class="minutes">This audio will auto play after </span><span class="timer">05</span><span>s</span>
+	                              <span class="minutes text-danger">This audio will auto play after </span><span class="timer text-danger">05</span><span class="text-danger">s</span>
                             </div>
                         </h3>
                         
                         <div class="page-header">
-                            <p id="content<%= k %>"><%= sens.result%></p>
+                            <p class="d-none" id="content<%= k %>"><%= sens.result%></p>
                             <span class="audio fa fa-play-circle-o fa-4x"></span>
                         </div>
                         <div class="md-form">
@@ -58,12 +58,17 @@
                             </div>              
                         </div>
                         <!-- Modl result -->
-                        
-                        <% if (k == @count.to_i) %>
-                            <input type='button' value='Finish' class="custom-button finish" onclick="$('#myModal<%= k %>').modal({backdrop: 'static', keyboard: false})">
-                        <% else %>
-                            <input type='button' name='next' class='next-button custom-button' value="Next">
-                        <% end %>
+                        <div class="action-bottom" style="left: 0">
+                            <div class="float-left">
+                                <i class="infor fa fa-info-circle" style="font-size:36px"></i>
+                            </div>
+                            
+                            <% if (k == @count.to_i) %>
+                                <button class="custom-button finish" onclick="$('#myModal<%= k %>').modal({backdrop: 'static', keyboard: false})">Finish</button>
+                            <% else %>
+                                <button name='next' class='next-button custom-button'>Next</button>
+                            <% end %>
+                        </div>
                     </fieldset>
                 <% end %>
         </form>
@@ -91,7 +96,7 @@
     </div>
 </div>
 <!-- Model errors -->
-<i class="infor fa fa-info-circle" style="font-size:36px"></i>
+
 <div class="result-hatest" style="display: none; padding: 5% 0 0 10%;">
     <details open>
         <summary>Overview</summary>

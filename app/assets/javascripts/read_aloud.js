@@ -312,8 +312,8 @@ $(document).on('turbolinks:load', function() {
       
       wavesurfer.load(linkRecord);
 
-      document.getElementById("downloadRecord").href = linkRecord;
-      document.getElementById("downloadRecord").download = linkRecord;
+      document.getElementById("downloadRecord-"+ (readCounter - 1)).href = linkRecord;
+      document.getElementById("downloadRecord-"+ (readCounter - 1)).download = linkRecord;
       //document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
     },
     onRecording: function(milliseconds) {

@@ -1,8 +1,8 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src='/assets/recaptcha.js' type="text/javascript"></script>
-<%= render "/home/header"%>
+
 <% flash.each do |key, value| %>
-<div class="alert alert-<%= key %>"><%= value %></div>
+  <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
 <div class="container signupPage p-4">
   <!-- Icon -->

@@ -68,8 +68,8 @@ $(document).on('turbolinks:load', function() {
     // Audio
     senCounter ++;
     $('.result-hatest').hide();
-    $('.audio').removeClass('fa-edit');
-    $('.audio').addClass('fa-play-circle-o');
+    $('.audio').removeClass('fa fa-pause-play-o');
+    $('.audio').addClass('fa fa-play-circle-o');
     // Action for show next sentences
     var current, next;
     current = $(this).parent();
@@ -105,8 +105,8 @@ $(document).on('turbolinks:load', function() {
   var senCounter = 1;
   // Text to Speech
   function text_to_speech(){
-    $('.audio').removeClass('fa-play-circle-o');
-    $('.audio').addClass('fa-edit');
+    $('.audio').removeClass('fa fa-play-circle-o');
+    $('.audio').addClass('fa fa-pause-circle-o');
     var words = $("#content" + senCounter).text();
     responsiveVoice.speak(words, "UK English Male", { rate: 1 });
   }

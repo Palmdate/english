@@ -6,58 +6,15 @@
     </li>
 
     <li class="sub-menu-parent">
-        <a href="#" class="menu"><h2 class="menu-title">speaking</h2></a>
-        <ul class="sub-menu bg-blue-en4all">
-          <li><a data-turbolinks='false' href="<%= read_alouds_chart_path %>" class="menu reset" >Read Aloud</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Repeat Sentence</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Describe Image</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Retell Lecture</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Answer Short Questions</a></li>
-        </ul>
+      <a data-turbolinks='false' href="<%= read_alouds_chart_path %>" class="menu" id="home"><h2 class="menu-title">Read Aloud</h2></a>
     </li>
 
     <li class="sub-menu-parent">
-      <a href="#" class="menu"><h2 class="menu-title ">Writing</h2></a>
-        <ul class="sub-menu bg-blue-en4all">
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Summarize Written Text</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Essay</a></li>
-        </ul>
+      <a data-turbolinks='false' href="<%= write_fr_dics_public_path %>" class="menu" id="home"><h2 class="menu-title">Write From Dictation</h2></a>
     </li>
 
     <li class="sub-menu-parent">
-      <a href="#click" class="menu"><h2 class="menu-title ">Reading</h2></a>
-        <ul class="sub-menu bg-blue-en4all">
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Reading & Writing Fill in the blanks</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Multiple Choice, Multiple Answer</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Re-order Paragraph</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Fill in the blanks (Drap & Drop)</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Multiple Choice, Single Answer</a></li>
-        </ul>
-    </li>
-    
-    <li class="sub-menu-parent">
-      <a href="#click" class="menu"><h2 class="menu-title ">listening</h2></a>
-        <ul class="sub-menu bg-blue-en4all">
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Summarize Spoken Text</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Multiple Choice, Multiple Answer</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Fill in the blanks</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Highlight Correct Summary</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Multiple Choice, Single Answer</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Select Missing Word</a></li>
-          <li><a data-turbolinks='false' href="<%= build_index_path %>" class="menu">Highlight Incorrect Words</a></li>
-          <li><a data-turbolinks='false' href="<%= write_fr_dics_public_path %>" class="menu">Write from Dictation</a></li>
-        </ul>
-    </li>
-
-    <li class="sub-menu-parent">
-      <a href="#" class="menu"><h2 class="menu-title">course</h2></a>
-      <ul class="sub-menu bg-blue-en4all">
-        <% if current_user %>
-          <li><a data-turbolinks='false' href="<%= home_course_path %>">Schedule</a></li>
-        <% else %>
-          <li><a data-turbolinks='false' href="<%= login_path %>">Schedule</a></li>
-        <% end %>
-      </ul>
+      <a data-turbolinks='false' href="<%= home_course_path %>" class="menu" id="home"><h2 class="menu-title">Schedule</h2></a>
     </li>
 
     <% if current_user %>
