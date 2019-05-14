@@ -8,6 +8,7 @@ $(document).on('turbolinks:load', function() {
   $('.clock').text(min.toString()+':'+sec.toString());
   countdown();
 
+  // Function count 60s
   function countdown() {
     clearInterval(interval1);
 
@@ -28,8 +29,6 @@ $(document).on('turbolinks:load', function() {
 
       if (minutes == 0 && seconds == 0)
       {
-       
-        // $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false});
         clearInterval(interval1);
       };
     }, 1000);
@@ -41,17 +40,16 @@ $(document).on('turbolinks:load', function() {
     clearInterval(interval1);
   });
   // ------------------------
-  // count time to play audio
 
+  // Main funct: count time to play audio
   var Pause, interval, settime, timer, total_time;
+
   timer = 5;
   interval = setInterval((function() {
     timer--;
     $('.timer').text(timer);
     if (timer === 0) {
-      Pause();
       text_to_speech();
-      // document.getElementById('timer-beep').play();
       clearInterval(interval);
     }
   }), 1000);
@@ -64,24 +62,26 @@ $(document).on('turbolinks:load', function() {
     $('.prev-button').prop('disabled', false);
   }), 10000);
   // -----------------------------
-  Pause = function() {
-    $('.timer-beep').each(function(i) {
-      $(this).get($('fieldset').index(i)).pause();
-      $(this).get($('fieldset').index(i)).currentTime = 0;
-    });
-  };
+  
   // Analyze click next, previous, finish button
   $('.next-button').click(function() {
+    // Audio
     senCounter ++;
     $('.result-hatest').hide();
     $('.audio').removeClass('fa-edit');
     $('.audio').addClass('fa-play-circle-o');
+    // Action for show next sentences
     var current, next;
     current = $(this).parent();
     next = $(this).parent().next();
-    Pause();
+
     current.hide();
     next.show();
+    // Count time 60s
+    $('.clock').text(min.toString()+':'+sec.toString());
+    countdown();
+    speechSynthesis.cancel();
+    
     $('.next-button').prop('disabled', true);
     $('.prev-button').prop('disabled', true);
     $('.finish').prop('disabled', true);
@@ -95,10 +95,7 @@ $(document).on('turbolinks:load', function() {
       timer--;
       $('.timer').text(timer);
       if (timer === 0) {
-        Pause();
-       
         text_to_speech();
-        // $('.timer-beep').get($('fieldset').index(next)).play();
         clearInterval(interval);
       }
     }), 1000);
@@ -110,8 +107,8 @@ $(document).on('turbolinks:load', function() {
   function text_to_speech(){
     $('.audio').removeClass('fa-play-circle-o');
     $('.audio').addClass('fa-edit');
-    var words = new SpeechSynthesisUtterance( $("#content" + senCounter).text() );
-    speechSynthesis.speak(words);    
+    var words = $("#content" + senCounter).text();
+    responsiveVoice.speak(words, "UK English Male", { rate: 1 });
   }
 
   function sentence_result(){
@@ -129,7 +126,8 @@ $(document).on('turbolinks:load', function() {
   }
   
   $('.infor').click(function() {
-    $('.result-hatest').show();
+    $('.result-hatest').toggle();
     sentence_result();
   });
+  
 });
