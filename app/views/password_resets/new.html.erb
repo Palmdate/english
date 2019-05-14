@@ -1,0 +1,16 @@
+<%= render 'home/header' %>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+  <div>
+    <img src="https://img.icons8.com/clouds/100/000000/lock.png">
+  </div>
+  <%= form_tag password_resets_path, :method => :post do %>
+    <div class='field mb-4'>
+      <%= text_field_tag :email, params[:email], class: "fadeIn text-left", placeholder: "Email" %>
+    </div>
+      <div id="formFooter">
+      <%= submit_tag "Reset Password", class: 'btn bg-blue-en4all text-light' %>
+    </div>
+  <% end %>
+</div>
+</div>

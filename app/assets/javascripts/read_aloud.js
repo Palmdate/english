@@ -1,12 +1,14 @@
 $(document).on('turbolinks:load', function() {
   var readCounter = 1;
+  var linkRecord = "";
+  var wavesurfer;
+  var wavesurferorigin;
   // $('p#content0').show();
   $('#next-read0').show();
   var newHTML = $('p#content0').text();
   var result = document.getElementById('result0');
   var speechRecognizer;
 
-  
   // Play, download recoring
   function WzRecorder(config) {
     config = config || {};
@@ -127,7 +129,6 @@ $(document).on('turbolinks:load', function() {
     }
 
     function onMicrophoneError(e) {
-      console.log(e);
       alert("Unable to access the microphone.");
     }
 
@@ -298,10 +299,25 @@ $(document).on('turbolinks:load', function() {
 
   var recorder = new WzRecorder({
     onRecordingStop: function(blob) {
-      document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
+      linkRecord = URL.createObjectURL(blob);
+      $('#waveform-' + (readCounter - 1))[0].innerHTML = ''
+      
+
+      wavesurfer = WaveSurfer.create({
+        container: '#waveform-' + (readCounter - 1),
+        waveColor: 'gray',
+        progressColor: '#003359',
+        height: 50
+      });
+      
+      wavesurfer.load(linkRecord);
+
+      document.getElementById("downloadRecord").href = linkRecord;
+      document.getElementById("downloadRecord").download = linkRecord;
+      //document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
     },
     onRecording: function(milliseconds) {
-      document.getElementById("duration" + (readCounter - 1)).innerText = milliseconds + "ms";
+      //document.getElementById("duration" + (readCounter - 1)).innerText = milliseconds + "ms";
     },
     visualizer: {
       element: document.getElementById('myCanvas' + (readCounter - 1))
@@ -310,9 +326,8 @@ $(document).on('turbolinks:load', function() {
   // Play, download recoring
 
   // Speech to text
-  
-  function startConverting () {
 
+  function startConverting () {
     if('webkitSpeechRecognition' in window) {
       speechRecognizer = new webkitSpeechRecognition();
       speechRecognizer.continuous = true;
@@ -343,73 +358,140 @@ $(document).on('turbolinks:load', function() {
     // }
   };
   function stopConverting () {
-     if('webkitSpeechRecognition' in window) {
-       
-       speechRecognizer.stop();
-       speechRecognizer.continuous = false;
-     }
-    
+    if('webkitSpeechRecognition' in window) {
+
+      speechRecognizer.stop();
+      speechRecognizer.continuous = false;
+    }
+
   };
   // ------------Speech to text
 
 
   // main function
   $('#btnStart').click(function() {
-    
     start_Record();
     startConverting();
-
   });
+
   $('#btnStop').click(function() {
+    // onReceive(chart_rate, chart_sent);
+    if(!('speechSynthesis' in window)){
+      $('.origin-audio').hide();
+    }
     stop_Record();
-
-    let originalHTML = $('#result'+ (readCounter - 1)).text();
-    newHTML = $("p#content" + (readCounter - 1)).text();
-    // Diff HTML strings
-    let output = htmldiff(originalHTML, newHTML);
-    // Count % matching
-    let similarity = compareTwoStrings(originalHTML, newHTML);
-
-    // Show HTML diff output as HTML
-    document.getElementById("output" + (readCounter - 1)).innerHTML = output;
-    $("#accuracy" + (readCounter - 1)).attr('value', similarity);
-    document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
   });
-  
+
   $('#btnAgain').click(function() {
     reload_Record();
   });
+
   $('#btnNext').click(function() {
     // next_Record();
-    
-    
+
     $('#next-read' + (readCounter - 1)).hide();
     $('#next-read' + readCounter).show();
 
     result = document.getElementById('result' + readCounter);
     readCounter ++;
-   
-    reload_Record();    
+
+    reload_Record();
   });
+  // Function to calculate the similarity
+
+  function compare() {
+    $('#compare').find("ins").remove();
+    $('#compare').find("del").remove();
+    let result = $("#compare").text().split(' ');
+    let words =  result.filter(function(item) { return item !== "" });
+
+    return words.length;
+  }
   
-  // Text to speech
-  // var utterance = new window.SpeechSynthesisUtterance();
-  // utterance.volume = 1;
-  // utterance.rate = 1;
-  // utterance.pitch = 1;
-  // utterance.lang = 'en-US';
-  // var words = new SpeechSynthesisUtterance( $("#textbox").val() );
-
-
-  // document.getElementById("btn")
-
+  function CompareResult() {
+    if('webkitSpeechRecognition' in window) {
+      let originalHTML = $('#result'+ (readCounter - 1)).text().split(' ').filter(function(item) { return item !== "" }).slice().join(' ').toLowerCase();
+      newHTML = $("p#content" + (readCounter - 1)).text().split(' ').filter(function(item) { return item !== "" }).slice(1).join(' ').toLowerCase();
+      let length_ofnew = newHTML.split(' ').filter(function(item) { return item !== "" }).length;
+      sentence = Number($("p#read_id" + (readCounter - 1)).text());
+      
+      // Diff HTML strings
+      var output;
+      if (originalHTML != "") {
+        output = htmldiff(originalHTML[0].toUpperCase() + originalHTML.slice(1), newHTML[0].toUpperCase() + newHTML.slice(1));
+      } else {
+        output = htmldiff(originalHTML, newHTML);
+      }
+      $('#accuracy0').val(name);
+      
+      // Calculate the percent
+      document.getElementById("compare").innerHTML = output;
+      let similarity = compare()/length_ofnew;
+      // Show HTML diff output as HTML
+      document.getElementById("output" + (readCounter - 1)).innerHTML = output;
+      $("#accuracy" + (readCounter - 1)).attr('value', similarity);
+      document.getElementById("text_accuracy" + (readCounter - 1)).innerHTML = (Math.round(similarity * 100)).toString() + "%";
+      var rs = (Math.round(similarity * 100));
+      document.querySelector('#percent-' + (readCounter - 1)).textContent = rs + '%';
+      var ctx = document.getElementById('accuracy' + (readCounter - 1)).getContext('2d');
+      var accuracyChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: [rs, 100-rs],
+            backgroundColor: ['#57b0f3']
+          }],
+        },
+        options: {
+          cutoutPercentage: 50
+        }
+      });
+      onReceive(Math.round(similarity * 100), sentence);
+      
+    } else {
+      $('.other-browser').hide();
+    }
+  }
+  
+  // get data for charts
+  function onReceive(rate, sentence){
+    $.ajax({
+      url: "/read_alouds/chart", // Route to the Script Controller method
+      type: "GET",
+      dataType: "html",
+      data: { rate: rate,  // This goes to Controller in params hash, i.e. params[:file_name]
+              sentence: sentence
+            }
+    });
+  }
+  
+  // ---------------------------
   $('span.la').on('click', function(){
+
     if ($('span.la').hasClass('fa-play-circle-o'))
     {
       $('span.la').removeClass('fa-play-circle-o');
       $('span.la').addClass('fa-pause-circle-o');
-      var words = new SpeechSynthesisUtterance( $("#content" + (readCounter - 1)).text() );
-      speechSynthesis.speak(words);
+      var words = $("#content" + (readCounter - 1)).text();
+      var voice;
+      var checkVoice = document.getElementById("toggle-voice-" + (readCounter - 1)).checked;
+      if(checkVoice){
+        voice = "UK English Female";
+      }
+      else{
+        voice = "UK English Male";
+      }
+      
+     /*  wavesurferorigin = WaveSurfer.create({
+        container: '#waveformorigin-' + (readCounter - 1),
+        waveColor: 'gray',
+        progressColor: '#003359',
+        height: 50
+      });
+      
+      wavesurferorigin.load(speechSynthesis.speak(words)); */
+
+      responsiveVoice.speak(words, voice, { rate: 0.9 });
     }
     else
     {
@@ -418,7 +500,7 @@ $(document).on('turbolinks:load', function() {
       speechSynthesis.cancel();
     }
   });
-
+ 
   // text to speech
   // cong
   function toHHMMSS(seconds) {
@@ -434,20 +516,31 @@ $(document).on('turbolinks:load', function() {
     return minutes + ':' + seconds;
   };
 
-  // var wavesurferorigin;
-  // var wavesurfer;
-
-  // wavesurferorigin = WaveSurfer.create({
-  //   container: '#waveformorigin',
-  //   waveColor: 'gray',
-  //   progressColor: '#003359',
-  //   height: 50
-  // });
-
-
   // $(".your-record-audio-origin-play").on('click', function(){
   //   $(".your-record-audio-origin-play").addClass("d-none");
   //   $(".your-record-audio-origin-pause").removeClass("d-none");
+  //   var words = new SpeechSynthesisUtterance( $("#content" + (readCounter - 1)).text() );
+
+  //   var checkVoice = document.getElementById("toggle-voice-" + (readCounter - 1)).checked;
+  //   var voiceMale = "Microsoft David Desktop - English (United States)";
+  //   var voiceFemale = "Microsoft Zira Desktop - English (United States)";
+
+  //   if(checkVoice){
+  //     words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceFemale; })[0];
+  //   }
+  //   else{
+  //     words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceMale; })[0];
+  //   }
+  //   speechSynthesis.speak(words);
+
+  //   wavesurferorigin = WaveSurfer.create({
+  //     container: '#waveformorigin',
+  //     waveColor: 'gray',
+  //     progressColor: '#003359',
+  //     height: 50
+  //   });
+  //   wavesurferorigin.load(speechSynthesis.speak(words));
+
   //   var durationTimeOrigin = wavesurferorigin.getDuration();
 
   //   setInterval(function () {
@@ -480,53 +573,45 @@ $(document).on('turbolinks:load', function() {
   //   wavesurferorigin.playPause();
   // });
 
-  // wavesurfer = WaveSurfer.create({
-  //   container: '#waveform',
-  //   waveColor: 'gray',
-  //   progressColor: '#003359',
-  //   height: 50
-  // });
-
-
-  // $(".your-record-audio-play").on('click', function(){
-  //   $(".your-record-audio-play").addClass("d-none");
-  //   $(".your-record-audio-pause").removeClass("d-none");
-
-  //   var durationTime = wavesurfer.getDuration();
-
-  //   setInterval(function () {
-  //     var currentTime = wavesurfer.getCurrentTime();
-
-  //     document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
-
-  //     if (currentTime == durationTime){
-  //       $(".your-record-audio-pause").addClass("d-none");
-  //       $(".your-record-audio-play").removeClass("d-none");
-  //     }
-  //   }, durationTime);
-
-  //   wavesurfer.playPause();
-  // });
-
-  // $(".your-record-audio-pause").on('click', function(){
-  //   $(".your-record-audio-pause").addClass("d-none");
-  //   $(".your-record-audio-play").removeClass("d-none");
-
-  //   var durationTime = wavesurfer.getDuration();
-
-  //   setInterval(function () {
-  //     var currentTime = wavesurfer.getCurrentTime();
-
-  //     document.querySelector('#timeRecord').textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
-  //   }, durationTime);
-
-  //   wavesurfer.playPause();
-  // });
-
   var timePre;
   var timePost;
   var pre;
   var post;
+  var yourTimeRecord;
+
+  $(".your-record-audio-play").on('click', function(){
+    $(".your-record-audio-play").addClass("d-none");
+    $(".your-record-audio-pause").removeClass("d-none");
+
+    var durationTime = wavesurfer.getDuration();
+    yourTimeRecord = setInterval(function () {
+      var currentTime = wavesurfer.getCurrentTime();
+
+      document.querySelector('#timeRecord-' + (readCounter - 1)).textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+
+      if (currentTime == durationTime){
+        $(".your-record-audio-pause").addClass("d-none");
+        $(".your-record-audio-play").removeClass("d-none");
+      }
+    }, durationTime);
+
+    wavesurfer.playPause();
+  });
+
+  $(".your-record-audio-pause").on('click', function(){
+    $(".your-record-audio-pause").addClass("d-none");
+    $(".your-record-audio-play").removeClass("d-none");
+
+    var durationTime = wavesurfer.getDuration();
+
+    yourTimeRecord = setInterval(function () {
+      var currentTime = wavesurfer.getCurrentTime();
+
+      document.querySelector('#timeRecord-' + (readCounter - 1)).textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
+    }, durationTime);
+
+    wavesurfer.playPause();
+  });
 
   function startTimerPre() {
     var timer = timePre, minutes, seconds;
@@ -537,7 +622,11 @@ $(document).on('turbolinks:load', function() {
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
+
       $('#timePrepaire').text(minutes + ":" + seconds);
+
+      document.querySelector('#timePrepaire').textContent = minutes + ":" + seconds;
+
 
       if (--timer < 0) {
         $("#time-prepaire").addClass("d-none");
@@ -547,6 +636,8 @@ $(document).on('turbolinks:load', function() {
         $('#btnStart').addClass("d-none");
         $('#btnStop').removeClass("d-none");
         clearInterval(pre);
+        clearInterval(yourTimeRecord);
+        $("#beepRecord")[0].play();
         recorder.start();
         startTimerPost();
       }
@@ -562,7 +653,15 @@ $(document).on('turbolinks:load', function() {
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
+      percent = 100 - ((timer/40)*100);
+
+
       $('#timeProgess').text( minutes + ":" + seconds );
+
+      $('#time-progess-bar').width(percent + '%');
+      $('#myCanvas' + (readCounter - 1)).removeClass("d-none");
+      //document.querySelector('#timeProgess').textContent = minutes + ":" + seconds;
+
 
       if (--timer < 0) {
         $("#time-prepaire").addClass("d-none");
@@ -576,10 +675,12 @@ $(document).on('turbolinks:load', function() {
         $('.origin-audio').removeClass("d-none");
         $('.record-audio').removeClass("d-none");
 
-        // wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
-        // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+        $('#myCanvas' + (readCounter - 1)).addClass("d-none");
 
+        CompareResult();
+        
         clearInterval(post);
+        clearInterval(yourTimeRecord);
         recorder.stop();
       }
       else {}
@@ -587,26 +688,30 @@ $(document).on('turbolinks:load', function() {
   };
 
   function start_Record(){
+    $("#beepRecord")[0].play();
     recorder.start();
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     $('#btnStart').addClass("d-none");
     $('#btnStop').removeClass("d-none");
 
     $('#time-prepaire').addClass("d-none");
+    $('#time-prepaire-bar').width('100%');
     $('#time-progess').removeClass("d-none");
     $('#time-out').addClass("d-none");
 
     clearInterval(pre);
     clearInterval(post);
+    clearInterval(yourTimeRecord);
+
     startTimerPost();
-    
+
   };
 
   function stop_Record(){
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     $('#btnStop').addClass("d-none");
 
@@ -615,23 +720,27 @@ $(document).on('turbolinks:load', function() {
 
     $('#time-prepaire').addClass("d-none");
     $('#time-progess').addClass("d-none");
+    $('#time-progess-bar').width('0%');
     $('#time-out').removeClass("d-none");
 
     $('.origin-audio').removeClass("d-none");
     $('.record-audio').removeClass("d-none");
 
-    // wavesurferorigin.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+    // wavesurferorigin.load(speechSynthesis.speak(words));
     // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
+
+    CompareResult();
 
     clearInterval(pre);
     clearInterval(post);
-    recorder.stop();
+    clearInterval(yourTimeRecord);
 
+    recorder.stop();
   };
 
   function reload_Record() {
     document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
     $('#btnAgain').addClass("d-none");
     $('#btnNext').addClass("d-none");
@@ -644,29 +753,18 @@ $(document).on('turbolinks:load', function() {
     $('.origin-audio').addClass("d-none");
     $('.record-audio').addClass("d-none");
 
-    clearInterval(pre);
-    clearInterval(post);
-    startTimerPre();
-  };
+    $(".your-record-audio-pause").addClass("d-none");
+    $(".your-record-audio-play").removeClass("d-none");
 
-  function next_Record() {
-    newHTML = $("p#content" + readCounter).text();
-    $('#next-read' + (readCounter - 1)).hide();
-    $('#next-read' + readCounter).show();
-    // $("p#content" + (readCounter - 1)).hide();
-    // $("p#content" + readCounter).show();
-    // $('#paragrap' + (readCounter - 1)).hide();
-    // $('#paragrap' + readCounter).show();
-    readCounter ++;
+    $('span.la').removeClass('fa-pause-circle-o');
+    $('span.la').addClass('fa-play-circle-o');
     
+    speechSynthesis.cancel();
+    wavesurfer.stop();
+
     clearInterval(pre);
     clearInterval(post);
-
-    timePre = 40;
-    timePost = 40;
-
-    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    clearInterval(yourTimeRecord);
 
     startTimerPre();
   };
@@ -674,6 +772,7 @@ $(document).on('turbolinks:load', function() {
   function init() {
     clearInterval(pre);
     clearInterval(post);
+    clearInterval(yourTimeRecord);
 
     timePre = 40;
     timePost = 40;
@@ -681,7 +780,18 @@ $(document).on('turbolinks:load', function() {
     $('#timePrepaire').text( "00:" + timePre );
     $('#timeProgess').text( "00:" + timePost);
 
+    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
     startTimerPre();
   };
   init();
+
+  window.addEventListener("keydown", event => {
+    if (event.keyCode == 116) {
+      if(speechSynthesis.speaking){
+        speechSynthesis.cancel();
+      }
+    }
+  });
 });

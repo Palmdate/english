@@ -1,9 +1,18 @@
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src='/assets/recaptcha.js' type="text/javascript"></script>
+<%= render "/home/header"%>
 <% flash.each do |key, value| %>
 <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
-<div class="container">
+<div class="container signupPage p-4">
   <!-- Icon -->
+  
+  <!-- Tabs Titles -->
 
+  <!-- Icon -->
+  <div style="padding-left: 45%;">
+    <img src="https://img.icons8.com/clouds/100/000000/lock.png">
+  </div>
   <!-- Sign up Form -->
   <%= form_with(model: user, local: true) do |form| %>
   <div class="row mb-2">
@@ -16,15 +25,27 @@
     <div class="col-4">
       <label class="text-right">Password: <span class="text-danger">*</span</label>
                                                                        </div>
-    <%= form.password_field :password, required: true, id: "password", class: "fadeIn third col-4", placeholder: "Password", pattern: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", title: "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters", onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters' : ''); if(this.checkValidity()) form.password_confirmation.pattern = this.value;" %>
+    <%= form.password_field :password, required: true, id: "password", class: "fadeIn third col-4", placeholder: "Password", pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$", title: "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters", onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters' : ''); if(this.checkValidity()) form.password_confirmation.pattern = this.value;" %>
   </div>
   <div class="row mb-2">
     <div class="col-4">
       <label class="text-right">Password Confirm: <span class="text-danger">*</spanc</label>                                                                              </div>
-    <%= form.password_field :password_confirmation, required: true, id: "password_confirmation", class: "fadeIn third col-4", placeholder: "Password Confirmation", pattern: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password' : '');" %>
+                                                                                                                                                                          <%= form.password_field :password_confirmation, required: true, id: "password_confirmation", class: "fadeIn third col-4", placeholder: "Password Confirmation", pattern: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", onchange: "this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password' : '');" %>
   </div>
+  <div 
+      class="g-recaptcha mb-4 mt-4 text-center" 
+      data-callback="reCaptchaCallback"
+    >
+    </div>
   <div class="mt-2 mb-2 text-center">
-    <%= form.submit 'Sign Up', class: 'btn bg-blue-en4all text-light' %>
+    <%= form.submit 'Sign Up', class: 'btn bg-blue-en4all text-light', id: "btnSigup", disabled: true %>
   </div>
   <% end %>
 </div>
+
+<script>
+  function reCaptchaCallback() {
+    $("#btnSigup").attr("disabled", false);
+  }
+  $('.sub-menu-parent').hide();
+</script>

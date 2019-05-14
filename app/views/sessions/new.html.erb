@@ -1,4 +1,5 @@
-<%= render 'home/header'%>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src='/assets/recaptcha.js' type="text/javascript"></script>
 <% flash.each do |key, value| %>
 <div class="alert alert-<%= key %>"><%= value %></div>
 <% end %>
@@ -15,19 +16,29 @@
     <%= form_tag sessions_path do |form| %>
     <%= text_field_tag :email, nil, class: "fadeIn second", id: "login", placeholder: "Email"%>
     <%= password_field_tag :password, nil, class: "fadeIn third", id: "password", placeholder: "Password"%>
-
+    <div 
+      class="g-recaptcha mb-4 mt-4" 
+      data-callback="reCaptchaCallback"
+    >
+    </div>
     <div class="mt-2 mb-2">
-      <%= submit_tag 'Login', class: "btn bg-blue-en4all text-light"%>
+      <%= submit_tag 'Login', class: "btn bg-blue-en4all text-light", id: "btnLogin", disabled: true%>
     </div>
     <% end %>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
       <div class="clearfix">
-        <a class="underlineHover text-blue-en4all float-left" href="#">Forgot Password?</a>
+        <a class="underlineHover text-blue-en4all float-left" href="<%= new_password_reset_path %>">Forgot Password?</a>
         <a class="underlineHover text-blue-en4all float-right" href="/signup">Sign Up</a>
       </div>
     </div>
 
   </div>
 </div>
+
+<script>
+  function reCaptchaCallback() {
+    $("#btnLogin").attr("disabled", false);
+  }
+</script>
