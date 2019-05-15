@@ -1,111 +1,82 @@
 <script src='/assets/write_fr_dic.js' type="text/javascript"></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src='//code.responsivevoice.org/responsivevoice.js'></script>
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <%= render partial: 'home/header' %>
-<% k = 0 %>
+<% k = 1 %>
 <div class="read-alouds container bg-white shadow p-2">
-    <div id="placement" class="text-center"><h1 class="clock countDown"></h1></div>
-    <div class="panel panel-default">
-        
-        <!--form-content-->
-        <form id="form-id">
-            <div id="ng-app" layout="column">
-                <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
-
-                    <fieldset>
-                        <h2 class="text-blue-en4all">SENTENCE <%= k = k + 1 %></h2>
-                        <h3 class='sub-title'>
-                            <div class="page-header">
-	                              <span class="minutes text-danger">This audio will auto play after </span><span class="timer text-danger">05</span><span class="text-danger">s</span>
-                            </div>
-                        </h3>
-                        
-                        <div class="page-header">
-                            <p class="d-none" id="content<%= k %>"><%= sens.result%></p>
-                            <span class="audio fa fa-play-circle-o fa-4x"></span>
-                        </div>
-                        <div class="md-form">
-                            <textarea layout-fill id="sens-content<%= k %>" class="left form-control p-4" rows="4"></textarea>
-                            <h1 layout-fill id="sens-content-right" class="md-textarea right form-control" style="display: none;"><%= sens.result%></h1>
-                            
-                            <!-- Modal result-->
-                            <div class="modal fade" id="myModal<%= k %>" role="dialog" >
-                                <div class="modal-dialog" role="document">
-                                    <!-- Modal result-->
-                                    <div class="modal-content" >
-                                        <div class="modal-header bg-blue-en4all">
-                                            <h5 class="modal-title" id="exampleModalLabel">YOUR RESULT</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body" style="padding:40px 50px;">
-                                            <form role="form">
-                                                <div class="form-group" >
-                                                </div>                        
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <%= link_to 'Schedule'.html_safe, home_course_path,  class: "btn btn-secondary pull-left mr-2", style: "color:white;"%>
-                                            <button type="button" class="btn bg-blue-en4all text-light pull-left" data-dismiss="modal" onclick="location.reload()">Listen again</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>              
-                        </div>
-                        <!-- Modl result -->
-                        <div class="action-bottom" style="left: 0">
-                            <div class="float-left">
-                                <i class="infor fa fa-info-circle" style="font-size:36px"></i>
-                            </div>
-                            
-                            <% if (k == @count.to_i) %>
-                                <button class="custom-button finish" onclick="$('#myModal<%= k %>').modal({backdrop: 'static', keyboard: false})">Finish</button>
-                            <% else %>
-                                <button name='next' class='next-button custom-button'>Next</button>
-                            <% end %>
-                        </div>
-                    </fieldset>
-                <% end %>
-        </form>
-        <!-- end form -->
+    <div id="placement" class="text-center d-none"><h1 class="clock countDown"></h1></div>
+    <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
+        <div id="data-<%= k %>" style="display: none; width: 80%; margin: auto">
+            <div class="text-center">
+                <h2 class="text-blue-en4all sentence">SENTENCE <%= k %></h2>
+                <h3 class='sub-title'>
+                    <div class="page-header">
+                            <span class="minutes text-danger">This audio will auto play after </span><span class="timer text-danger">05</span><span class="text-danger">s</span>
+                    </div>
+                </h3>
+                
+                <div class="page-header">
+                    <p class="d-none" id="content<%= k %>"><%= sens.result%></p>
+                    <span id="audio" class="fas fa-broadcast-tower fa-4x"></span>
+                </div>
             </div>
+            <div class="md-form">
+                <textarea layout-fill id="sens-content<%= k %>" class="left form-control p-4" rows="4"></textarea>
+                <h1 layout-fill id="sens-content-right" class="md-textarea right form-control" style="display: none;"><%= sens.result%></h1>            
+            </div>
+            <div class="d-none" id="result-<%= k %>">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <canvas id="accuracy-<%= k %>"></canvas>
+                    </div>
+                    <div class="col-sm-8">
+                        <div id="output-<%= k %>"></div>
+                        <div id="accuracy-<%= k %>"></div>
+                        <div class="mt-4 text-center">
+                            <button id="retry-button" class='edit btn bg-blue-en4all text-light'>Retry</button>
+                        <button id="next-button" class='edit btn bg-blue-en4all text-light'>Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% k = k + 1%>
+    <% end %>
+</div>
+</div>
+<div class="action-bottom" style="left: 0">
+    <div class="float-right">
+        <button id="verify-result" class="edit btn bg-blue-en4all text-light mr-2" >Verify</button>
     </div>
 </div>
 
-<!-- Model errors -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:red;">
-                <h5 class="modal-title" id="exampleModalLongTitle">TIMEOUT</h5>
+<!-- Modal result-->
+<div class="modal fade" id="myResult" role="dialog" >
+    <div class="modal-dialog" role="document">
+        <!-- Modal result-->
+        <div class="modal-content" >
+            <div class="modal-header bg-blue-en4all">
+                <h5 class="modal-title" id="exampleModalLabel">YOUR RESULT</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                You didn't finished this test!!!
-                Please chosse do this again or back to course
+            <div class="modal-body" style="padding:40px 50px;">
+                
             </div>
-            <div class="modal-footer" style="justify-content: space-between;">
-                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal" onclick="location.reload()"><span class="fa fa-rotate-left"></span></button>
-                <%= link_to '<span class="fa fa-align-justify"></span>'.html_safe, home_course_path,  class: "btn btn-secondary pull-left", style: "color:white;"%>
+            <div class="modal-footer">
+                <button id="retry-button" class='edit btn bg-blue-en4all text-light mr-2'>Retry</button>
+                <button id="next-button" class='edit btn bg-blue-en4all text-light mr-2'>Next</button>
             </div>
         </div>
     </div>
-</div>
-<!-- Model errors -->
-
-<div class="result-hatest" style="display: none; padding: 5% 0 0 10%;">
-    <details open>
-        <summary>Overview</summary>
-
-        <div id="output"></div>
-        <meter id="accuracy"></meter>
-        <p id="text_accuracy"><strong></strong></p>
-    </details>
-</div>
+</div>  
 
 <script>
     speechSynthesis.cancel();
