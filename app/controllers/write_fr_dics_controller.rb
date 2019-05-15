@@ -3,11 +3,17 @@ class WriteFrDicsController < ApplicationController
 
   # GET /write_fr_dics
   # GET /write_fr_dics.json
+  # Pgae WFD in Course
   def index
     @write_fr_dics = WriteFrDic.all
     @count = params[:audio]
+    if params[:status_id]
+      wfd_status = Course.all.find_by_id(params[:status_id])
+      wfd_status.update(:status => "In Progress")
+    end
   end
 
+  # Pgae WFD in Menu
   def public
     @write_fr_dics_result = WriteFrDic.select(:id, :result)
     @count = params[:audio]

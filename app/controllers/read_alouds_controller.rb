@@ -22,6 +22,11 @@ class ReadAloudsController < ApplicationController
   def index
     if current_user
       @read_alouds = params[:audio].to_i
+      if params[:status_id]
+        @status_id = params[:status_id]
+        read_status = Course.all.find_by_id(params[:status_id])
+        read_status.update(:status => "In Progress")
+      end
     else
       redirect_to login_path
     end

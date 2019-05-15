@@ -4,7 +4,7 @@ class CourseController < ApplicationController
   end
 
   def store
-    @course = Course.new({:skill => params[:skill], :quality => params[:quality], :status => params[:status], :day_id => params[:day_id], :user_id => current_user.id})
+    @course = Course.new({:skill => params[:skill], :quality => params[:quality], :status => "Not Starting", :day_id => params[:day_id], :user_id => current_user.id})
     @course.save
     redirect_to home_course_path
   end
