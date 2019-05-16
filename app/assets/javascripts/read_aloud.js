@@ -370,8 +370,8 @@ $(document).on('turbolinks:load', function() {
 
   // main function
   $('#btnStart').click(function() {
-    start_Record();
     startConverting();
+    start_Record();
   });
 
   $('#btnStop').click(function() {

@@ -106,19 +106,22 @@ $(document).on('turbolinks:load', function() {
     
     //
     var suggest = "unavailable result";
-    console.log(rs);
-    console.log(typeof rs);
+    var suggestDetail = "unavailable result";
 
     if (rs <= 50){
       suggest = "Bad";
+      suggestDetail = "You should retry!!!";
     }      
     else if(rs <= 85) {
       suggest = "Good";
+      suggestDetail = "You might retry to have high result more!!!";
     }
     else if(rs <= 100) {
       suggest = "Great";
+      suggestDetail = "You might listen next sentence!!!";
     }
 
-    $("#suggest")[0].innerHTML = suggest;
+    $("#suggest-" + senCounter)[0].innerHTML = suggest;
+    $("#suggestDetail-" + senCounter)[0].innerHTML = suggestDetail;
   }
 });
