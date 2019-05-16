@@ -7,10 +7,12 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <%= render partial: 'home/header' %>
 <% k = 1 %>
 <div class="read-alouds container bg-white shadow p-2">
     <div id="placement" class="text-center d-none"><h1 class="clock countDown"></h1></div>
+    <h6 class="font-weight-bold mb-4">Type what you hear in the box below exactly as you hear it. You can replay as many times as you want by click icon <span class="fas fa-broadcast-tower fa-2x"></span>.</h6>
     <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
         <div id="data-<%= k %>" style="display: none; width: 80%; margin: auto">
             <div class="text-center">
@@ -33,15 +35,17 @@
             <div class="d-none" id="result-<%= k %>">
                 <div class="row">
                     <div class="col-sm-4">
-                        <canvas id="accuracy-<%= k %>"></canvas>
+                        <div style="width: 250px;">
+                            <div class="percent">
+                                <h5 id="percent-<%= k %>"></h5>
+                            </div>
+                            <canvas id="accuracy-<%= k %>"></canvas>
+                        </div>
                     </div>
                     <div class="col-sm-8">
-                        <div id="output-<%= k %>"></div>
-                        <div id="accuracy-<%= k %>"></div>
-                        <div class="mt-4 text-center">
-                            <button id="retry-button" class='edit btn bg-blue-en4all text-light'>Retry</button>
-                        <button id="next-button" class='edit btn bg-blue-en4all text-light'>Next</button>
-                        </div>
+                        <h3 class="font-weight-bold text-success" id="suggest">Good</h3>
+                        <div class="d-none" id="output-<%= k %>"></div>
+                        <div class="d-none" id="accuracy-<%= k %>"></div>
                     </div>
                 </div>
             </div>
@@ -52,32 +56,11 @@
 </div>
 <div class="action-bottom" style="left: 0">
     <div class="float-right">
-        <button id="verify-result" class="edit btn bg-blue-en4all text-light mr-2" >Verify</button>
+        <button id="retry-button" class='edit btn bg-blue-en4all text-light d-none'>Retry</button>
+        <button id="next-button" class='edit btn bg-blue-en4all text-light d-none'>Next</button>
+        <button id="verify-result" class="edit btn bg-blue-en4all text-light mr-2" disabled="true">Verify</button>
     </div>
 </div>
-
-<!-- Modal result-->
-<div class="modal fade" id="myResult" role="dialog" >
-    <div class="modal-dialog" role="document">
-        <!-- Modal result-->
-        <div class="modal-content" >
-            <div class="modal-header bg-blue-en4all">
-                <h5 class="modal-title" id="exampleModalLabel">YOUR RESULT</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="padding:40px 50px;">
-                
-            </div>
-            <div class="modal-footer">
-                <button id="retry-button" class='edit btn bg-blue-en4all text-light mr-2'>Retry</button>
-                <button id="next-button" class='edit btn bg-blue-en4all text-light mr-2'>Next</button>
-            </div>
-        </div>
-    </div>
-</div>  
-
 <script>
     speechSynthesis.cancel();
 </script>
