@@ -3,6 +3,6 @@ class IpaEnglishController < ApplicationController
  
  
   def index
-    @ipa = convert("hello is smart")
+    @ipa = to_ipa("hello is smart")
   end
 end
