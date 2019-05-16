@@ -7,7 +7,9 @@ class WriteFrDicsController < ApplicationController
   def index
     @write_fr_dics = WriteFrDic.all
     @count = params[:audio]
+     
     if params[:status_id]
+      @status_id = params[:status_id]
       wfd_status = Course.all.find_by_id(params[:status_id])
       wfd_status.update(:status => "In Progress")
     end

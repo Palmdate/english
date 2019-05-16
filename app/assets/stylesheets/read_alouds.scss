@@ -595,6 +595,10 @@ input.checkbox-toggle-round-flat:checked + label:after {
   background-color: none;
 }
 
+
+// resets
+
+// modal pop up when complete read-alouds
 $babyblue: #7fadf2;
 $white: #fff;
 
@@ -615,10 +619,7 @@ $white: #fff;
   transition: $transition;
 }
 
-// resets
-
-// modal pop up
-.modal {
+.modal-readaloud {
 	position: fixed;
 	top: 0;
 	left: 50%;
@@ -634,7 +635,7 @@ $white: #fff;
   @include transition(all .4s ease);
 }
 
-.modal-content {
+.modal-content-ra {
   padding: 20px;
   text-align: left;
   background-color: $white;

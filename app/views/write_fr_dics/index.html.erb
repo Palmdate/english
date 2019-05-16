@@ -66,7 +66,7 @@
                     </form>
                   </div>
                   <div class="modal-footer">
-                    <%= link_to 'Schedule'.html_safe, home_course_path,  class: "btn btn-secondary pull-left mr-2", style: "color:white;"%>
+                    <%= link_to 'Schedule'.html_safe, home_course_path(:status_id => @status_id),  class: "btn btn-secondary pull-left mr-2", style: "color:white;"%>
                     <button type="button" class="btn bg-blue-en4all text-light pull-left" data-dismiss="modal" ng-click="clear()" onclick="location.reload()">Listen again</span></button>
                   </div>
                 </div>
