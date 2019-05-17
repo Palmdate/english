@@ -14,4 +14,5 @@
  *= require_self
  *= require main
  *= require sessions
+ *= require bootstrap-table/bootstrap-table
  */

@@ -41,6 +41,8 @@ gem 'jquery-rails'
 gem 'fuzzy-string-match'
 # Font awesome include icon
 gem 'font-awesome-sass', '~> 4.7.0'
+# Filter table
+gem "bootstrap-table-rails"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

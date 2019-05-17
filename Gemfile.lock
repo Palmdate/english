@@ -64,6 +64,7 @@ GEM
     bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
       sassc (>= 2.0.0)
+    bootstrap-table-rails (1.13.4)
     builder (3.2.3)
     byebug (11.0.0)
     capybara (3.14.0)
@@ -246,6 +247,7 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap
   bootstrap-sass (~> 3.4.1)
+  bootstrap-table-rails
   byebug
   capybara (>= 2.15)
   chartjs-ror

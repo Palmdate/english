@@ -1,0 +1,18 @@
+<table data-toggle="table" data-search="true">
+  <thead>
+    <tr>
+      
+      <th data-field="name" data-sortable="true">Name</th>
+      <th data-field="age" data-sortable="true">Age</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% User.all.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

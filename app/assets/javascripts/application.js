@@ -14,4 +14,5 @@
 //= require rails-ujs
 //= require turbolinks
 //= require popper
+//= require bootstrap-table/bootstrap-table
 //= require_tree ./plugin
