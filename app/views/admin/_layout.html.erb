@@ -1,0 +1,69 @@
+<div class="admin-panel">
+  
+  <div class="slidebar">
+    <ul>
+      <li>
+        <a href="" name="tab1">
+          <i class="fa fa-tachometer"></i>General</a>
+      </li>
+      <li><a href="" name="tab2"><i class="fa fa-eyedropper"></i>Styling</a></li>
+      <li><a href="" name="tab3"><i class="fa fa-pencil"></i>Typography</a></li>
+      <li><a href="" name="tab4"><i class="fa fa-picture-o"></i>Report</a></li>
+      <li><a href="" name="tab5"><i class="fa fa-file-video-o"></i>Blog / News</a></li>
+      <li><a href="" name="tab6"><i class="fa fa-wrench"></i>Advanced</a></li>
+    </ul>
+  </div>
+  
+  <div class="main">
+    <article id="tab1">
+      <h2 class="header">Dashboard</h2>
+      
+    </article>
+    <article id="tab2"><h2 class="header">Styling</h2></article>
+    <article id="tab3"><h2 class="header">Typography</h2></article>
+    <article id="tab4"><h2 class="header">Report By A Week</h2>
+      <%= render "user_report" %>
+    </article>
+    <article id="tab5"><h2 class="header">Blog /news</h2></article>
+    <article id="tab6"><h2 class="header">Advanced</h2></article>    
+  </div>
+  
+  
+</div>
+
+<script>
+  $(document).ready(function() {
+    $(".main article").hide(); 
+    // // Cache tout les textes et les sous-menu
+    // $('#myList').show();
+    $(".slidebar li:first").attr("id","active"); 
+    // Ajoute la class active au premier menu
+    
+    $(".main article:first").fadeIn(); 
+    // Montre le premier texte à l'apparition de la page
+    
+
+    $('.slidebar a').click(function(e) {
+      e.preventDefault();
+      if ($(this).closest("li").attr("id") == "active"){ 
+        //si le menu cliquer est déjà ouvert.
+        return       
+      }else{             
+        $(".main article").hide(); 
+        // Cache tous les éléments
+
+        $(".slidebar li").attr("id","");  
+        // Rénitialise tout les menu active
+        
+        $(this).parent().attr("id","active"); 
+        // active le parent du li selectionner
+        
+        $('#' + $(this).attr('name')).fadeIn(); 
+        // Montre le texte
+      }
+      
+      
+    });
+
+  });
+</script>

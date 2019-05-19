@@ -1,0 +1,63 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<input id="search" type="text" placeholder="Search..">
+<br>
+<div id="myList" style="overflow: scroll; height:500px">
+  <ul>
+    <% User.all.each do |user| %>
+    <li>
+      <p class="list-group-item" data-toggle="collapse" data-target="#demo<%= user.id %>"><%= user.email %><p>
+        <div id="demo<%= user.id %>" class="collapse">
+          <!-- <div id="chart_div"></div> -->
+          <%= column_chart list_7_days(user.id), min: 0, max: 100, download: true, xtitle: "A Week", ytitle: "Percent" %>
+          <!-- <%= column_chart ReadAloudChart.where("date(created_at) between :start and :end", {start: 7.days.ago.to_date, end: Date.today}).where(:user_id => user.id).group_by_day_of_week(:created_at, format: "%a").count %> -->
+        </div>
+    </li>
+    <% end %>
+  </ul>
+</div> 
+
+<script>
+
+// Button search
+$("#search").on("keyup", function() {
+  var value = $(this).val().toLowerCase();
+  $("#myList li").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  });
+});
+
+  // google.charts.load('current', {'packages':['bar']});
+  // google.charts.setOnLoadCallback(drawChart);
+
+  // function drawChart() {
+  //   var data = google.visualization.arrayToDataTable([
+  //     ['Year', 'Sales', 'Expenses', 'Profit'],
+  //     ['2014', 1000, 400, 200],
+  //     ['2015', 1170, 460, 250],
+  //     ['2016', 660, 1120, 300],
+  //     ['2017', 1030, 540, 350]
+  //   ]);
+
+  //   var options = {
+  //     chart: {
+  //       title: 'Company Performance',
+  //       subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+  //     },
+  //     bars: 'horizontal', // Required for Material Bar Charts.
+  //     hAxis: {format: 'decimal'},
+  //     height: 400,
+  //     colors: ['#1b9e77', '#d95f02', '#7570b3']
+  //   };
+
+  //   var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+  //   chart.draw(data, google.charts.Bar.convertOptions(options));
+
+    
+  // }
+</script>
+
