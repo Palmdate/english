@@ -721,3 +721,168 @@ button.modal-close {
   opacity: 1;
   @include transition(all .4s ease);
 }
+
+// Favorite button
+.fave {
+	width: 50px;
+	height: 50px;
+	background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/202839/add-to-favorites.png);
+	background-position: 0 0;
+	&:hover {
+		cursor: pointer;
+	}
+	&.animate {
+		background-position: -3519px 0;
+		transition: background .8s steps(55);
+	}
+}
+
+.tooltip {
+	font-size: 13px;
+	//font-weight: bold; 
+	background-color: #FFAD00;
+	box-shadow: 0 2px 6px rgba(0,0,0,.18);
+	color: white;
+	padding: 10px 14px;
+	border-radius: 4px;
+	transition: all 125ms ease-out;
+	visibility: hidden;
+	opacity: 0;
+	transform-origin: 50% 100%;
+	position: absolute;
+	bottom: 90%;
+	margin-left: 25px;
+	width: 125px;
+	white-space: nowrap; 
+	text-align: center;
+	
+	&.slide-up {
+		bottom: 120%;
+		opacity: 1; 
+		visibility: visible;
+		transition: 275ms 300ms ease-out;		
+	}
+}
+// Notify page
+$notif-height: 60px;
+$primary-color: #4A8AA9;
+$primary-text-color: black;
+
+$notice-color: $primary-color;
+$success-color: #40B233;
+$warning-color: #E57E32;
+$alert-color: #CC1429;
+
+* {transition: all 0.1s ease;}
+
+@mixin flash($bg-color, $color, $icon) {
+  &-color {
+    color: $bg-color;
+  }
+  &.button {
+    background-color: $bg-color;
+    border-color: $bg-color;
+    &:hover {
+      border-color: darken($bg-color, 10);
+      background-color: darken($bg-color, 10);
+    }
+  }
+  &.bg, .bg {
+    background-color: $bg-color;
+    color: $color;
+  }
+  &.icon, .icon {
+    &::before {
+      font-family: FontAwesome;
+      content: $icon;
+    }
+  }
+}
+
+.notifications {
+    a {
+        color: $primary-text-color;
+        text-decoration: none;
+        &.close {
+            color: grey;
+            &::before {
+                font-family: FontAwesome;
+                content: '\f00d';
+            }
+            &:hover {
+                color: $alert-color !important;
+            }
+        }
+        &:hover {
+            color: $primary-color;
+        }
+    }
+}
+
+.notice { @include flash($notice-color, white, '\f129'); }
+.success { @include flash($success-color, white, '\f00c'); }
+.warning { @include flash($warning-color, white, '\f0a1'); }
+.alert { @include flash($alert-color, white, '\f0f3'); }
+
+.notifications {
+  position: fixed;
+  right: 0px;
+  left: 0px;
+  z-index: 99;
+  .notification {
+    &:not(:last-child) {
+      border-bottom: solid 1px lightgrey;
+    }
+    background-color: rgba(255, 255, 255, .975);
+    display: table;
+    height: $notif-height;
+    position: relative;
+    width: 100%;
+    .close {
+      right: 0px;
+      font-size: 16px;
+      width: $notif-height;
+      position: absolute;
+      text-align: center;
+      line-height: $notif-height;
+    }
+    .icon {
+      position: absolute;
+      text-align: center;
+      width: $notif-height;
+      height: 100%;
+      font-size: $notif-height / 4;
+      line-height: $notif-height;
+
+    }
+    .content {
+      display: table-cell;
+      vertical-align: middle;
+      padding-left: $notif-height + 20px;
+      padding-right: $notif-height;
+    }
+  }
+}
+
+@mixin notif-width($w) {
+  .notifications {
+    .notification:not(.large) {
+      margin-left: 100% - $w;
+      // margin-right: 100% - $w;
+      width: $w; 
+    } 
+  }
+}
+
+@media only screen and (min-width: 480px) {
+  @include notif-width(75%);
+}
+@media only screen and (min-width: 768px) {
+  @include notif-width(50%);
+}
+@media only screen and (min-width: 960px) {
+  @include notif-width(35%);
+}
+@media only screen and (min-width: 1440px) {
+  @include notif-width(25%);
+}

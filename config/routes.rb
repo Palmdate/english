@@ -2,6 +2,7 @@
 Rails.application.routes.draw do
 
   get 'admin/index'
+  get 'admin/report'
   get 'build/index'
   resources :read_alouds, only: [:index, :chart]
   get 'read_alouds/chart'

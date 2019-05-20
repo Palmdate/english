@@ -27,6 +27,8 @@ class ReadAloudsController < ApplicationController
         read_status = Course.all.find_by_id(params[:status_id])
         read_status.update(:status => "In Progress")
       end
+
+      
     else
       redirect_to login_path
     end
