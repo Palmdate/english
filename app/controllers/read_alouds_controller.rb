@@ -1,38 +1,30 @@
 class ReadAloudsController < ApplicationController
   before_action :set_read_aloud, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_user
+       
   # GET /read_alouds
   # GET /read_alouds.json
   def chart
-    if current_user         
-      last_result = ReadAloudChart.where(user_id:current_user.id).order('updated_at DESC').first
-      if last_result != nil && last_result.sentence.to_s == params[:sentence]
-        return last_result.update(:rate => params[:rate])
-      else
-        unless params[:rate] == nil
-          result = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence])
-          result.save!
-        end
-      end
+    last_result = ReadAloudChart.where(user_id:current_user.id).order('updated_at DESC').first
+    if last_result != nil && last_result.sentence.to_s == params[:sentence]
+      return last_result.update(:rate => params[:rate])
     else
-      redirect_to login_path
+      unless params[:rate] == nil
+        result = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence])
+        result.save!
+      end
     end
+    
   end
   
   def index
-    if current_user
-      @read_alouds = params[:audio].to_i
-      if params[:status_id]
-        @status_id = params[:status_id]
-        read_status = Course.all.find_by_id(params[:status_id])
-        read_status.update(:status => "In Progress")
-      end
-
-      
-    else
-      redirect_to login_path
+    @read_alouds = params[:audio].to_i
+    if params[:status_id]
+      @status_id = params[:status_id]
+      read_status = Course.all.find_by_id(params[:status_id])
+      read_status.update(:status => "In Progress")
     end
-   
+    
   end
 
   # GET /read_alouds/1

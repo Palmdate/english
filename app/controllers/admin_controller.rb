@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
-  def index
-    
-    
+  before_action :check_user_admin
+  
+  def index    
   end
 
   def report

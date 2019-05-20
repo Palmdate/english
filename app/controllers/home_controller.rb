@@ -1,8 +1,8 @@
 class HomeController < ApplicationController
+  before_action :check_user
+  
   def index
-    unless current_user
-      redirect_to login_path
-    end
+    
   end
 
   def course
