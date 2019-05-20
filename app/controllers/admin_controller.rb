@@ -18,8 +18,7 @@ class AdminController < ApplicationController
       
     else
       render json: { status: 'error', message: "Your accuracy need larger than 60% " }
-    end
-      
+    end      
 
   end
 end

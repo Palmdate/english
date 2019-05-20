@@ -2,19 +2,24 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+<form class="form-inline my-2 my-lg-0">
+  <input class="form-control mr-sm-2" id="search" type="search" placeholder="Search" aria-label="Search">
+</form>
 
-<input id="search" type="text" placeholder="Search..">
 <br>
-<div id="myList" style="overflow: scroll; height:500px">
-  <ul>
+<div id="myList" style="overflow: scroll; height:600px">
+  <ul >
     <% User.all.each do |user| %>
-    <li>
-      <p class="list-group-item" data-toggle="collapse" data-target="#demo<%= user.id %>"><%= user.email %><p>
-        <div id="demo<%= user.id %>" class="collapse">
+    <li style="margin-bottom: 2%;">
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <strong data-toggle="collapse" data-target="#demo<%= user.id %>"><%= user.email %></strong>
+        
+      </div>
+      <div id="demo<%= user.id %>" class="collapse border border-danger">
           <!-- <div id="chart_div"></div> -->
           <%= column_chart list_7_days(user.id), min: 0, max: 100, download: true, xtitle: "A Week", ytitle: "Percent" %>
           <!-- <%= column_chart ReadAloudChart.where("date(created_at) between :start and :end", {start: 7.days.ago.to_date, end: Date.today}).where(:user_id => user.id).group_by_day_of_week(:created_at, format: "%a").count %> -->
-        </div>
+      </div>
     </li>
     <% end %>
   </ul>
@@ -59,5 +64,6 @@ $("#search").on("keyup", function() {
 
     
   // }
+
 </script>
 

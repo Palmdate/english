@@ -16,7 +16,7 @@ module AdminHelper
     #         ['2015', 11, 46, 25],
     #         ['2016', 60, 11, 30],
     #         ['2017', 10, 54, 35,10,56,90,80]]
-    data = [['Year']] + array
+    data = [['DATES']] + array
 
     return @data = (1..10).map do |i|
       {

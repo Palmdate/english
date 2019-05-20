@@ -6,16 +6,17 @@
 admin-panel {
 	  width: 100%;
     max-width:900px;
-	  margin: 50px auto;
+	  // margin: 50px auto;
     overflow: hidden;
     background-color:#fff;
     position:relative;
 }
 
 .slidebar {
-	  width:15%;
+	  width: fit-content;
+    height: -webkit-fill-available;
 	  float: left;
-	  background-color: #111;
+	  background-color: #003359;
 }
 .slidebar ul {
     position:relative;
@@ -57,27 +58,29 @@ li {
 	  display: block;
 	  text-transform: capitalize;
     padding: 20px;
+    
 }
 .slidebar li:hover a, li#active{
-	  background-color: #313131;
+	  background-color: #003359;
 }
 .slidebar li:hover i, li#active i{
-	  color: #17BCE8;
+	  color: #fff;
 }
 .slidebar li:focus i {
-	  color: #17BCE8;
+	  color: #fff;
 }
 
 .main {
-	  float: left;
+	  float: right;
 	  width: 85%;
 	  background-color: rgb(255,255,255);
 	  position: relative;
+    height: auto;
 }
 
 .main h2 {
 	  margin:1em 30px;
-	  color:#17BCE8;
+	  color:#003359;
 	  font-size: 20px;
     font-weight:600;
     border-bottom: 1px solid #bbb;
