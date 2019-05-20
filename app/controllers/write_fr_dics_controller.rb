@@ -1,6 +1,7 @@
 class WriteFrDicsController < ApplicationController
   before_action :set_write_fr_dic, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_user
+  
   # GET /write_fr_dics
   # GET /write_fr_dics.json
   # Pgae WFD in Course
