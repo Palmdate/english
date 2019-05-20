@@ -123,9 +123,8 @@
                     </div>
                     <p id="text_accuracy<%= k %>" class="d-none"><strong></strong></p>
                     <!--   Favorite button -->
-	                  <section id="favorite<%= k %>" class="fave"></section>
-	                  <div class="tooltip">
-		                  <span class="tooltip-message">Added!</span>
+                    <div class="col-sm">
+                        <button class="press-effect fa fa-cloud-download fave pull-right" style="outline: none;"></button>
                     </div>
                 </div>
                 
@@ -150,9 +149,9 @@
         <h2>YOU FINISHED TEST</h2>
         <p>YOUR RESULT HAVE RECORDED</p>
         <p>Please chosse do this again or back to course</p>
-         <div class="modal-footer" style="background-color: none;">
-           <button class="modal-close" onclick="window.location.href = '<%=  home_course_path(:status_id => @status_id) %>';">BACK</button>
-           <button class="modal-close" onclick="location.reload()">AGAIN</button>
+        <div class="modal-footer" style="background-color: none;">
+            <button class="modal-close" onclick="window.location.href = '<%=  home_course_path(:status_id => @status_id) %>';">BACK</button>
+            <button class="modal-close" onclick="location.reload()">AGAIN</button>
         </div>
     </div>
 </div>
@@ -189,15 +188,5 @@
      }
      
  });
-  // Favorite button
-  $(function() {                      
-    $(".fave").click(function() { 
-      $(this).toggleClass("animate"); 
-	    $(".tooltip").addClass("slide-up");
-	    setTimeout(function(){
-    	  $(".tooltip").removeClass('slide-up')},3000);
-    });
-  });
-
 
 </script>

@@ -498,14 +498,8 @@ $(document).on('turbolinks:load', function() {
   }
    // Favorite button
   $(".fave").click(function() {
-    $(this).toggleClass("animate"); 
-	  $(".tooltip").addClass("slide-up");
     report(report_rate, report_sentence, report_result);
-	  setTimeout(function(){
-    	$(".tooltip").removeClass('slide-up')},3000);
-  });
-  
-
+  }); 
 
   // ---------------------------
   $('span.la').on('click', function(){
