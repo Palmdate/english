@@ -1,7 +1,7 @@
 class ReadAloudsController < ApplicationController
   before_action :set_read_aloud, only: [:show, :edit, :update, :destroy]
   before_action :check_user
-       
+  
   # GET /read_alouds
   # GET /read_alouds.json
   def chart
@@ -24,7 +24,32 @@ class ReadAloudsController < ApplicationController
       read_status = Course.all.find_by_id(params[:status_id])
       read_status.update(:status => "In Progress")
     end
-    
+  end
+  
+  # Report to admin 
+  def report
+    last_report = ReadAloudReport.where(user_id:current_user.id).order('updated_at DESC').first
+    if params[:rate].to_i >= 60
+      
+      if last_report != nil && last_report.sentence.to_s == params[:sentence]
+        last_report.update(:percent => params[:rate])
+        render json: { status: 'update', message: "Your result updated successful." }
+      else
+        report = ReadAloudReport.new(:user_id => current_user.id,
+                                     :sentence => params[:sentence],
+                                     :percent => params[:rate],
+                                     :result => params[:result])
+        if report.save!
+          render json: { status: 'success', message: "Saved" }
+        else
+          render json: { status: 'errors', message: "Occured errors!" }
+        end
+        
+      end
+      
+    else
+      render json: { status: 'error', message: "Your accuracy need larger than 60% " }
+    end      
   end
 
   # GET /read_alouds/1
@@ -82,13 +107,13 @@ class ReadAloudsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_read_aloud
-      @read_aloud = ReadAloud.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_read_aloud
+    @read_aloud = ReadAloud.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def read_aloud_params
-      params.fetch(:read_aloud, {})
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def read_aloud_params
+    params.fetch(:read_aloud, {})
+  end
 end
