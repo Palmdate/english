@@ -474,7 +474,7 @@ $(document).on('turbolinks:load', function() {
   // get data for Report
   function report(rate, sentence, result){
     $.ajax({
-      url: "/admin/report", // Route to the Script Controller method
+      url: "/read_alouds/report", // Route to the Script Controller method
       type: "GET",
       dataType: "JSON",
       data: { rate: rate,  // This goes to Controller in params hash, i.e. params[:file_name]
@@ -487,8 +487,10 @@ $(document).on('turbolinks:load', function() {
           $('.success').show().delay(3000).fadeOut();
         }else if (data.status == 'errors'){
           $('.alert').show().delay(3000).fadeOut();
-        }else {
+        } else if (data.status == 'update'){
           $('.notice').show().delay(3000).fadeOut();
+        } else {
+          $('.warning').show().delay(3000).fadeOut();
         }
       },
       error: function() {

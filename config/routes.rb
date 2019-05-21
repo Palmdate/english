@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   get 'admin/index'
   get 'admin/report'
   get 'build/index'
-  resources :read_alouds, only: [:index, :chart]
+  resources :read_alouds, only: [:index, :chart, :report]
   get 'read_alouds/chart'
+  get 'read_alouds/report'
   get 'course/create'
   post 'course/store'
   resources :course, only: [:edit, :update, :destroy]
