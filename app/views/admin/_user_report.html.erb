@@ -9,16 +9,16 @@
 <br>
 <div id="myList" style="overflow: scroll; height:600px">
   <ul >
-    <% User.all.each do |user| %>
+    <% ReadAloudReport.pluck(:user_id).uniq.each do |user| %>
     <li style="margin-bottom: 2%;">
-      <div class="alert alert-warning alert-dismissible" role="alert">
-        <strong data-toggle="collapse" data-target="#demo<%= user.id %>"><%= user.email %></strong>
+      <div class="col-sm-2 alert alert-warning alert-dismissible" role="alert">
+        <strong data-toggle="collapse" data-target="#demo<%= user %>"><%= User.find_by_id(user).email %></strong>
         
       </div>
-      <div id="demo<%= user.id %>" class="collapse border border-danger">
+      <div id="demo<%= user %>" class="collapse border border-danger">
           <!-- <div id="chart_div"></div> -->
-          <%= column_chart list_7_days(user.id), min: 0, max: 100, download: true, xtitle: "A Week", ytitle: "Percent" %>
-          <!-- <%= column_chart ReadAloudChart.where("date(created_at) between :start and :end", {start: 7.days.ago.to_date, end: Date.today}).where(:user_id => user.id).group_by_day_of_week(:created_at, format: "%a").count %> -->
+          <%= column_chart list_7_days(user), min: 0, max: 100, download: true, xtitle: "A Week", ytitle: "Percent" %>
+
       </div>
     </li>
     <% end %>
