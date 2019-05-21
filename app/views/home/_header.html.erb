@@ -5,7 +5,7 @@
       <a data-turbolinks='false' href="/" class="menu" id="home"><h2 class="menu-title">Home</h2></a>
     </li>
     
-    <% if current_user.email == "admin@en4pr.com"  %>
+    <% if current_user && current_user.email == "admin@en4pr.com"  %>
     <li class="sub-menu-parent">
       <a data-turbolinks='false' href="<%= admin_index_path %>" class="menu" id="home"><h2 class="menu-title">ADMIN BOARD</h2></a>
     </li>
