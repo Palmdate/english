@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_admin
-    unless current_user.email == "admin@en4pr.com"
+    unless current_user && current_user.email == "admin@en4pr.com"
       redirect_to login_path
     end
   end

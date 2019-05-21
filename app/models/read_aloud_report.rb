@@ -1,0 +1,2 @@
+class ReadAloudReport < ApplicationRecord
+end
