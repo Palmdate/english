@@ -28,11 +28,11 @@ class ReadAloudsController < ApplicationController
   
   # Report to admin 
   def report
-    last_report = ReadAloudReport.where(user_id:current_user.id).order('updated_at DESC').first
+    same_report = ReadAloudReport.where(user_id:current_user.id, updated_at: (Date.today).all_day, sentence: params[:sentence])
     if params[:rate].to_i >= 60
       
-      if last_report != nil && last_report.sentence.to_s == params[:sentence]
-        last_report.update(:percent => params[:rate])
+      if same_report != []
+        same_report.update(:percent => params[:rate])
         render json: { status: 'update', message: "Your result updated successful." }
       else
         report = ReadAloudReport.new(:user_id => current_user.id,
