@@ -22,7 +22,7 @@
 // }
 
 #form-id{
-  margin:50px auto;
+  margin:0px auto;
   text-align:center;
   position: relative;
 }
@@ -30,7 +30,6 @@
   background:#fff;
   border:0 none;
   border-radius:3px;
-  box-shadow:0 0 10px 1px rgba(0,0,0,0.4);
   box-sizing:border-box;
   padding:20px 30px;
   width:80%;
@@ -202,10 +201,14 @@ pre {
 .countDown {
   border: solid .5px #003359;
   padding: 10px;
-  border-radius: 65px;
+  border-radius: 10px;
   color: #d2322d;
 }
 div#placement {
     width: 150px;
     margin: 0 auto;
+}
+
+#audio {
+  cursor: pointer;
 }

@@ -1,10 +1,12 @@
 class CourseController < ApplicationController
   before_action :set_course, only: [:edit, :update, :destroy]
+  before_action :check_user
+  
   def create
   end
 
   def store
-    @course = Course.new({:skill => params[:skill], :quality => params[:quality], :status => params[:status], :day_id => params[:day_id], :user_id => current_user.id})
+    @course = Course.new({:skill => params[:skill], :quality => params[:quality], :status => "Not Starting", :day_id => params[:day_id], :user_id => current_user.id})
     @course.save
     redirect_to home_course_path
   end

@@ -6,10 +6,11 @@
   
   <canvas id="todayChart" class="d-none"></canvas>
 
-  <div class="w-100 text-center mt-4">
-    <%= link_to 'CONTINUE', read_alouds_path, :class => "btn bg-blue-en4all text-light", :"data-turbolinks" => false %>
-  </div>
 </div>
+<div class="action-bottom w-100 text-center mt-4">
+    <%= link_to 'CONTINUE', read_alouds_path(:audio => ReadAloud.all.count), :class => "btn bg-blue-en4all text-light", :"data-turbolinks" => false %>
+  </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>

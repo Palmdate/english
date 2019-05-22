@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_13_170328) do
+ActiveRecord::Schema.define(version: 2019_05_19_144905) do
 
   create_table "courses", force: :cascade do |t|
     t.text "skill"
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 2019_05_13_170328) do
     t.integer "total"
     t.date "date"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "read_aloud_reports", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "sentence"
+    t.integer "percent"
+    t.string "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

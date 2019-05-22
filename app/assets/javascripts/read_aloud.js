@@ -8,7 +8,7 @@ $(document).on('turbolinks:load', function() {
   var newHTML = $('p#content0').text();
   var result = document.getElementById('result0');
   var speechRecognizer;
-
+  var report_rate, report_sentence, report_result;
   // Play, download recoring
   function WzRecorder(config) {
     config = config || {};
@@ -312,8 +312,8 @@ $(document).on('turbolinks:load', function() {
       
       wavesurfer.load(linkRecord);
 
-      document.getElementById("downloadRecord").href = linkRecord;
-      document.getElementById("downloadRecord").download = linkRecord;
+      document.getElementById("downloadRecord-"+ (readCounter - 1)).href = linkRecord;
+      document.getElementById("downloadRecord-"+ (readCounter - 1)).download = linkRecord;
       //document.getElementById("player" + (readCounter - 1)).src = URL.createObjectURL(blob);  
     },
     onRecording: function(milliseconds) {
@@ -370,16 +370,17 @@ $(document).on('turbolinks:load', function() {
 
   // main function
   $('#btnStart').click(function() {
-    start_Record();
     startConverting();
+    start_Record();
   });
 
   $('#btnStop').click(function() {
-    // onReceive(chart_rate, chart_sent);
+
     if(!('speechSynthesis' in window)){
       $('.origin-audio').hide();
     }
     stop_Record();
+
   });
 
   $('#btnAgain').click(function() {
@@ -397,6 +398,7 @@ $(document).on('turbolinks:load', function() {
 
     reload_Record();
   });
+  
   // Function to calculate the similarity
 
   function compare() {
@@ -447,6 +449,10 @@ $(document).on('turbolinks:load', function() {
         }
       });
       onReceive(Math.round(similarity * 100), sentence);
+      // get data for Report Admin
+      report_rate = Math.round(similarity * 100);
+      report_sentence = sentence;
+      report_result = output;
       
     } else {
       $('.other-browser').hide();
@@ -465,26 +471,55 @@ $(document).on('turbolinks:load', function() {
     });
   }
   
+  // get data for Report
+  function report(rate, sentence, result){
+    $.ajax({
+      url: "/read_alouds/report", // Route to the Script Controller method
+      type: "GET",
+      dataType: "JSON",
+      data: { rate: rate,  // This goes to Controller in params hash, i.e. params[:file_name]
+              sentence: sentence,
+              result: result
+            },
+      complete: function() {},
+      success: function(data) {
+        if(data.status == 'success'){
+          $('.success').show().delay(3000).fadeOut();
+        }else if (data.status == 'errors'){
+          $('.alert').show().delay(3000).fadeOut();
+        } else if (data.status == 'update'){
+          $('.notice').show().delay(3000).fadeOut();
+        } else {
+          $('.warning').show().delay(3000).fadeOut();
+        }
+      },
+      error: function() {
+        $('.alert').show().delay(3000).fadeOut();
+      }
+    });
+  }
+   // Favorite button
+  $(".fave").click(function() {
+    report(report_rate, report_sentence, report_result);
+  }); 
+
   // ---------------------------
   $('span.la').on('click', function(){
+
     if ($('span.la').hasClass('fa-play-circle-o'))
     {
       $('span.la').removeClass('fa-play-circle-o');
       $('span.la').addClass('fa-pause-circle-o');
-      var words = new SpeechSynthesisUtterance( $("#content" + (readCounter - 1)).text() );
-
+      var words = $("#content" + (readCounter - 1)).text();
+      var voice;
       var checkVoice = document.getElementById("toggle-voice-" + (readCounter - 1)).checked;
-      var voiceMale = "Microsoft David Desktop - English (United States)";
-      var voiceMaleOpt = "Microsoft David - English (United States)";
-      var voiceFemale = "Microsoft Zira Desktop - English (United States)";
-      var voiceFemaleOpt = "Microsoft Zira - English (United States)";
-
       if(checkVoice){
-        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == "Samantha"; })[0];
+        voice = "UK English Female";
       }
       else{
-        words.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == "Alex"; })[0];
+        voice = "UK English Male";
       }
+      
      /*  wavesurferorigin = WaveSurfer.create({
         container: '#waveformorigin-' + (readCounter - 1),
         waveColor: 'gray',
@@ -494,8 +529,7 @@ $(document).on('turbolinks:load', function() {
       
       wavesurferorigin.load(speechSynthesis.speak(words)); */
 
-      speechSynthesis.speak(words)
-
+      responsiveVoice.speak(words, voice, { rate: 0.9 });
     }
     else
     {

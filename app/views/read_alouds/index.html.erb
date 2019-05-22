@@ -6,135 +6,187 @@
 <script src="https://unpkg.com/wavesurfer.js"></script>
 
 <%= render 'home/header' %>
+<%= render 'notify' %>
 
 <div class="read-alouds container bg-white shadow p-2">
-<%= audio_tag "beep.mp3", controls: true, id: "beepRecord", class: "d-none"%>
-  <h6 class="font-weight-bold mb-4">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
-  <% k = 0 %>
-  <div class="record-tool mb-4">
-    <div class="status">
-      <h5 class="text-info" id="time-prepaire">Begining in <span id="timePrepaire"> 00:00</span> seconds</h5>
-      <div id="time-progess" class="d-none">
-        <h5 class="text-info">Recording:</h5>
-        <div class="progress">
-          <div id="time-progess-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-        </div>
-      </div>
+    <%= audio_tag "beep.mp3", controls: true, id: "beepRecord", class: "d-none"%>
+    <h6 class="font-weight-bold mb-4">Look at the text below. In 40 seconds, you must read this text aloud as naturally and clearly as possible. You have 40 seconds to read aloud.</h6>
+    <% k = 0 %>
+    <div class="record-tool mb-4">
+        <div class="status">
+            <h5 class="text-info" id="time-prepaire">Begining in <span id="timePrepaire"> 00:00</span> seconds</h5>
+            <div id="time-progess" class="d-none">
+                <h5 class="text-info">Recording:</h5>
+                <div class="progress">
+                    <div id="time-progess-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                </div>
+            </div>
 
-      <div id="time-out" class="d-none">
-        <h5 class="text-danger">Time out</h5>
-        <div class="progress">
-          <div id="time-progess-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  <% ReadAloud.all.sample(ReadAloud.all.count).each do |read| %>
- 
-  <div style="display: none; width: 80%; margin: auto" id="next-read<%= k %>">
-    <div class="row mb-4 origin-audio d-none">
-      <div class="col-sm-2 text-right font-weight-bold">
-        Origin audio:
-        <div class="can-toggle mt-4">
-          <input id="toggle-voice-<%= k %>" type="checkbox">
-          <label for="toggle-voice-<%= k %>">
-            <div class="can-toggle__switch" data-checked="Female" data-unchecked="Male"></div>
-            <div class="can-toggle__label-text"></div>
-          </label>
-        </div>
-      </div>
-      <div class="col-sm">
-        <div class="result-read rounded">
-          <div class="row">
-            <div class="col-sm-2 text-center">
-              <div style="display: grid; width: max-content">
-                <span class="la your-record-audio-origin-play fa fa-play-circle-o fa-4x"></span>
-                <span class="your-record-audio-origin-pause fa fa-pause-circle-o fa-4x d-none"></span>
-                <span id="timeOrigin" class="d-none">00:00/00:00</span>
-              </div>
+            <div id="time-out" class="d-none">
+                <h5 class="text-danger">Time out</h5>
+                <div class="progress">
+                    <div id="time-progess-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                </div>
             </div>
-            <div class="col-sm-10">
-              <div id="waveformorigin-<%= k %>"></div>
-            </div>
-          </div>
+            
         </div>
-      </div>
     </div>
-    
-    <div class="row mb-4 paragraph" id="paragraph<%= k %>">
-      
-      <div class="col-sm-2 text-right font-weight-bold">
-      </div>
-      <div class="data-source p-2 col-sm">
-        <p id="content<%= k %>" class="text-justify">
-          <%= read.content %>
-        </p>
-        <p id="read_id<%= k %>"class="d-none"><%= read.id %></p>
-      </div>
-    </div>
+    <% ReadAloud.all.sample(@read_alouds).each do |read| %>
+        
+        <div style="display: none; width: 80%; margin: auto" id="next-read<%= k %>">
+            <div class="row mb-4 origin-audio d-none">
+                <div class="col-sm-2 text-right font-weight-bold">
+                    Origin audio:
+                    <div class="can-toggle mt-4">
+                        <input id="toggle-voice-<%= k %>" type="checkbox">
+                        <label for="toggle-voice-<%= k %>">
+                            <div class="can-toggle__switch" data-checked="Female" data-unchecked="Male"></div>
+                            <div class="can-toggle__label-text"></div>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="result-read rounded">
+                        <div class="row">
+                            <div class="col-sm-2 text-center">
+                                <div style="display: grid; width: max-content">
+                                    <span class="la your-record-audio-origin-play fa fa-play-circle-o fa-4x"></span>
+                                    <span class="your-record-audio-origin-pause fa fa-pause-circle-o fa-4x d-none"></span>
+                                    <span id="timeOrigin" class="d-none">00:00/00:00</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-10">
+                                <div id="waveformorigin-<%= k %>"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-4 paragraph" id="paragraph<%= k %>">
+                
+                <div class="col-sm-2 text-right font-weight-bold">
+                </div>
+                <div class="data-source p-2 col-sm">
+                    <p id="content<%= k %>" class="text-justify">
+                        <%= read.content %>
+                    </p>
+                    <p id="read_id<%= k %>"class="d-none"><%= read.id %></p>
+                </div>
+            </div>
 
-    <div class="row mb-4 record-audio d-none">
-      <div class="col-sm-2 text-right font-weight-bold">
-        Your record audio:
-      </div>
-      <div class="col-sm">
-        <div class="result-read rounded">
-          <div class="row">
-            <div class="col-sm-2 text-center">
-              <div style="display: grid; width: max-content">
-                   <span class="your-record-audio-play fa fa-play-circle-o fa-4x"></span>
-                   <span class="your-record-audio-pause fa fa-pause-circle-o fa-4x d-none"></span>
-                   <span id="timeRecord-<%= k %>">00:00/00:00</span>
-              </div>
+            <div class="row mb-4 record-audio d-none">
+                <div class="col-sm-2 text-right font-weight-bold">
+                    Your record audio:
+                </div>
+                <div class="col-sm">
+                    <div class="result-read rounded">
+                        <div class="row">
+                            <div class="col-sm-2 text-center">
+                                <div style="display: grid; width: max-content">
+                                    <span class="your-record-audio-play fa fa-play-circle-o fa-4x"></span>
+                                    <span class="your-record-audio-pause fa fa-pause-circle-o fa-4x d-none"></span>
+                                    <span id="timeRecord-<%= k %>">00:00/00:00</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <div id="waveform-<%= k %>"></div>
+                            </div>
+                            <div class="col-sm-1">
+                                <a id="downloadRecord-<%= k %>">
+                                    <span class="fa fa-download fa-3x"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-9">
-              <div id="waveform-<%= k %>"></div>
+            <div class="row mb-4 record-audio d-none other-browser">
+                <div class="col-sm-2 text-right font-weight-bold">
+                    Your result:
+                </div>
+                <div class="final-data p-2 col-sm">
+                    <p id="result<%= k %>" class="text-justify d-none"></p>
+                    <p id="output<%= k %>" class="text-justify"></p>
+                </div>
             </div>
-            <div class="col-sm-1">
-              <a id="downloadRecord">
-                <span class="fa fa-download fa-3x"></span>
-              </a>
+            <div class="row mb-4 record-audio d-none other-browser">
+                <div class="col-sm-2 text-right font-weight-bold">
+                    Pronunciation result:
+                </div>
+                <div class="col-sm" style="display: flex">
+                    <div style="width: 250px;">
+                        <div class="percent">
+                            <h5 id="percent-<%= k %>"></h5>
+                        </div>
+                        <canvas id="accuracy<%= k %>"></canvas>
+                    </div>
+                    <p id="text_accuracy<%= k %>" class="d-none"><strong></strong></p>
+                    <!--   Favorite button -->
+                    <div class="col-sm">
+                        <button class="press-effect fa fa-cloud-download fave pull-right" style="outline: none;"></button>
+                    </div>
+                </div>
+                
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="row mb-4 record-audio d-none other-browser">
-      <div class="col-sm-2 text-right font-weight-bold">
-        Your result:
-      </div>
-      <div class="final-data p-2 col-sm">
-        <p id="result<%= k %>" class="text-justify d-none"></p>
-        <p id="output<%= k %>" class="text-justify"></p>
-      </div>
-    </div>
-    <div class="row mb-4 record-audio d-none other-browser">
-      <div class="col-sm-2 text-right font-weight-bold">
-       Pronunciation result:
-      </div>
-      <div class="col-sm" style="display: flex">
-      <div style="width: 250px;">
-        <div class="percent">
-          <h5 id="percent-<%= k %>"></h5>
-        </div>
-        <canvas id="accuracy<%= k %>"></canvas>
-      </div>
-        <meter id="accuracy<%= k %>" class="d-none"></meter>
-        <p id="text_accuracy<%= k %>" class="d-none"><strong></strong></p>
-      </div>
-    </div>
-  </div>
-  <% k = k + 1%>
-  <% end %>
+        <% k = k + 1%>
+    <% end %>
 </div>
-<p id="compare" class="d-none"><p>
+<p id="compare" class="d-none"></p>
 
 <div class="action-bottom">
-  <div class="float-right">
-    <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart">START</button>
-    <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnStop">STOP</button>
-    <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnAgain">AGAIN</button>
-    <button class="edit btn bg-blue-en4all text-light d-none" id="btnNext">NEXT</button>
-  </div>
+    <div class="float-right">
+        <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart">START</button>
+        <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnStop">STOP</button>
+        <button class="edit btn bg-blue-en4all text-light mr-2 d-none" id="btnAgain">AGAIN</button>
+        <button class="edit btn bg-blue-en4all text-light d-none" id="btnNext">NEXT</button>
+    </div>
 </div>
+
+<div class="modal-readaloud">
+    <div class="modal-content-ra">
+        <h2>YOU FINISHED TEST</h2>
+        <p>YOUR RESULT HAVE RECORDED</p>
+        <p>Please chosse do this again or back to course</p>
+        <div class="modal-footer" style="background-color: none;">
+            <button class="modal-close" onclick="window.location.href = '<%=  home_course_path(:status_id => @status_id) %>';">BACK</button>
+            <button class="modal-close" onclick="location.reload()">AGAIN</button>
+        </div>
+    </div>
+</div>
+
+<script>
+ var $modal = $('.modal-readaloud');
+ var $modalClose = $('.modal-close');
+ var $overlay = $('.modal-overlay');
+
+ // Closes modal on overlay click
+ $overlay.on('click', function(event) {
+     if ($(event.target).is($overlay) || $(event.target).is($modalClose)) {
+         $overlay.removeClass('overlay-visible');
+         $modal.removeClass('modal-visible');
+     }
+ });
+
+ // Closes modal on esc
+ $(document).keyup(function(event) {
+     if (event.which == '27') {
+         $overlay.removeClass('overlay-visible');
+         $modal.removeClass('modal-visible');
+     }
+ });
+ var count = 0;
+ $('#btnNext').click(function(event) {
+     count ++;
+     if (count == '<%= @read_alouds %>')
+     {
+         $overlay.addClass('overlay-visible');
+         $modal.addClass('modal-visible');
+         $( ".container" ).hide();
+         $('.float-right').hide();
+     }
+     
+ });
+
+</script>
