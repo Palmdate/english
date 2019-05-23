@@ -6,22 +6,26 @@ module IpaEnglishHelper
     db = SQLite3::Database.new 'ipagem.db'
 
     new_word = words.map do |w|
+      w = w.split(/\W+/).join(' ')
+      
       temp = db.execute("SELECT phonetic FROM phonetics WHERE word == '#{w.upcase}'")
       temp.join(' ').to_s
       
     end
     p new_word*" "
-      # temp = db.execute("SELECT phonetic FROM phonetics WHERE word == 'HELLO'")
 
   end
 
   
   def is_number(x)
-    x.to_f.to_s == x.to_s || x.to_i.to_s == x.to_s
+    Float(x) != nil rescue false
   end
 
   def to_exactly_type(words)
+
     words = words.split.map do |w|
+      # Remove . and , at end string 
+      w = w.sub(/\.+$/, '').sub(/\,+$/, '') 
       if is_number(w)
         w = w.to_f.humanize
         check_pharse(w)
@@ -29,12 +33,13 @@ module IpaEnglishHelper
         w
       end
     end
-    return words.to_sentence.split()
+    return words.to_sentence.split(' ')
   end
 
+  # Remove - when convert humanize of number
   def check_pharse(text)
     if text.split.count > 1
-      text = text.split(/\W+/).join(' ')
+      text = text.gsub("-", " ")
     end
     return text
   end

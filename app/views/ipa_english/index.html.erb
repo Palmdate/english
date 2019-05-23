@@ -1,5 +1,19 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <h1>IpaEnglish#index</h1>
 <p>Find me in app/views/ipa_english/index.html.erb</p>
-<p><%= to_ipa("hello is smart 1898")%></p>
-<p><%= to_exactly_type("hello is smart 1898 1000 0.0")%></p>
+<p><%= to_ipa("hello is smart, 1898 1000,.. 0.0, 0.12")%></p>
+<p><%= to_exactly_type("hello is smart 1898, 1000, 0.0 0.12")%></p>
 <p><%= to_exactly_type("hello is smart 1")%></p>
+
+<div class="form-group">
+  <label for="exampleFormControlTextarea1">Enter text</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+
+<samp id="output1"></samp>
+<script>
+  var word = $('#exampleFormControlTextarea1').val();
+  var output = '<%= to_ipa('" + word + "')%>'
+  document.getElementById('output1').innerHTML = output;
+</script>
