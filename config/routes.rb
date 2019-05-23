@@ -19,11 +19,12 @@ Rails.application.routes.draw do
   get "login", to: "sessions#new", as: "login"
   get "logout", to: "sessions#destroy", as: "logout"
   resources :write_fr_dics, only: [:index, :public]
-  resources :password_resets, only: [:new, :edit, :update]
+  resources :password_resets, only: [:edit, :update, :create, :new]
 
   get 'write_fr_dics/public'
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # Handle unavailable link
   get '*path' => redirect('/404_customize')
 
 end
