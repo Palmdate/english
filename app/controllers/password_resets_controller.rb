@@ -1,4 +1,5 @@
 class PasswordResetsController < ApplicationController
+  before_action :is_login
   def new
   end
 
@@ -30,5 +31,11 @@ class PasswordResetsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:password)
+  end
+
+  def is_login
+    if current_user
+       redirect_to "/*path"
+    end
   end
 end
