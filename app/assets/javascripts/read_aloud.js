@@ -758,11 +758,12 @@ $(document).on('turbolinks:load', function() {
         reverseButtons: true
       }).then((result) => {
         if (result.value) {
+          $('#btnStart').addClass("d-none");
           stop_Record();
         }
         else
         {
-
+          Swal.fire('Sorry for the inconvenience');
         }
       });
     }
