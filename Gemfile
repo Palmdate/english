@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.1'
 # 
 gem 'chartjs-ror'
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Bundle edge Railsinstead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', git: "https://github.com/larskanis/sqlite3-ruby", branch: "add-gemspec"
@@ -41,6 +41,12 @@ gem 'jquery-rails'
 gem 'fuzzy-string-match'
 # Font awesome include icon
 gem 'font-awesome-sass', '~> 4.7.0'
+# Filter table
+gem "bootstrap-table-rails"
+# Chart
+gem "chartkick"
+gem 'groupdate'
+
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

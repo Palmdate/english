@@ -8,7 +8,7 @@ $(document).on('turbolinks:load', function() {
   var newHTML = $('p#content0').text();
   var result = document.getElementById('result0');
   var speechRecognizer;
-
+  var report_rate, report_sentence, report_result;
   // Play, download recoring
   function WzRecorder(config) {
     config = config || {};
@@ -375,7 +375,7 @@ $(document).on('turbolinks:load', function() {
   });
 
   $('#btnStop').click(function() {
-    // onReceive(chart_rate, chart_sent);
+
     if(!('speechSynthesis' in window)){
       $('.origin-audio').hide();
     }
@@ -449,6 +449,10 @@ $(document).on('turbolinks:load', function() {
         }
       });
       onReceive(Math.round(similarity * 100), sentence);
+      // get data for Report Admin
+      report_rate = Math.round(similarity * 100);
+      report_sentence = sentence;
+      report_result = output;
       
     } else {
       $('.other-browser').hide();
@@ -467,6 +471,38 @@ $(document).on('turbolinks:load', function() {
     });
   }
   
+  // get data for Report
+  function report(rate, sentence, result){
+    $.ajax({
+      url: "/read_alouds/report", // Route to the Script Controller method
+      type: "GET",
+      dataType: "JSON",
+      data: { rate: rate,  // This goes to Controller in params hash, i.e. params[:file_name]
+              sentence: sentence,
+              result: result
+            },
+      complete: function() {},
+      success: function(data) {
+        if(data.status == 'success'){
+          $('.success').show().delay(3000).fadeOut();
+        }else if (data.status == 'errors'){
+          $('.alert').show().delay(3000).fadeOut();
+        } else if (data.status == 'update'){
+          $('.notice').show().delay(3000).fadeOut();
+        } else {
+          $('.warning').show().delay(3000).fadeOut();
+        }
+      },
+      error: function() {
+        $('.alert').show().delay(3000).fadeOut();
+      }
+    });
+  }
+   // Favorite button
+  $(".fave").click(function() {
+    report(report_rate, report_sentence, report_result);
+  }); 
+
   // ---------------------------
   $('span.la').on('click', function(){
 

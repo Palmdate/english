@@ -1,36 +1,55 @@
 class ReadAloudsController < ApplicationController
   before_action :set_read_aloud, only: [:show, :edit, :update, :destroy]
-
+  before_action :check_user
+  
   # GET /read_alouds
   # GET /read_alouds.json
   def chart
-    if current_user         
-      last_result = ReadAloudChart.where(user_id:current_user.id).order('updated_at DESC').first
-      if last_result != nil && last_result.sentence.to_s == params[:sentence]
-        return last_result.update(:rate => params[:rate])
-      else
-        unless params[:rate] == nil
-          result = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence])
-          result.save!
-        end
-      end
+    last_result = ReadAloudChart.where(user_id:current_user.id).order('updated_at DESC').first
+    if last_result != nil && last_result.sentence.to_s == params[:sentence]
+      return last_result.update(:rate => params[:rate])
     else
-      redirect_to login_path
+      unless params[:rate] == nil
+        result = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence])
+        result.save!
+      end
     end
+    
   end
   
   def index
-    if current_user
-      @read_alouds = params[:audio].to_i
-      if params[:status_id]
-        @status_id = params[:status_id]
-        read_status = Course.all.find_by_id(params[:status_id])
-        read_status.update(:status => "In Progress")
-      end
-    else
-      redirect_to login_path
+    @read_alouds = params[:audio].to_i
+    if params[:status_id]
+      @status_id = params[:status_id]
+      read_status = Course.all.find_by_id(params[:status_id])
+      read_status.update(:status => "In Progress")
     end
-   
+  end
+  
+  # Report to admin 
+  def report
+    same_report = ReadAloudReport.where(user_id:current_user.id, updated_at: (Date.today).all_day, sentence: params[:sentence])
+    if params[:rate].to_i >= 60
+      
+      if same_report != []
+        same_report.update(:percent => params[:rate])
+        render json: { status: 'update', message: "Your result updated successful." }
+      else
+        report = ReadAloudReport.new(:user_id => current_user.id,
+                                     :sentence => params[:sentence],
+                                     :percent => params[:rate],
+                                     :result => params[:result])
+        if report.save!
+          render json: { status: 'success', message: "Saved" }
+        else
+          render json: { status: 'errors', message: "Occured errors!" }
+        end
+        
+      end
+      
+    else
+      render json: { status: 'error', message: "Your accuracy need larger than 60% " }
+    end      
   end
 
   # GET /read_alouds/1
@@ -88,13 +107,13 @@ class ReadAloudsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_read_aloud
-      @read_aloud = ReadAloud.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_read_aloud
+    @read_aloud = ReadAloud.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def read_aloud_params
-      params.fetch(:read_aloud, {})
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def read_aloud_params
+    params.fetch(:read_aloud, {})
+  end
 end

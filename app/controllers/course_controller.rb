@@ -1,5 +1,7 @@
 class CourseController < ApplicationController
   before_action :set_course, only: [:edit, :update, :destroy]
+  before_action :check_user
+  
   def create
   end
 

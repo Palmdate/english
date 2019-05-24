@@ -7,7 +7,8 @@ $(document).on('turbolinks:load', function() {
 
   $('#data-1').show();
   
-  $('#audio').click(function() {
+  $('.audio_play').click(function() {
+    speechSynthesis.cancel();
     if(timer == 0) {
       text_to_speech();
     }
@@ -65,21 +66,38 @@ $(document).on('turbolinks:load', function() {
       }
     }), 1000);
   }
+  // Compare string
+  function compare2string(s1, s2){
+    // var s1 = 'The dog ha sleeps';
+    // var s2 = 'the dog jogs sleeps';
 
-  function text_to_speech(){
-    var words = $("#content" + senCounter).text();
-    if(!responsiveVoice.isPlaying()){
-      responsiveVoice.speak(words, "UK English Male", { rate: 1 });
+    var s1 = '' + s1;
+    var s2 = '' + s2;
+    var s1Parts= s1.split(' ');
+    var s2Parts= s2.split(' ');
+    var length_s2 = s2Parts.length;
+    var score = 0;
+
+    for(var i = 0; i<s1Parts.length; i++)
+    {
+      if(s1Parts[i] == s2Parts[i])
+        score++;   
     }
+    return score/length_s2;
   }
-
+  
+  function text_to_speech(){
+    var words = new SpeechSynthesisUtterance($("#content" + senCounter).text());
+    speechSynthesis.speak(words);
+  }
+  
   function sentence_result(){
     let originalHTML = document.getElementById('sens-content' + senCounter).value;
     let newHTML = $("p#content" + senCounter).text();
     // Diff HTML strings
     let output = htmldiff(originalHTML, newHTML);
     // Count % matching
-    let similarity = compareTwoStrings(originalHTML, newHTML);
+    let similarity = compare2string(originalHTML, newHTML);
 
     document.getElementById("output-" + senCounter).innerHTML = output;
     $("#accuracy-" + senCounter).attr('value', similarity);

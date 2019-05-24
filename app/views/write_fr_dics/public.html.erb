@@ -1,7 +1,7 @@
 <script src='/assets/write_fr_dic.js' type="text/javascript"></script>
 <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src='//code.responsivevoice.org/responsivevoice.js'></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
@@ -9,12 +9,13 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <%= render partial: 'home/header' %>
+
 <div class="row justify-content-center">
     <div class="col-lg-10">
         <% k = 1 %>
         <div class="read-alouds bg-white shadow p-2">
             <div id="placement" class="text-center d-none"><h1 class="clock countDown"></h1></div>
-            <h6 class="font-weight-bold mb-4">Type what you hear in the box below exactly as you hear it. You can replay as many times as you want by click icon <span class="fas fa-broadcast-tower fa-2x"></span>.</h6>
+            <h6 class="font-weight-bold mb-4">Type what you hear in the box below exactly as you hear it. You can replay as many times as you want by click icon <span><%=image_tag("listen.jpg", size: "40x40")%></span>.</h6>
             <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
                 <div id="data-<%= k %>" style="display: none; width: 80%; margin: auto">
                     <div class="text-center">
@@ -66,6 +67,6 @@
         <button id="verify-result" class="edit btn bg-blue-en4all text-light mr-2" disabled="true">Verify</button>
     </div>
 </div>
-<script>
-    speechSynthesis.cancel();
+<script>  
+  speechSynthesis.cancel();  
 </script>

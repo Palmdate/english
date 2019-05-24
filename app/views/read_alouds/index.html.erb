@@ -21,7 +21,7 @@
                             <div id="time-progess-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                         </div>
                     </div>
-
+                    <%= render 'notify' %>
                     <div id="time-out" class="d-none">
                         <h5 class="text-danger">Time out</h5>
                         <div class="progress">
@@ -127,9 +127,20 @@
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
                 </div>
                 <% k = k + 1%>
             <% end %>
+=======
+                    <p id="text_accuracy<%= k %>" class="d-none"><strong></strong></p>
+                    <!--   Favorite button -->
+                    <div class="col-sm">
+                        <button class="press-effect fa fa-cloud-download fave pull-right" style="outline: none;"></button>
+                    </div>
+                </div>
+                
+            </div>
+>>>>>>> dfb071731f9fccb0cb486045ead3c7017235b8f3
         </div>
     </div>
 </div>
@@ -149,9 +160,9 @@
         <h2>YOU FINISHED TEST</h2>
         <p>YOUR RESULT HAVE RECORDED</p>
         <p>Please chosse do this again or back to course</p>
-         <div class="modal-footer" style="background-color: none;">
-           <button class="modal-close" onclick="window.location.href = '<%=  home_course_path(:status_id => @status_id) %>';">BACK</button>
-           <button class="modal-close" onclick="location.reload()">AGAIN</button>
+        <div class="modal-footer" style="background-color: none;">
+            <button class="modal-close" onclick="window.location.href = '<%=  home_course_path(:status_id => @status_id) %>';">BACK</button>
+            <button class="modal-close" onclick="location.reload()">AGAIN</button>
         </div>
     </div>
 </div>
@@ -188,4 +199,5 @@
      }
      
  });
+
 </script>
