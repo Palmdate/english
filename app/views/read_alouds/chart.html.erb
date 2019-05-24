@@ -1,11 +1,11 @@
 <%= render 'home/header' %>
-<div class="read-alouds container bg-white shadow p-2">
-  
-
-  <canvas id="allChart"></canvas>
-  
-  <canvas id="todayChart" class="d-none"></canvas>
-
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="read-alouds bg-white shadow p-2">
+    <canvas id="allChart"></canvas>  
+    <canvas id="todayChart" class="d-none"></canvas>
+</div>
+  </div>
 </div>
 <div class="action-bottom w-100 text-center mt-4">
     <%= link_to 'CONTINUE', read_alouds_path(:audio => ReadAloud.all.count), :class => "btn bg-blue-en4all text-light", :"data-turbolinks" => false %>

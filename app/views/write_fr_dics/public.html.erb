@@ -9,51 +9,55 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <%= render partial: 'home/header' %>
-<% k = 1 %>
-<div class="read-alouds container bg-white shadow p-2">
-    <div id="placement" class="text-center d-none"><h1 class="clock countDown"></h1></div>
-    <h6 class="font-weight-bold mb-4">Type what you hear in the box below exactly as you hear it. You can replay as many times as you want by click icon <span class="fas fa-broadcast-tower fa-2x"></span>.</h6>
-    <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
-        <div id="data-<%= k %>" style="display: none; width: 80%; margin: auto">
-            <div class="text-center">
-                <h2 class="text-blue-en4all sentence">SENTENCE <%= k %></h2>
-                <h3 class='sub-title'>
-                    <div class="page-header">
-                            <span class="minutes text-danger">This audio will auto play after </span><span class="timer text-danger">05</span><span class="text-danger">s</span>
-                    </div>
-                </h3>
-                
-                <div class="page-header">
-                    <p class="d-none" id="content<%= k %>"><%= sens.result%></p>
-                    <span id="audio" class="fas fa-broadcast-tower fa-4x"></span>
-                </div>
-            </div>
-            <div class="md-form">
-                <textarea layout-fill id="sens-content<%= k %>" class="left form-control p-4" rows="4"></textarea>
-                <h1 layout-fill id="sens-content-right" class="md-textarea right form-control" style="display: none;"><%= sens.result%></h1>            
-            </div>
-            <div class="d-none" id="result-<%= k %>">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div style="width: 250px;">
-                            <div class="percent">
-                                <h5 id="percent-<%= k %>"></h5>
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <% k = 1 %>
+        <div class="read-alouds bg-white shadow p-2">
+            <div id="placement" class="text-center d-none"><h1 class="clock countDown"></h1></div>
+            <h6 class="font-weight-bold mb-4">Type what you hear in the box below exactly as you hear it. You can replay as many times as you want by click icon <span class="fas fa-broadcast-tower fa-2x"></span>.</h6>
+            <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
+                <div id="data-<%= k %>" style="display: none; width: 80%; margin: auto">
+                    <div class="text-center">
+                        <h2 class="text-blue-en4all sentence">SENTENCE <%= k %></h2>
+                        <h3 class='sub-title'>
+                            <div class="page-header">
+                                    <span class="minutes text-danger">This audio will auto play after </span><span class="timer text-danger">05</span><span class="text-danger">s</span>
                             </div>
-                            <canvas id="accuracy-<%= k %>"></canvas>
+                        </h3>
+                        
+                        <div class="page-header">
+                            <p class="d-none" id="content<%= k %>"><%= sens.result%></p>
+                            <span id="audio" class="fas fa-broadcast-tower fa-4x"></span>
                         </div>
                     </div>
-                    <div class="col-sm-8">
-                        <h3 class="font-weight-bold text-success" id="suggest-<%= k %>">Good</h3>
-                        <h6 class="text-blue-en4all font-italic" id="suggestDetail-<%= k %>"></h6>
-                        <div class="d-none" id="output-<%= k %>"></div>
-                        <div class="d-none" id="accuracy-<%= k %>"></div>
+                    <div class="md-form">
+                        <textarea layout-fill id="sens-content<%= k %>" class="left form-control p-4" rows="4"></textarea>
+                        <h1 layout-fill id="sens-content-right" class="md-textarea right form-control" style="display: none;"><%= sens.result%></h1>            
+                    </div>
+                    <div class="d-none" id="result-<%= k %>">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div style="width: 250px;">
+                                    <div class="percent">
+                                        <h5 id="percent-<%= k %>"></h5>
+                                    </div>
+                                    <canvas id="accuracy-<%= k %>"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <h3 class="font-weight-bold text-success" id="suggest-<%= k %>">Good</h3>
+                                <h6 class="text-blue-en4all font-italic" id="suggestDetail-<%= k %>"></h6>
+                                <div class="d-none" id="output-<%= k %>"></div>
+                                <div class="d-none" id="accuracy-<%= k %>"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <% k = k + 1%>
+            <% end %>
         </div>
-        <% k = k + 1%>
-    <% end %>
-</div>
+        </div>
+    </div>
 </div>
 <div class="action-bottom" style="left: 0">
     <div class="float-right">
