@@ -358,11 +358,11 @@ $(document).on('turbolinks:load', function() {
     // }
   };
   function stopConverting () {
-    if('webkitSpeechRecognition' in window) {
+    //if('webkitSpeechRecognition' in window) {
 
       speechRecognizer.stop();
       speechRecognizer.continuous = false;
-    }
+    //}
 
   };
   // ------------Speech to text
