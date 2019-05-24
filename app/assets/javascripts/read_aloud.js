@@ -328,7 +328,7 @@ $(document).on('turbolinks:load', function() {
   // Speech to text
 
   function startConverting () {
-    if('webkitSpeechRecognition' in window) {
+    //if('webkitSpeechRecognition' in window) {
       speechRecognizer = new webkitSpeechRecognition();
       speechRecognizer.continuous = true;
       speechRecognizer.interimResults = true;
@@ -353,7 +353,7 @@ $(document).on('turbolinks:load', function() {
       speechRecognizer.onerror = function (event) {
 
       };
-    }// else {
+    //}// else {
     //   confirm("Please set: \n media.webspeech.recognition.enable in about:config \n to get all feature of web");
     // }
   };
