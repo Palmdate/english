@@ -404,17 +404,17 @@ $(document).on('turbolinks:load', function() {
   function compare() {
     $('#compare').find("ins").remove();
     $('#compare').find("del").remove();
-    let result = $("#compare").text().split(' ');
-    let words =  result.filter(function(item) { return item !== "" });
+    var result = $("#compare").text().split(' ');
+    var words =  result.filter(function(item) { return item !== "" });
 
     return words.length;
   }
   
   function CompareResult() {
-    if('webkitSpeechRecognition' in window) {
-      let originalHTML = $('#result'+ (readCounter - 1)).text().split(' ').filter(function(item) { return item !== "" }).slice().join(' ').toLowerCase();
+    //if('webkitSpeechRecognition' in window) {
+      var originalHTML = $('#result'+ (readCounter - 1)).text().split(' ').filter(function(item) { return item !== "" }).slice().join(' ').toLowerCase();
       newHTML = $("p#content" + (readCounter - 1)).text().split(' ').filter(function(item) { return item !== "" }).slice(1).join(' ').toLowerCase();
-      let length_ofnew = newHTML.split(' ').filter(function(item) { return item !== "" }).length;
+      var length_ofnew = newHTML.split(' ').filter(function(item) { return item !== "" }).length;
       sentence = Number($("p#read_id" + (readCounter - 1)).text());
       
       // Diff HTML strings
@@ -428,7 +428,7 @@ $(document).on('turbolinks:load', function() {
       
       // Calculate the percent
       document.getElementById("compare").innerHTML = output;
-      let similarity = compare()/length_ofnew;
+      var similarity = compare()/length_ofnew;
       // Show HTML diff output as HTML
       document.getElementById("output" + (readCounter - 1)).innerHTML = output;
       $("#accuracy" + (readCounter - 1)).attr('value', similarity);
@@ -454,9 +454,9 @@ $(document).on('turbolinks:load', function() {
       report_sentence = sentence;
       report_result = output;
       
-    } else {
-      $('.other-browser').hide();
-    }
+    //} else {
+      //$('.other-browser').hide();
+    //}
   }
   
   // get data for charts
@@ -483,6 +483,7 @@ $(document).on('turbolinks:load', function() {
             },
       complete: function() {},
       success: function(data) {
+        console.log(data);
         if(data.status == 'success'){
           $('.success').show().delay(3000).fadeOut();
         }else if (data.status == 'errors'){
