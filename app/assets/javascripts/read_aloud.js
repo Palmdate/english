@@ -753,16 +753,12 @@ $(document).on('turbolinks:load', function() {
         text: "Function record don't support on your web browser.",
         type: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'No',
-        cancelButtonText: 'Yes',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
         reverseButtons: true
       }).then((result) => {
         if (result.value) {
-          clearInterval(pre);
-          clearInterval(post);
-          clearInterval(yourTimeRecord);
-
-          CompareResult();
+          stop_Record();
         }
         else
         {
