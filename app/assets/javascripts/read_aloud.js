@@ -370,7 +370,6 @@ $(document).on('turbolinks:load', function() {
 
   // main function
   $('#btnStart').click(function() {
-    startConverting();
     start_Record();
   });
 
@@ -727,25 +726,50 @@ $(document).on('turbolinks:load', function() {
   };
 
   function start_Record(){
-    $("#beepRecord")[0].play();
-    recorder.start();
-    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
+    if('webkitSpeechRecognition' in window) {
+      $("#beepRecord")[0].play();
+      startConverting();
+      recorder.start();
+      document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+      //document.querySelector('#timeProgess').textContent = "00:" + timePost;
 
-    $('#btnStart').addClass("d-none");
-    $('#btnStop').removeClass("d-none");
+      $('#btnStart').addClass("d-none");
+      $('#btnStop').removeClass("d-none");
 
-    $('#time-prepaire').addClass("d-none");
-    $('#time-prepaire-bar').width('100%');
-    $('#time-progess').removeClass("d-none");
-    $('#time-out').addClass("d-none");
+      $('#time-prepaire').addClass("d-none");
+      $('#time-prepaire-bar').width('100%');
+      $('#time-progess').removeClass("d-none");
+      $('#time-out').addClass("d-none");
 
-    clearInterval(pre);
-    clearInterval(post);
-    clearInterval(yourTimeRecord);
+      clearInterval(pre);
+      clearInterval(post);
+      clearInterval(yourTimeRecord);
 
-    startTimerPost();
+      startTimerPost();
+    }
+    else{
+      Swal.fire({
+        title: 'Do you want to continue?',
+        text: "Function record don't support on your web browser.",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'No',
+        cancelButtonText: 'Yes',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          clearInterval(pre);
+          clearInterval(post);
+          clearInterval(yourTimeRecord);
 
+          CompareResult();
+        }
+        else
+        {
+
+        }
+      });
+    }
   };
 
   function stop_Record(){
