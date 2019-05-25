@@ -586,6 +586,12 @@ input[type=password] :placeholder {
     position: fixed;
     top: 5px;
     right: 25px;
+
+    @media (min-width: 768px) {
+      li:first-child {
+        padding-right: 50px;
+      }
+    }
   }
 }
 
