@@ -15,7 +15,7 @@ html {
   height: 30px !important;
   position: relative;
   width: 30px !important;
-  right: 100px;
+  right: 0px !important;
 }
 
 .avatar img {
@@ -24,8 +24,8 @@ html {
   position: relative;
   width: 27px !important;
   z-index: 2;
-  top: 17% !important;
-  left: -5% !important;
+  //top: 17% !important;
+  //left: -5% !important;
 }
 
 @keyframes cycle-colors {
@@ -51,7 +51,7 @@ html {
   box-sizing: border-box;
   content: ' ';
   height: 120% !important;
-  left: -20%;
+  //left: -20%;
   opacity: .6;
   position: absolute;
   top: 0 !important;

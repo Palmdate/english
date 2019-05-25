@@ -7,8 +7,11 @@
   position: relative; 
 }
 
-.sub-menu-parent:first-child { 
-  padding-left: 50px;
+
+@media (min-width: 768px) {
+  .sub-menu-parent:first-child { 
+    padding-left: 50px;
+  }
 }
 
 .sub-menu { 
@@ -81,12 +84,22 @@ $menu_WIDTH: 120px;
 }
 
 .menu-title {
-    display: block;
+  @media (min-width: 768px) {
     width: $menu_WIDTH;
+    text-align: center;
+  }
+
+  @media (max-width: 767px){
+    width: auto;
+    text-align: left;
+    border-bottom: 1px solid white;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+    display: block;
     height: 50px;
     padding: 15px 0 0;
     margin: 0;
-    text-align: center;
     color: white;
     font-weight: bold;
     text-transform: uppercase;
@@ -220,9 +233,10 @@ $menu_WIDTH: 120px;
         0.6s visibility;
     z-index: 99;
 }
-
-.hList > * {
+@media (min-width: 768px) {
+  .hList > * {  
     float: left;
+  }
 }
 
 .hList > * + * {
@@ -534,4 +548,57 @@ input[type=password] :placeholder {
 
 .avatar-dropdown:hover{
   cursor: pointer;
+}
+
+.icon-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: white;
+  border-radius: 1px;
+  border-color: white;
+  margin: 5px;
+}
+
+@media (max-width: 767px) {
+  #content-sidebar{
+    position: fixed;
+  
+    ul {
+      height: 100vh;
+      background-color: #003359;
+  
+      li:first-child {
+        border-top: 1px solid white;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px){
+  #small-sidebar {
+    display: none;
+  }
+}
+
+#user-info {
+  ul {
+    position: fixed;
+    top: 5px;
+    right: 25px;
+  }
+}
+
+#content-user-info{
+  ul{
+    position: fixed;
+    right: 15px;
+    height: 40px;
+    width: 120px;
+    background-color: #003359;
+
+    li:first-child{
+      border-top: 1px solid white;
+    }
+  }
 }

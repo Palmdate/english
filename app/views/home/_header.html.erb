@@ -1,44 +1,64 @@
 <nav class="fixed-top bg-blue-en4all shadow">
-  <ul class="hList" style="list-style: none;">
+  <div class="row" id="small-sidebar">
+    <div class="col-2 pl-4 pt-2 pb-2" id="act-toggle-sidebar">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span> 
+    </div>
 
-    <li class="sub-menu-parent">
-      <a data-turbolinks='false' href="/" class="menu" id="home"><h2 class="menu-title">Home</h2></a>
-    </li>
-    
-    <% if current_user && current_user.email == "admin@en4pr.com"  %>
-    <li class="sub-menu-parent">
-      <a data-turbolinks='false' href="<%= admin_index_path %>" class="menu" id="home"><h2 class="menu-title">ADMIN BOARD</h2></a>
-    </li>
-    <% else %>
-    <li class="sub-menu-parent">
-      <a data-turbolinks='false' href="<%= read_alouds_chart_path %>" class="menu" id="home"><h2 class="menu-title">Read Aloud</h2></a>
-    </li>
+    <div class="col-8 text-center p-1">
+      <%=image_tag("favicon.ico", size: "30x30") %>
+    </div>
+  </div>
 
-    <li class="sub-menu-parent">
-      <a data-turbolinks='false' href="<%= write_fr_dics_public_path %>" class="menu" id="home"><h2 class="menu-title">Write From Dictation</h2></a>
-    </li>
+  <div id="user-info">
+    <ul >
+      <% if current_user %>
+        <li id="act-user-info" class="avatar d-flex float-right sub-menu-parent">
+          <%=image_tag("cuteCat.jpg") %>
+        </li>
+        <% else %>
+        <li class="float-right">
+          <a data-turbolinks='false' href="<%= login_path %>" class="menu"><h2 class="menu-title text-white">Log in</h2></a>
+        </li>
+        <% end %>
+    </ul> 
+  </div>
+  
+  <div class="d-none" id="content-user-info"> 
+    <ul>
+      <li class="sub-menu-parent"><a data-turbolinks='false' class="menu" href="<%= logout_path %>"><h2 class="menu-title">Log out</h2></a></li>
+    </ul>
+  </div>
+  
+  <div class="d-none" id="content-sidebar">
+    <ul class="hList" style="list-style: none;">
 
-    <li class="sub-menu-parent">
-      <a data-turbolinks='false' href="<%= home_course_path %>" class="menu" id="home"><h2 class="menu-title">Schedule</h2></a>
-    </li>   
-    <% end %>
-    
-    <% if current_user %>
-    <li class="avatar d-flex float-right sub-menu-parent" style="top: 5px">
-      <%=image_tag("cuteCat.jpg") %>
-      <a href="#" class="menu"></a>
-      <h2><span class="text-light dropdown-toggle dropdown-toggle-split menu avatar-dropdown-toggle"></span></h2>
-      <ul class="avatar-dropdown menu-dropdown sub-menu" style="top: 45px; right: -20px;">
-        <li><a data-turbolinks='false' href="<%= logout_path %>">Log out</a></li>
-      </ul>
-    </li>
-    <% else %>
-    <li class="float-right" style="margin-right: 50px;">
-      <a data-turbolinks='false' href="<%= login_path %>" class="menu"><h2 class="menu-title text-white">Log in</h2></a>
-    </li>
-    <% end %>
-    
-  </ul>  
+      <li class="sub-menu-parent">
+        <a data-turbolinks='false' href="/" class="menu" id="home"><h2 class="menu-title">Home</h2></a>
+      </li>
+      
+      <% if current_user && current_user.email == "admin@en4pr.com"  %>
+      <li class="sub-menu-parent">
+        <a data-turbolinks='false' href="<%= admin_index_path %>" class="menu" id="home"><h2 class="menu-title">ADMIN BOARD</h2></a>
+      </li>
+      <% else %>
+      <li class="sub-menu-parent">
+        <a data-turbolinks='false' href="<%= read_alouds_chart_path %>" class="menu" id="home"><h2 class="menu-title">Read Aloud</h2></a>
+      </li>
+
+      <li class="sub-menu-parent">
+        <a data-turbolinks='false' href="<%= write_fr_dics_public_path %>" class="menu" id="home"><h2 class="menu-title">Write From Dictation</h2></a>
+      </li>
+
+      <li class="sub-menu-parent">
+        <a data-turbolinks='false' href="<%= home_course_path %>" class="menu" id="home"><h2 class="menu-title">Schedule</h2></a>
+      </li>   
+      <% end %>
+      
+    </ul> 
+  </div>
+
 </nav>
 <div style="height: 60px;">
 </div>
@@ -51,4 +71,23 @@
   if(pathName !== "/read_alouds"){
     speechSynthesis.cancel();
   }
+
+
+  $("#act-toggle-sidebar").click(function() {
+    if ( $('#content-sidebar').is('.d-none') ) {
+      $("#content-sidebar").removeClass("d-none");
+    }
+    else{
+      $("#content-sidebar").addClass("d-none");
+    }
+  });
+
+  $("#act-user-info").click(function(){
+    if ( $('#content-user-info').is('.d-none') ) {
+      $("#content-user-info").removeClass("d-none");
+    }
+    else{
+      $("#content-user-info").addClass("d-none");
+    }
+  });
 </script>
