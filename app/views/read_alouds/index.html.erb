@@ -38,13 +38,19 @@
                     <div class="col-11">
                         <div class="row mb-4 origin-audio d-none">
                             <div class="col-lg-2 text-lg-right font-weight-bold">
-                                Origin audio:
-                                <div class="can-toggle mt-4">
-                                    <input id="toggle-voice-<%= k %>" type="checkbox">
-                                    <label for="toggle-voice-<%= k %>">
-                                        <div class="can-toggle__switch" data-checked="Female" data-unchecked="Male"></div>
-                                        <div class="can-toggle__label-text"></div>
-                                    </label>
+                                <div class="row">
+                                    <div class="col-auto col-lg-12">
+                                        <p class="lb-title">Origin audio:</p>
+                                    </div>
+                                    <div class="col-auto col-lg-12">
+                                        <div class="can-toggle mt-lg-4">
+                                            <input id="toggle-voice-<%= k %>" type="checkbox">
+                                            <label for="toggle-voice-<%= k %>">
+                                                <div class="can-toggle__switch" data-checked="Female" data-unchecked="Male"></div>
+                                                <div class="can-toggle__label-text"></div>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg">
@@ -79,22 +85,22 @@
 
                         <div class="row mb-4 record-audio d-none">
                             <div class="col-lg-2 text-lg-right font-weight-bold">
-                                Your record audio:
+                                <p class="lb-title">Your record audio:</p>
                             </div>
                             <div class="col-lg">
                                 <div class="result-read rounded">
                                     <div class="row">
-                                        <div class="col-2 text-center">
+                                        <div class="col-4 col-sm-2 text-center">
                                             <div style="display: grid; width: max-content">
                                                 <span class="your-record-audio-play fa fa-play-circle-o fa-4x"></span>
                                                 <span class="your-record-audio-pause fa fa-pause-circle-o fa-4x d-none"></span>
                                                 <span id="timeRecord-<%= k %>">00:00/00:00</span>
                                             </div>
                                         </div>
-                                        <div class="col-9">
+                                        <div class="col-5 col-sm-9">
                                             <div id="waveform-<%= k %>"></div>
                                         </div>
-                                        <div class="col-1">
+                                        <div class="col-3 col-sm-1">
                                             <a id="downloadRecord-<%= k %>">
                                                 <span class="fa fa-download fa-3x"></span>
                                             </a>
@@ -105,7 +111,7 @@
                         </div>
                         <div class="row mb-4 record-audio d-none other-browser">
                             <div class="col-lg-2 text-lg-right font-weight-bold">
-                                Your result:
+                                <p class="lb-title">Your result:</p>
                             </div>
                             <div class="final-data p-2 col-lg">
                                 <p id="result<%= k %>" class="text-justify d-none"></p>
@@ -114,20 +120,24 @@
                         </div>
                         <div class="row mb-4 record-audio d-none other-browser">
                             <div class="col-lg-2 text-lg-right font-weight-bold">
-                                Pronunciation result:
+                                <p class="lb-title">Pronunciation result:</p>
                             </div>
-                            <div class="col-lg" style="display: flex">
-                                <div style="width: 250px;">
-                                    <div class="percent">
-                                        <h5 id="percent-<%= k %>"></h5>
+                            <div class="col-lg">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div style="width: 250px;">
+                                            <div class="percent">
+                                                <h5 id="percent-<%= k %>"></h5>
+                                            </div>
+                                            <canvas id="accuracy<%= k %>"></canvas>
+                                            <meter id="accuracy<%= k %>" class="d-none"></meter>
+                                        </div>
+                                        <p id="text_accuracy<%= k %>" class="d-none"><strong></strong></p>
                                     </div>
-                                    <canvas id="accuracy<%= k %>"></canvas>
                                 </div>
-                                <meter id="accuracy<%= k %>" class="d-none"></meter>
-                                <p id="text_accuracy<%= k %>" class="d-none"><strong></strong></p>
                                 <!--   Favorite button -->
-                                <div class="col-sm">
-                                    <button class="press-effect fa fa-cloud-download fave pull-right" style="outline: none;"></button>
+                                <div class="float-right mr-4">
+                                    <button class="press-effect fa fa-cloud-download fave" style="outline: none;"></button>
                                 </div>
                             </div>
                         </div>

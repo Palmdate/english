@@ -675,7 +675,12 @@ $(document).on('turbolinks:load', function() {
         $('#btnStop').removeClass("d-none");
         clearInterval(pre);
         clearInterval(yourTimeRecord);
-        $("#beepRecord")[0].play();
+        var promise = $("#beepRecord")[0].play();
+
+        if (promise) {
+            //Older browsers may not return a promise, according to the MDN website
+            promise.catch(function(error) { console.log(error); });
+        }
         recorder.start();
         startTimerPost();
       }

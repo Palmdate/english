@@ -304,10 +304,15 @@
     }
 }
 
+.lb-title {
+    font-size: 1.2em;
+}
+
 .data-source,
 .final-data {
     p{
-        font-size: 1.4em;
+        font-size: 1.5em;
+        line-height: 1.5em;
         font-family: initial;
         background-color: none;
     }
