@@ -3,6 +3,13 @@ $(document).on('turbolinks:load', function() {
   var linkRecord = "";
   var wavesurfer;
   var wavesurferorigin;
+
+  var timePre;
+  var timePost;
+  var pre;
+  var post;
+  var yourTimeRecord;
+  
   // $('p#content0').show();
   $('#next-read0').show();
   var newHTML = $('p#content0').text();
@@ -611,11 +618,7 @@ $(document).on('turbolinks:load', function() {
   //   wavesurferorigin.playPause();
   // });
 
-  var timePre;
-  var timePost;
-  var pre;
-  var post;
-  var yourTimeRecord;
+  
 
   $(".your-record-audio-play").on('click', function(){
     $(".your-record-audio-play").addClass("d-none");
@@ -624,12 +627,13 @@ $(document).on('turbolinks:load', function() {
     var durationTime = wavesurfer.getDuration();
     yourTimeRecord = setInterval(function () {
       var currentTime = wavesurfer.getCurrentTime();
-
       document.querySelector('#timeRecord-' + (readCounter - 1)).textContent = toHHMMSS(currentTime) + "/" + toHHMMSS(durationTime);
 
       if (currentTime == durationTime){
         $(".your-record-audio-pause").addClass("d-none");
         $(".your-record-audio-play").removeClass("d-none");
+        wavesurfer.stop();
+        clearInterval(yourTimeRecord);
       }
     }, durationTime);
 
@@ -720,11 +724,11 @@ $(document).on('turbolinks:load', function() {
 
         $('#myCanvas' + (readCounter - 1)).addClass("d-none");
 
-        CompareResult();
-        
         clearInterval(post);
         clearInterval(yourTimeRecord);
         recorder.stop();
+
+        CompareResult();
       }
       else {}
     }, 1000);
@@ -791,16 +795,13 @@ $(document).on('turbolinks:load', function() {
     $('.origin-audio').removeClass("d-none");
     $('.record-audio').removeClass("d-none");
 
-    // wavesurferorigin.load(speechSynthesis.speak(words));
-    // wavesurfer.load('/assets/2018collection_55-3d39adaf2350f3b47b0021add3cdc52b0e946a5382dcf66ea06f71c868f1e8a0.mp3');
-
-    CompareResult();
-
     clearInterval(pre);
     clearInterval(post);
     clearInterval(yourTimeRecord);
 
     recorder.stop();
+
+    CompareResult();
   };
 
   function reload_Record() {
