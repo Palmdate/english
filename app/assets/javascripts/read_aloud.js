@@ -730,27 +730,31 @@ $(document).on('turbolinks:load', function() {
     }, 1000);
   };
 
+  function recordAndResult() {
+    $("#beepRecord")[0].play();
+    startConverting();
+    recorder.start();
+    document.querySelector('#timePrepaire').textContent = "00:" + timePre;
+    //document.querySelector('#timeProgess').textContent = "00:" + timePost;
+
+    $('#btnStart').addClass("d-none");
+    $('#btnStop').removeClass("d-none");
+
+    $('#time-prepaire').addClass("d-none");
+    $('#time-prepaire-bar').width('100%');
+    $('#time-progess').removeClass("d-none");
+    $('#time-out').addClass("d-none");
+
+    clearInterval(pre);
+    clearInterval(post);
+    clearInterval(yourTimeRecord);
+
+    startTimerPost();
+  }
+
   function start_Record(){
     if('webkitSpeechRecognition' in window) {
-      $("#beepRecord")[0].play();
-      startConverting();
-      recorder.start();
-      document.querySelector('#timePrepaire').textContent = "00:" + timePre;
-      //document.querySelector('#timeProgess').textContent = "00:" + timePost;
-
-      $('#btnStart').addClass("d-none");
-      $('#btnStop').removeClass("d-none");
-
-      $('#time-prepaire').addClass("d-none");
-      $('#time-prepaire-bar').width('100%');
-      $('#time-progess').removeClass("d-none");
-      $('#time-out').addClass("d-none");
-
-      clearInterval(pre);
-      clearInterval(post);
-      clearInterval(yourTimeRecord);
-
-      startTimerPost();
+      recordAndResult();
     }
     else{
       Swal.fire({
@@ -763,8 +767,7 @@ $(document).on('turbolinks:load', function() {
         reverseButtons: true
       }).then((result) => {
         if (result.value) {
-          $('#btnStart').addClass("d-none");
-          stop_Record();
+          recordAndResult();
         }
         else
         {
