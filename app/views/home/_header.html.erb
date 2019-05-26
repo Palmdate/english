@@ -62,6 +62,7 @@
     $("#home").attr('disabled', 'disabled')
 
   if(pathName !== "/read_alouds"){
+    responsiveVoice.cancel();
     speechSynthesis.cancel();
   }
 

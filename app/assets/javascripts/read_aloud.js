@@ -535,6 +535,7 @@ $(document).on('turbolinks:load', function() {
     {
       $('span.la').removeClass('fa-pause-circle-o');
       $('span.la').addClass('fa-play-circle-o');
+      responsiveVoice.cancel();
       speechSynthesis.cancel();
     }
   });
@@ -824,6 +825,7 @@ $(document).on('turbolinks:load', function() {
     $('span.la').removeClass('fa-pause-circle-o');
     $('span.la').addClass('fa-play-circle-o');
     
+    responsiveVoice.cancel();
     speechSynthesis.cancel();
     wavesurfer.stop();
 
@@ -855,6 +857,7 @@ $(document).on('turbolinks:load', function() {
   window.addEventListener("keydown", event => {
     if (event.keyCode == 116) {
       if(speechSynthesis.speaking){
+        responsiveVoice.cancel();
         speechSynthesis.cancel();
       }
     }
