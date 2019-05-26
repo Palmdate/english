@@ -24,8 +24,7 @@ html {
   position: relative;
   width: 27px !important;
   z-index: 2;
-  //top: 17% !important;
-  //left: -5% !important;
+  top: 4px;
 }
 
 @keyframes cycle-colors {
@@ -50,14 +49,28 @@ html {
   border-radius: 9999px;
   box-sizing: border-box;
   content: ' ';
-  height: 35px !important;
-  left: 45px !important;
+  height: 35px;
+  
   opacity: .6;
   position: absolute;
   top: 0 !important;
   transform: scale(0.714);
   width: 35px !important;
   z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .avatar::before,
+  .avatar::after {
+    left: 45px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .avatar::before,
+  .avatar::after {
+    left: -5px !important;
+  }
 }
 
 .avatar::after {

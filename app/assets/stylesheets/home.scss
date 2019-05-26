@@ -563,15 +563,12 @@ input[type=password] :placeholder {
 @media (max-width: 767px) {
   #content-sidebar{
     position: fixed;
-  
-    ul {
       height: 100vh;
       background-color: #003359;
   
       li:first-child {
         border-top: 1px solid white;
       }
-    }
   }
 }
 
@@ -598,13 +595,18 @@ input[type=password] :placeholder {
 #content-user-info{
   ul{
     position: fixed;
-    right: 15px;
-    height: 40px;
+    right: 0;
     width: 120px;
     background-color: #003359;
+    top: 50px;
+
+    @media (min-width: 768px) {
+      right: 35px;
+    }
 
     li:first-child{
       border-top: 1px solid white;
+      padding-left: unset;
     }
   }
 }

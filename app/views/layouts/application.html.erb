@@ -14,7 +14,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
-  <body>
+  <body onload="calculationScreen()">
     <%= yield %>
   </body>
 </html>
+
+<script>
+  function calculationScreen() {
+    var ws = $(window).width();
+    if(ws > 768){
+      $("#content-sidebar").removeClass("d-none");
+    }
+    else {
+      $("#content-sidebar").addClass("d-none");
+    }
+  }
+
+  $(window).resize(function() {
+    calculationScreen();
+  });
+</script>

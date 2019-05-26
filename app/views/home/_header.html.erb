@@ -7,21 +7,15 @@
     </div>
 
     <div class="col-8 text-center p-1">
-      <%=image_tag("favicon.ico", size: "30x30") %>
+      <%=image_tag("favicon.ico", size: "42x42") %>
     </div>
   </div>
 
   <div id="user-info">
     <ul >
-      <% if current_user %>
-        <li id="act-user-info" class="avatar d-flex float-right sub-menu-parent">
-          <%=image_tag("cuteCat.jpg") %>
-        </li>
-        <% else %>
-        <li class="float-right">
-          <a data-turbolinks='false' href="<%= login_path %>" class="menu"><h2 class="menu-title text-white">Log in</h2></a>
-        </li>
-        <% end %>
+      <li id="act-user-info" class="avatar d-flex float-right sub-menu-parent">
+        <%=image_tag("cuteCat.jpg") %>
+      </li>
     </ul> 
   </div>
   
@@ -31,8 +25,8 @@
     </ul>
   </div>
   
-  <div class="" id="content-sidebar">
-    <ul class="hList" style="list-style: none;">
+
+    <ul class="hList" id="content-sidebar" style="list-style: none;">
 
       <li class="sub-menu-parent">
         <a data-turbolinks='false' href="/" class="menu" id="home"><h2 class="menu-title">Home</h2></a>
@@ -57,7 +51,6 @@
       <% end %>
       
     </ul> 
-  </div>
 
 </nav>
 <div style="height: 60px;">
