@@ -63,8 +63,13 @@
 
   if(pathName !== "/read_alouds"){
     try {
-      responsiveVoice.cancel();
       speechSynthesis.cancel(); 
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      responsiveVoice.cancel();
     } catch (error) {
       console.log(error);
     }
