@@ -482,7 +482,6 @@ $(document).on('turbolinks:load', function() {
             },
       complete: function() {},
       success: function(data) {
-        console.log(data);
         if(data.status == 'success'){
           $('.success').show().delay(3000).fadeOut();
         }else if (data.status == 'errors'){
