@@ -87,32 +87,27 @@ $(document).on('turbolinks:load', function() {
     };
 
     function stopRecording(callback) {
-      try{
-        // stop recording
-        recording = false;
+      // stop recording
+      recording = false;
 
-        // to make sure onaudioprocess stops firing
-        window.localStream.getTracks().forEach(track => {
-          track.stop();
-        });
-        audioInput.disconnect();
-        audioNode.disconnect();
+      // to make sure onaudioprocess stops firing
+      window.localStream.getTracks().forEach(track => {
+        track.stop();
+      });
+      audioInput.disconnect();
+      audioNode.disconnect();
 
-        exportWav(
-          {
-            sampleRate: sampleRate,
-            recordingLength: recordingLength,
-            data: recordedData
-          },
-          function(buffer, view) {
-            self.blob = new Blob([view], { type: "audio/wav" });
-            callback && callback(self.blob);
-          }
-        );
-      }
-      catch(error) {
-        console.log(error);
-      }
+      exportWav(
+        {
+          sampleRate: sampleRate,
+          recordingLength: recordingLength,
+          data: recordedData
+        },
+        function(buffer, view) {
+          self.blob = new Blob([view], { type: "audio/wav" });
+          callback && callback(self.blob);
+        }
+      );
     }
 
     function onMicrophoneCaptured(microphone) {
@@ -764,7 +759,7 @@ $(document).on('turbolinks:load', function() {
     else{
       Swal.fire({
         title: 'Do you want to continue?',
-        text: "Function score don't support on your web browser.",
+        text: "Function record don't support on your web browser.",
         type: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Yes',
