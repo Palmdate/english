@@ -875,3 +875,13 @@ $alert-color: #CC1429;
   transform: translate(0px, 5px);
   box-shadow: 0 5px 1px #555;
 }
+
+.main-read-aloud {
+    overflow: auto;
+}
+
+@media (max-width: 767px) {
+    .main-chart-read-aloud {
+        width: 800px;
+    }
+}
