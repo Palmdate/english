@@ -335,31 +335,41 @@ $(document).on('turbolinks:load', function() {
   // Speech to text
 
   function startConverting () {
-    //if('webkitSpeechRecognition' in window) {
+    if('webkitSpeechRecognition' in window) {
       speechRecognizer = new webkitSpeechRecognition();
       speechRecognizer.continuous = true;
       speechRecognizer.interimResults = true;
       speechRecognizer.lang = 'en-US';
-      speechRecognizer.start();
+    }else if ('SpeechRecognition' in window) {
+      speechRecognizer = new SpeechRecognition();
+    }
+    speechRecognizer.addEventListener('start', function() { 
+      console.log('Speech recognition service has started');
+    });
+    speechRecognizer.onstart = function() {
+      console.log('Speech recognition service has started');
+    }
+    
+    // speechRecognizer.start();
 
-      var finalTranscripts = '';
+    var finalTranscripts = '';
 
-      speechRecognizer.onresult = function(event) {
-        var interimTranscripts = '';
-        for(var i = event.resultIndex; i < event.results.length; i++){
-          var transcript = event.results[i][0].transcript;
-          transcript.replace("\n", "<br>");
-          if(event.results[i].isFinal) {
-            finalTranscripts += transcript;
-          }else{
-            interimTranscripts += transcript;
-          }
+    speechRecognizer.onresult = function(event) {
+      var interimTranscripts = '';
+      for(var i = event.resultIndex; i < event.results.length; i++){
+        var transcript = event.results[i][0].transcript;
+        transcript.replace("\n", "<br>");
+        if(event.results[i].isFinal) {
+          finalTranscripts += transcript;
+        }else{
+          interimTranscripts += transcript;
         }
-        result.innerHTML = finalTranscripts + '<span style="color: #999">' + interimTranscripts + '</span>';
-      };
-      speechRecognizer.onerror = function (event) {
+      }
+      result.innerHTML = finalTranscripts + '<span style="color: #999">' + interimTranscripts + '</span>';
+    };
+    speechRecognizer.onerror = function (event) {
 
-      };
+    };
     //}// else {
     //   confirm("Please set: \n media.webspeech.recognition.enable in about:config \n to get all feature of web");
     // }
@@ -368,7 +378,7 @@ $(document).on('turbolinks:load', function() {
     //if('webkitSpeechRecognition' in window) {
 
       speechRecognizer.stop();
-      speechRecognizer.continuous = false;
+      // speechRecognizer.continuous = false;
     //}
 
   };
@@ -735,7 +745,7 @@ $(document).on('turbolinks:load', function() {
   };
 
   function start_Record(){
-    if('webkitSpeechRecognition' in window) {
+    if('webkitSpeechRecognition' || 'SpeechRecognition' in window) {
       $("#beepRecord")[0].play();
       startConverting();
       recorder.start();
