@@ -747,7 +747,7 @@ $(document).on('turbolinks:load', function() {
   };
 
   function start_Record(){
-    if('webkitSpeechRecognition' || 'SpeechRecognition' in window) {
+    if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       $("#beepRecord")[0].play();
       startConverting();
       recorder.start();
