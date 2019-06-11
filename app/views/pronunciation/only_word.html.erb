@@ -2,21 +2,76 @@
 <div class="row justify-content-center">
     <div class="col-lg-10">
         <div class="read-alouds bg-white shadow p-2">
-            <div class="text-center">
-                <h1>/eɪ/</h1>
+            <div class="border p-4">
+                <div class="row">
+                    <div class="col-3 text-center">
+                        <h1 style="line-height: 2em; font-size: 6em; color: red;">/eɪ/</h1>
+                    </div>
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col">
+                                <iframe
+                                    src="http://traffic.libsyn.com/sozox/a-JPNC4S.mp4">
+                                </iframe>
+                            </div>
+                            <div class="col">
+                                <p>How to pronunciation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="border p-4 mt-2">
+                <div class="text-center border p-2 d-flex">
+                    <h2 href="" class="pr-3" style="font-size: 4em" onClick="showInfoWork()">SAY</h2>
+                    <h2 href="" class="pr-3" style="font-size: 4em" onClick="">EIGHT</h2>
+                </div>
 
-            <div class="row justify-content-center">
-                <p class="p-4 col-auto">SAY</p>
-                <p class="p-4 col-auto">EIGHT</p>
+                <div class="pt-4 d-none" id="infor_Result">
+                    <div class="row">
+                        <div class="col-4 d-flex d-none" id="erea_word">
+                            <label class="pr-2">Word:</label>
+                            <h2 id="word"></h2>
+                        </div>
+                        <div class="col-4 d-flex d-none">
+                            <label class="pr-2">Say: </label>
+                            <h2 class="text-success" id="erea_Say"></h2>
+                        </div>
+                        <div class="col-4 d-flex d-none">
+                            <label class="pr-2">Result: </label>
+                            <canvas id="result"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="text-center">
-                <iframe width="420" height="315"
-                    src="http://traffic.libsyn.com/sozox/a-JPNC4S.mp4">
-                </iframe>
-            </div>
-
         </div>
     </div>
 </div>
+<div class="action-bottom">
+    <div class="float-right">
+        <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart">SAY</button>
+        <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStop">AGAIN</button>
+    </div>
+</div>
+
+<script>
+    function showInfoWork() {
+        console.log(this);
+        $("#infor_Result").removeClass("d-none");
+        $("#erea_word").removeClass("d-none");
+        document.getElementById("word").innerHTML = "SAY"
+    }
+    var ctx = document.getElementById('result').getContext('2d');
+      var accuracyChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: [50],
+            backgroundColor: ['#57b0f3']
+          }],
+        },
+        options: {
+          cutoutPercentage: 50
+        }
+      });
+</script>
