@@ -16,7 +16,7 @@
         <div class="read-alouds bg-white shadow p-2">
             <div id="placement" class="text-center d-none"><h1 class="clock countDown"></h1></div>
             <h6 class="font-weight-bold mb-4">Type what you hear in the box below exactly as you hear it. You can replay as many times as you want by click icon <span><%=image_tag("listen.jpg", size: "40x40")%></span>.</h6>
-            <% @write_fr_dics_result.sample(WriteFrDic.all.count).each do |sens| %>
+            <% @write_fr_dics_result.sample(WriteFrDic.all.size).each do |sens| %>
                 <div class="row justify-content-center">
                     <div class="col-10" id="data-<%= k %>" style="display: none;">
                         <div class="text-center">
