@@ -1,2 +1,146 @@
-<h1>Pronunciation#index</h1>
-<p>Find me in app/views/pronunciation/index.html.erb</p>
+<%= render 'home/header' %>
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="read-alouds bg-white shadow p-2">
+            <div>
+                <p class="text-left font-weight-bold pb-3">VOWELS</p>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">
+                    <a class="text-white" href="">ʌ</a>                 
+                </div>
+                
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">                     
+                    <a class="text-white" href="">ɑ:</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">                     
+                    <a class="text-white" href="">æ</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">                     
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">e</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: indianred;">                     
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">ə</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;"> 
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">ɜ:</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">  
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">ɪ</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">    
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">i:</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">   
+                    <a class="text-white" href="">ɒ</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">   
+                    <a class="text-white" href="">ɔ:</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: indianred;"> 
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">ʊ</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">        
+                    <a class="text-white" href="">u:</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">   
+                    <a class="text-white" href="">aɪ</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">    
+                    <a class="text-white" href="">aʊ</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">      
+                    <a class="text-white" href="">eɪ</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">   
+                    <a class="text-white" href="">oʊ</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">  
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">ɔɪ</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">    
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">eə</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">    
+                    <a class="text-white" href="">ɪə</a>                
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">    
+                    <a class="text-white" href="">ʊə</a>                
+                </div>
+                <div class="clearfix"></div>
+                <p class="text-left font-weight-bold pt-3">CONSONANTS</p>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">  
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">b</a>               
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;"> 
+                    <a class="text-white" href="">d</a>              
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">  
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">f</a>             
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: indianred;">      
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">g</a>           
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">  
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">h</a>           
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">  
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">j</a>              
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">  
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">k</a>          
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">     
+                    <a class="text-white" href="">l</a>            
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">  
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">m</a>           
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">    
+                    <a class="text-white" href="">n</a>             
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: indianred;">   
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">ŋ</a>           
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">     
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">p</a>         
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">  
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">r</a>             
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">   
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">s</a>                
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">  
+                    <a class="text-white" href="">ʃ</a>           
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">      
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">t</a>       
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;"> 
+                    <a class="text-white" href="">tʃ</a>          
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: seagreen;">    
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">θ</a>    
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: indianred;">     
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">ð</a>                 
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">     
+                    <a class="text-white" href="">v</a>            
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">    
+                    <a class="text-white" href="">w</a>       
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">    
+                    <a class="text-white" href="">z</a>        
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: indianred;">    
+                    <a class="text-white" href="<%= pronunciation_only_word_path %>">ʒ</a>          
+                </div>
+                <div class="border rounded text-center m-2 shadow" style="width: 50px; height: 50px; line-height: 50px; float: left;background-color: grey;">   
+                    <a class="text-white" href="">dʒ</a>           
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
