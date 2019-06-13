@@ -1,7 +1,7 @@
 <%= render 'home/header' %>
 <div class="row justify-content-center">
     <div class="col-lg-10">
-        <div class="read-alouds bg-white shadow p-2">
+        <div class="bg-white shadow p-2">
             <div class="border p-4">
                 <div class="row">
                     <div class="col-3 text-center">
@@ -23,22 +23,28 @@
             </div>
             <div class="border p-4 mt-2">
                 <div class="text-center border p-2 d-flex">
-                    <h2 href="" class="pr-3" style="font-size: 4em" onClick="showInfoWork()">SAY</h2>
-                    <h2 href="" class="pr-3" style="font-size: 4em" onClick="">EIGHT</h2>
+                    <p class="text-blue-en4all pl-2 pr-2" style="top: -20px; position: relative; background-color: white; font-size: 1.2em">Word practive</p>
+                    <div class="pt-2 wordList" style="position: relative; left: -70px; display: flex;">
+                        <h3 class="pr-3 wordItem" id="work_say" onClick="showInfoWork(this)">SAY</h3>
+                        <h3 class="pr-3 wordItem" id="work_eight" onClick="showInfoWork(this)">EIGHT</h3>
+                    </div>
                 </div>
 
-                <div class="pt-4 d-none" id="infor_Result">
+                <div class="pt-4" id="infor_Result">
                     <div class="row">
-                        <div class="col-4 d-flex d-none" id="erea_word">
-                            <label class="pr-2">Word:</label>
-                            <h2 id="word"></h2>
+                        <div class="col-3 text-center">
+                            <%=image_tag("microphone.png", width: "70px", :onClick => "speakWord()".html_safe)%>
                         </div>
-                        <div class="col-4 d-flex d-none">
-                            <label class="pr-2">Say: </label>
-                            <h2 class="text-success" id="erea_Say"></h2>
+                        <div class="col-3 d-flex">
+                            <label class="pr-4">Word:</label>
+                            <h2 id="word" class="pt-4"></h2>
                         </div>
-                        <div class="col-4 d-flex d-none">
-                            <label class="pr-2">Result: </label>
+                        <div class="col-3 d-flex">
+                            <label class="pr-4">Say: </label>
+                            <h2 class="text-success pt-4" id="erea_Say"></h2>
+                        </div>
+                        <div class="col-3 d-flex">
+                            <label class="pr-4">Result: </label>
                             <canvas id="result"></canvas>
                         </div>
                     </div>
@@ -47,31 +53,45 @@
         </div>
     </div>
 </div>
-<div class="action-bottom">
-    <div class="float-right">
-        <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStart">SAY</button>
-        <button class="edit btn bg-blue-en4all text-light mr-2" id="btnStop">AGAIN</button>
-    </div>
-</div>
-
 <script>
-    function showInfoWork() {
-        console.log(this);
+    var word = "";
+    function showInfoWork(e) {
+        word = document.getElementById(e.id).innerHTML;
+        document.getElementById("word").innerHTML = word;
+        $("#" + e.id).addClass("text-info");
         $("#infor_Result").removeClass("d-none");
         $("#erea_word").removeClass("d-none");
-        document.getElementById("word").innerHTML = "SAY"
     }
-    var ctx = document.getElementById('result').getContext('2d');
-      var accuracyChart = new Chart(ctx, {
+    
+    function speakWord(){
+        if(word !== ""){
+            document.getElementById("erea_Say").innerHTML = "EIGHT";
+            showResult();
+        }
+        else{
+            alert("The word don't choice!!!");
+        }
+    }
+
+    function record(){
+        start = setInterval(function () {
+
+        }, 1000);
+    }
+
+    function showResult(){
+        var ctx = document.getElementById('result').getContext('2d');
+        var accuracyChart = new Chart(ctx, {
         type: 'pie',
         data: {
-          datasets: [{
+            datasets: [{
             data: [50],
             backgroundColor: ['#57b0f3']
-          }],
+            }],
         },
         options: {
-          cutoutPercentage: 50
+            cutoutPercentage: 50
         }
-      });
+        });
+    }
 </script>
