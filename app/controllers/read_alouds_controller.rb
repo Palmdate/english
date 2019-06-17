@@ -7,11 +7,17 @@ class ReadAloudsController < ApplicationController
   def chart
     last_result = ReadAloudChart.where(user_id:current_user.id).order('updated_at DESC').first
     if last_result != nil && last_result.sentence.to_s == params[:sentence]
-      return last_result.update(:rate => params[:rate])
+      return last_result.update(:rate => params[:rate], :result => params[:result])
     else
       unless params[:rate] == nil
-        result = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence])
-        result.save!
+        # check condition if :rate >= 55%, it will save :result
+        if params[:rate] >= 55
+          result = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence], :result => params[:result])
+          result.save!
+        else
+          result = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence])
+          result.save!
+        end
       end
     end
     
