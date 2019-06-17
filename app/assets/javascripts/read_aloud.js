@@ -466,7 +466,7 @@ $(document).on('turbolinks:load', function() {
           cutoutPercentage: 50
         }
       });
-      onReceive(Math.round(similarity * 100), sentence);
+    onReceive(Math.round(similarity * 100), sentence, output);
       // get data for Report Admin
       report_rate = Math.round(similarity * 100);
       report_sentence = sentence;
@@ -478,13 +478,14 @@ $(document).on('turbolinks:load', function() {
   }
   
   // get data for charts
-  function onReceive(rate, sentence){
+  function onReceive(rate, sentence, result){
     $.ajax({
       url: "/read_alouds/chart", // Route to the Script Controller method
       type: "GET",
       dataType: "html",
       data: { rate: rate,  // This goes to Controller in params hash, i.e. params[:file_name]
-              sentence: sentence
+              sentence: sentence,
+              result: result
             }
     });
   }
