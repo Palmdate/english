@@ -932,6 +932,8 @@ read_aloud_hard = ["Thompson recognized and exploited all the ingredients of a s
                    "A national study into fraud by bookkeepers employed at small and medium-sized businesses has uncovered 65 instances of theft in more than five years, with more than $31 million stolen. Of the cases identified by the research, 56 involved women."
                   ]
 
+# Database default IPA
+list_ipa = [["ʌ", "ɑ:", "æ", "e", "ə", "ɜ:", "ɪ", "i:", "ɒ", "ɔ:", "ʊ", "u:", "aɪ", "aʊ", "eɪ", "oʊ", "ɔɪ", "eə", "ɪə", "ʊə"], ["b", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ŋ", "p", "r", "s", "ʃ", "t", "tʃ", "θ", "ð", "v", "w", "z", "ʒ", "dʒ"]]
 # Remove old database
 WriteFrDic.all.each do |k|
   k.destroy
@@ -954,4 +956,10 @@ end
 
 read_aloud_easy.each do |content|
   ReadAloud.create(content: content)
+end
+
+list_ipa.each do |ipas|
+  ipas.each do |v|
+    Ipa.create(name: v)
+  end
 end

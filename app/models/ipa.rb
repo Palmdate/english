@@ -1,0 +1,2 @@
+class Ipa < ApplicationRecord
+end
