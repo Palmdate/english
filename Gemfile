@@ -46,7 +46,8 @@ gem "bootstrap-table-rails"
 # Chart
 gem "chartkick"
 gem 'groupdate'
-
+# Convert number to word
+gem 'humanize'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
