@@ -1,3 +1,4 @@
+# coding: utf-8
 module PronunciationHelper
   require "sqlite3"
   require "humanize"
@@ -10,6 +11,9 @@ module PronunciationHelper
       w = w.split(/\W+/).join(' ')
       
       temp = db.execute("SELECT phonetic FROM phonetics WHERE word == '#{w.upcase}'")
+      if temp == []
+        UnknowIpa.new(:word => w).save
+      end
       temp.join(' ').to_s
       
     end
@@ -65,26 +69,54 @@ module PronunciationHelper
     new_result = result.split(Regexp.union(['<del>'])).map{|elem| elem.split('</ins>').first}
   end
 
-  def get_ipa
+  def get_ipa(record)
+    hash_ipa = Hash.new
     array = ""
-    ReadAloudReport.where.not(result: nil).pluck(:user_id, :result).each do |user_id, result|
+    record.where.not(result: nil).pluck(:result).each do |result|
+      
       array_ins(result).each do |word|
         words = to_ipa(word)
         array += words
       end
     end
 
-    # p array
-    # array.uniq.each do |elem|
-    #   puts "#{elem}\t#{array.count(elem)}"
-    # end
+    # Check all ipa: ɑ: => ɑ, ɜ: => ɝ, i: => i, ɒ => , ɔ: => ɔ, u: => u
+    # /ʌ+|a+|æ+|e+|ə+|ɝ+|ɪ+|i+|ɑ+|ɔ+|ʊ+|u+|aɪ+|aʊ+|eɪ+|oʊ+|ɔɪ+|eə+|ɪə+|ʊə+|b+|d+|f+|g+|h+|j+|k+|ɫ+|m+|n+|ŋ+|p+|r+|s+|ʃ+|t+|tʃ+|θ+|ð+|v+|w+|z+|ʒ+|dʒ+/
     
-    array.split('').uniq.each do |elem|
-
-      puts "#{elem}\t#{array.count(elem)}"
-
+    # Get list include double vowels and consotants
+    array_double = array.scan /aɪ+|aʊ+|eɪ+|oʊ+|ɔɪ+|eə+|ɪə+|ʊə+|tʃ+|dʒ+/
+    array_double.uniq.each do |elem|
+      hash_ipa[elem] = array_double.count(elem)
+    end
+    #  Get list include one vowels and consotants
+    array_once = array.gsub(/aɪ|aʊ|eɪ|oʊ|ɔɪ|eə|ɪə|ʊə|tʃ|dʒ/, '')
+    new_array = array_once.scan /ʌ+|ɑ+|æ+|e+|ə+|ɝ+|ɪ+|i+|ɒ+|ɔ+|ʊ+|u+|b+|d+|f+|g+|h+|j+|k+|ɫ+|m+|n+|ŋ+|p+|r+|s+|ʃ+|t+|tʃ+|θ+|ð+|v+|w+|z+|ʒ+/
+    new_array.uniq.each do |elem|
+      hash_ipa[elem] = new_array.count(elem)
+    end
+    # Get 3 max values with wrong pronunciation
+    return max_3_values(hash_ipa)
+  end
+  
+  # Save ipa for each user
+  def max_3_values(hash)
+    hash.select do |key, value|
+      hash.values.max(3).include? value
     end
   end
-  # Save ipa for each user
+
+  def save_record_ipa
+    list_user = ReadAloudReport.where("date(updated_at) between :start and :end", {start: 14.days.ago.to_date, end: Date.today}).order(:updated_at).pluck(:user_id)
+    list_result = ReadAloudReport.where("date(updated_at) between :start and :end", {start: 14.days.ago.to_date, end: Date.today}).order(:updated_at)
+    list_user.each do |user_id|
+      hash_ipa = get_ipa(list_result.where(user_id: user_id))
+      result_user = IpaUser.find_by(user_id: user_id)
+      if result_user.nil?
+        IpaUser.new(:user_id => user_id, :alphabet_wrong => hash_ipa.keys, :alphabet_done => []).save!
+      else
+        result_user.update(:alphabet_wrong => hash_ipa.keys)
+      end
+    end
+  end
   
 end

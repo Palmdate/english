@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_033512) do
+ActiveRecord::Schema.define(version: 2019_06_21_102748) do
 
   create_table "courses", force: :cascade do |t|
     t.text "skill"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(version: 2019_06_20_033512) do
     t.integer "cong_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ipa_users", force: :cascade do |t|
+    t.text "alphabet_wrong"
+    t.text "alphabet_done"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
   end
 
   create_table "ipas", force: :cascade do |t|
@@ -61,6 +69,12 @@ ActiveRecord::Schema.define(version: 2019_06_20_033512) do
     t.integer "user_id"
     t.string "audio_user"
     t.string "content"
+  end
+
+  create_table "unknow_ipas", force: :cascade do |t|
+    t.string "word"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

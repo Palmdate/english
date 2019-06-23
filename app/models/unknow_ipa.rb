@@ -1,0 +1,2 @@
+class UnknowIpa < ApplicationRecord
+end
