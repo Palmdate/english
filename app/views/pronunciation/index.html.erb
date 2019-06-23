@@ -1,15 +1,14 @@
 <%= render 'home/header' %>
 
-<% alphabet_wrong = IpaUser.find_by(user_id: current_user.id).alphabet_wrong %>
-<% alphabet_done = IpaUser.find_by(user_id: current_user.id).alphabet_done %>
+<% alphabet_wrong = IpaUser.find_by(user_id: current_user.id).nil? ? [] : IpaUser.find_by(user_id: current_user.id).alphabet_wrong %>
+<% alphabet_done = IpaUser.find_by(user_id: current_user.id).nil? ? [] : IpaUser.find_by(user_id: current_user.id).alphabet_done %>
 
 <div class="row justify-content-center">
   <div class="col-lg-10">
     <div class="read-alouds bg-white shadow p-2">
       <div>
         <h2 class="text-left font-weight-bold pb-3">VOWELS</h2>
-        <% @list_vowels.each do |vowel| %>
-        <% unless alphabet_wrong.nil? || alphabet_done.nil? %>
+        <% @list_vowels.each do |vowel| %>       
         <% if alphabet_wrong.include? vowel %>
         <div class="border rounded text-center m-2 shadow" style="width: 90px; height: 90px; line-height: 80px; float: left;background-color: indianred;"><!-- background-color: grey/seagreen/indianred; -->
           <% elsif alphabet_done.include? vowel %>
@@ -17,14 +16,13 @@
             <% else %>
             <div class="border rounded text-center m-2 shadow" style="width: 90px; height: 90px; line-height: 80px; float: left;background-color: grey;">
               <% end %>
-              <% end %>
               <a class="text-white" style="font-size: 50px" href="<%= pronunciation_only_word_path(:ipa => vowel) %>"><%= vowel %></a>
             </div>
             <% end %>
             <div class="clearfix"></div>
             <h2 class="text-left font-weight-bold pt-3">CONSONANTS</h2>
-            <% @list_consonants.each do |cons| %>
-            <% unless alphabet_wrong.nil? || alphabet_done.nil? %>
+
+            <% @list_consonants.each do |cons| %>            
             <% if alphabet_wrong.include? cons %>
             <div class="border rounded text-center m-2 shadow" style="width: 90px; height: 90px; line-height: 80px; float: left;background-color: indianred;"><!-- background-color: grey/seagreen/indianred; -->
               <% elsif alphabet_done.include? cons %>
@@ -36,8 +34,6 @@
                   <a class="text-white" style="font-size: 50px" href="<%= pronunciation_only_word_path(:ipa => cons) %>"><%= cons %></a>
                 </div>
                 <% end %>
-                <% end %>
-                
                 <div class="clearfix"></div>
               </div>
             </div>
