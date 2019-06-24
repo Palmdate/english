@@ -3,7 +3,7 @@ module PronunciationHelper
   require "sqlite3"
   require "humanize"
   
-  def to_ipa(words)
+  def self.to_ipa(words)
     words = to_exactly_type(words)
     db = SQLite3::Database.new 'ipagem.db'
 
@@ -22,16 +22,16 @@ module PronunciationHelper
   end
 
   
-  def is_number(x)
+  def self.is_number(x)
     Float(x) != nil rescue false
   end
 
-  def to_exactly_type(words)
+  def self.to_exactly_type(words)
 
     words = words.split.map do |w|
       # Remove . and , at end string
       w = w.sub(/\.+$/, '').sub(/\,+$/, '')
-      if is_number(w)
+     if is_number(w)
         w = w.to_f.humanize
         check_pharse(w)
       else
@@ -42,7 +42,7 @@ module PronunciationHelper
   end
 
   # Remove - when convert humanize of number
-  def check_pharse(text)
+  def self.check_pharse(text)
     if text.split.count > 1
       text = text.gsub("-", " ")
     end
@@ -51,7 +51,7 @@ module PronunciationHelper
   
   # Analize result
 
-  def array_ins(result)
+  def self.array_ins(result)
     new_ins = result.split(Regexp.union(['<', '/ins>'])).select do |elem|
       elem.include? "ins"
     end
@@ -69,7 +69,7 @@ module PronunciationHelper
     new_result = result.split(Regexp.union(['<del>'])).map{|elem| elem.split('</ins>').first}
   end
 
-  def get_ipa(record)
+  def self.get_ipa(record)
     hash_ipa = Hash.new
     array = ""
     record.where.not(result: nil).pluck(:result).each do |result|
@@ -99,13 +99,13 @@ module PronunciationHelper
   end
   
   # Save ipa for each user
-  def max_3_values(hash)
+  def self.max_3_values(hash)
     hash.select do |key, value|
       hash.values.max(3).include? value
     end
   end
 
-  def save_record_ipa
+  def self.save_record_ipa
     list_user = ReadAloudReport.where("date(updated_at) between :start and :end", {start: 14.days.ago.to_date, end: Date.today}).order(:updated_at).pluck(:user_id)
     list_result = ReadAloudReport.where("date(updated_at) between :start and :end", {start: 14.days.ago.to_date, end: Date.today}).order(:updated_at)
     list_user.each do |user_id|
@@ -118,5 +118,5 @@ module PronunciationHelper
       end
     end
   end
-  
+
 end
