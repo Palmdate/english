@@ -1,4 +1,5 @@
 <script src='//code.responsivevoice.org/responsivevoice.js'></script>
+<script src='/assets/pronunciation.js' type="text/javascript"></script>
 <%= render 'home/header' %>
 <div class="row justify-content-center">
     <div class="col-lg-10">
@@ -25,8 +26,8 @@
                 <div class="text-center border p-2 d-flex">
                     <p class="text-blue-en4all pl-2 pr-2" style="top: -25px; position: relative; background-color: white; font-size: 1.2em">Word practice</p>
                     <div class="pt-3 wordList" style="position: relative; left: -70px; display: flex; overflow-x: auto">
-                        <h3 class="pr-3 wordItem" id="work_say" onClick="showInfoWork(this)">SAY</h3>
-                        <h3 class="pr-3 wordItem" id="work_eight" onClick="showInfoWork(this)">EIGHT</h3>
+                        <h3 class="pr-3 wordItem" id="work_say">SAY</h3>
+                        <h3 class="pr-3 wordItem" id="work_eight">EIGHT</h3>
                     </div>
                 </div>
                 <div class="pt-3 text-center font-italic text-success" id="word-example">
@@ -35,11 +36,11 @@
                 <div class="pt-4" id="infor_Result">
                     <div class="row">
                         <div class="col-md-3 col-12 text-center border pt-3">
-                            <%=image_tag("microphone.png", width: "70px", :onClick => "speakWord()".html_safe)%>
+                            <%=image_tag("microphone.png", width: "70px")%>
                         </div>
                         <div class="col-sm-6 col-md-3 com-12 d-flex border pt-3">
                             <p class="text-blue-en4all pr-4">Word:</p>
-                            <h2 id="word" class="pt-4" onClick="reviewSpeak(this.id)"></h2>
+                            <h2 id="word" class="pt-4"></h2>
                         </div>
                         <div class="col-sm-6 col-md-3 col-12 d-flex border pt-3">
                             <p class="text-blue-en4all pr-4">Say: </p>
@@ -67,152 +68,3 @@
         height: 100px !important;
     }
 </style>
-<script>
-    var timeRecord;
-    var word = "";
-    var idWord = "";
-    var result = document.getElementById('erea_Say');
-    function showInfoWork(e) {
-        word = document.getElementById(e.id).innerHTML;
-        responsiveVoice.speak(word, "UK English Female", { rate: 0.9 });
-        document.getElementById("word").innerHTML = word;
-
-        $("#" + idWord).removeClass("text-info");
-        $("#" + e.id).addClass("text-info");
-
-        try {
-            document.getElementById("word-example").removeChild(document.getElementById("word-example").lastElementChild)
-        } catch (error) {
-            
-        }
-
-        if(e.id == "work_say")
-        {
-            var para = document.createElement("p");
-            var node = document.createTextNode('"She say love me but I know she do not."');
-            para.appendChild(node);
-            var element = document.getElementById("word-example");
-            element.appendChild(para);
-        }
-        else{
-            var para = document.createElement("p");
-            var node = document.createTextNode('"Eight days a week."');
-            para.appendChild(node);
-            var element = document.getElementById("word-example");
-            element.appendChild(para);
-        }
-
-        $("#infor_Result").removeClass("d-none");
-        $("#erea_word").removeClass("d-none");
-
-        document.getElementById("erea_Say").innerHTML = "";
-        $("#result").addClass("d-none");
-
-        idWord = e.id;
-    }
-    
-    function speakWord(){
-        timeRecord = 5;
-        if(word !== ""){
-            document.getElementById("erea_Say").innerHTML = "";
-            $("#result").addClass("d-none");
-            record();
-        }
-        else{
-            alert("The word don't choice!!!");
-        }
-    }
-
-    function record(){
-        startConverting();
-        start = setInterval(function () {
-            timeRecord --;
-            var rs = document.getElementById("erea_Say").innerHTML;
-            if(timeRecord == 0 || rs != ""){
-                $("#result").removeClass("d-none");
-                showResult();
-
-                stopConverting();
-                clearInterval(start);
-
-                if(rs === ""){
-                    document.getElementById("erea_Say").innerHTML = "None";
-                }
-            }
-        }, 1000);
-    }
-
-    function showResult(){
-        var ctx = document.getElementById('result').getContext('2d');
-        var accuracyChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            datasets: [{
-            data: [50],
-            backgroundColor: ['#57b0f3']
-            }],
-        },
-        options: {
-            cutoutPercentage: 50
-        }
-        });
-    }
-
-    function reviewSpeak(id){
-        responsiveVoice.speak(document.getElementById("word").innerHTML, "UK English Female", { rate: 0.9 });
-    }
-
-    // Speech to text
-
-  function startConverting () {
-    if('webkitSpeechRecognition' in window) {
-      speechRecognizer = new webkitSpeechRecognition();
-      speechRecognizer.continuous = true;
-      speechRecognizer.interimResults = true;
-      speechRecognizer.lang = 'en-US';
-      speechRecognizer.start();
-    }else if ('SpeechRecognition' in window) {
-      speechRecognizer = new SpeechRecognition();
-      speechRecognizer.addEventListener('start', function() { 
-        console.log('Speech recognition service has started');
-      });
-      speechRecognizer.onstart = function() {
-        console.log('Speech recognition service has started');
-      }
-    }
-    
-    
-    // speechRecognizer.start();
-
-    var finalTranscripts = '';
-
-    speechRecognizer.onresult = function(event) {
-      var interimTranscripts = '';
-      for(var i = event.resultIndex; i < event.results.length; i++){
-        var transcript = event.results[i][0].transcript;
-        transcript.replace("\n", "<br>");
-        if(event.results[i].isFinal) {
-          finalTranscripts += transcript;
-        }else{
-          interimTranscripts += transcript;
-        }
-      }
-      result.innerHTML = finalTranscripts;
-    };
-    speechRecognizer.onerror = function (event) {
-
-    };
-    //}// else {
-    //   confirm("Please set: \n media.webspeech.recognition.enable in about:config \n to get all feature of web");
-    // }
-  };
-  function stopConverting () {
-    if('webkitSpeechRecognition' in window) {
-      speechRecognizer.continuous = false;
-    }
-      speechRecognizer.stop();
-     
-
-  };
-  // ------------Speech to text
-</script>

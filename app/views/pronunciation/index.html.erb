@@ -16,7 +16,7 @@
             <% else %>
             <div class="border rounded text-center m-2 shadow" style="width: 90px; height: 90px; line-height: 80px; float: left;background-color: grey;">
               <% end %>
-              <a class="text-white" style="font-size: 50px" href="<%= pronunciation_only_word_path(:ipa => vowel) %>"><%= vowel %></a>
+              <a class="text-white" style="font-size: 50px" data-turbolinks='false' href="<%= pronunciation_only_word_path(:ipa => vowel) %>"><%= vowel %></a>
             </div>
             <% end %>
             <div class="clearfix"></div>
@@ -31,7 +31,7 @@
                 <div class="border rounded text-center m-2 shadow" style="width: 90px; height: 90px; line-height: 80px; float: left;background-color: grey;">
                   <% end %>
                   
-                  <a class="text-white" style="font-size: 50px" href="<%= pronunciation_only_word_path(:ipa => cons) %>"><%= cons %></a>
+                  <a class="text-white" style="font-size: 50px" data-turbolinks='false' href="<%= pronunciation_only_word_path(:ipa => cons) %>"><%= cons %></a>
                 </div>
                 <% end %>
                 <div class="clearfix"></div>
