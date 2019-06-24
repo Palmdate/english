@@ -22,12 +22,6 @@ ActiveRecord::Schema.define(version: 2019_06_21_102748) do
     t.integer "day_id"
   end
 
-  create_table "has", force: :cascade do |t|
-    t.integer "cong_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "ipa_users", force: :cascade do |t|
     t.text "alphabet_wrong"
     t.text "alphabet_done"
@@ -51,7 +45,7 @@ ActiveRecord::Schema.define(version: 2019_06_21_102748) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "result"
+    t.text "result"
   end
 
   create_table "read_aloud_reports", force: :cascade do |t|
@@ -92,14 +86,6 @@ ActiveRecord::Schema.define(version: 2019_06_21_102748) do
     t.string "audio"
     t.text "content"
     t.text "result"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "wrong_pronunciations", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "wrong_words"
-    t.string "wrong_phonetic"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

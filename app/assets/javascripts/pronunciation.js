@@ -150,22 +150,16 @@ $(document).on('turbolinks:load', function() {
   
   // Click function handle
 
-  // Handle click function
-  document.addEventListener('click', function (event) {
-    switch(event.target.id) {
-    case 'work_say':
-    case 'work_eight':
-      {
-        showInfoWork(event.target);
-        break;
-      }
-    case 'word':
-      reviewSpeak(event.target.id);
-      break;
-    default:
-      speakWord();
-    }
-    
-  }, false);
+  $("#microphone").click(function() {
+    speakWord();
+  });
+
+  $("#word").click(function(event) {
+    reviewSpeak(event.target.id);
+  });
+
+  $(".wordItem").click(function(event) {
+    showInfoWork(event.target);
+  });
 
 });
