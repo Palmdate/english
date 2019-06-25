@@ -933,7 +933,9 @@ read_aloud_hard = ["Thompson recognized and exploited all the ingredients of a s
                   ]
 
 # Database default IPA
-list_ipa = [["ʌ", "ɑ:", "æ", "e", "ə", "ɜ:", "ɪ", "i:", "ɒ", "ɔ:", "ʊ", "u:", "aɪ", "aʊ", "eɪ", "oʊ", "ɔɪ", "eə", "ɪə", "ʊə"], ["b", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ŋ", "p", "r", "s", "ʃ", "t", "tʃ", "θ", "ð", "v", "w", "z", "ʒ", "dʒ"]]
+list_ipa = [["ʌ" -> ["monkey", "wonder", "cover", "discover", "luck", "donut", "scrub", "subtitle", "umbrella", "rough", "tough", "touch", "young", "youngster", "bump", "monk", "blood"],
+             "ɑ" -> ["blot", "cot", "clot", "jot", "got", "hot", "knot", "lot", "not", "plot", "pot", "rot", "shot", "spot", "tot", "lock", "clock", "rock", "flock", "mock", "shock", "dock", "knock", "stock", "block", "hall", "all", "small", "tall", "call", "fall", "install", "mall", "ball", "pall", "bought", "brought", "fought", "ought", "sought", "saw", "raw", "law", "draw", "flaw"],
+             "æ", "e", "ə", "ɜ:", "ɪ", "i:", "ɒ", "ɔ:", "ʊ", "u:", "aɪ", "aʊ", "eɪ", "oʊ", "ɔɪ", "eə", "ɪə", "ʊə"], ["b", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ŋ", "p", "r", "s", "ʃ", "t", "tʃ", "θ", "ð", "v", "w", "z", "ʒ", "dʒ"]]
 # Remove old database
 WriteFrDic.all.each do |k|
   k.destroy

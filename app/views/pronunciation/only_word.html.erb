@@ -4,7 +4,6 @@
 <div class="row justify-content-center">
     <div class="col-lg-10">
         <div class="bg-white shadow p-2">
-            <h6 class="font-weight-bold mb-4">choice one of word practice then click microphone icon to speak</h6>
             <div class="border p-4">
                 <div class="row">
                     <div class="col-sm-3 col-12 text-center">
@@ -22,38 +21,56 @@
                     </div>
                 </div>
             </div>
-            <div class="border p-4 mt-2">
-                <div class="text-center border p-2 d-flex">
-                    <p class="text-blue-en4all pl-2 pr-2" style="top: -25px; position: relative; background-color: white; font-size: 1.2em">Word practice</p>
-                    <div class="pt-3 wordList" style="position: relative; left: -70px; display: flex; overflow-x: auto">
-                        <h3 class="pr-3 wordItem" id="work_say">SAY</h3>
-                        <h3 class="pr-3 wordItem" id="work_eight">EIGHT</h3>
+            <div class="clearfix p-2">
+                <h6 class="font-weight-bold float-left pt-3">Click microphone icon to start speak</h6>
+                <div class="text-center float-right d-none" id="Next">
+                    <button class="edit btn bg-blue-en4all text-light" id="btnNext">NEXT</button>
+                </div>
+            </div>
+            <div class="p-3" style="clear: both">
+                <div class="row" id="infor_Result">
+                    <div class="col-md-3 col-12 text-center border p-3">
+                        <div class="flip-card rounded shadow">
+                            <div class="flip-card-inner rounded shadow">
+                                <div class="flip-card-front rounded shadow">
+                                    <h2 class="wordItem text-info pt-3" id="work_say">HAT</h2>
+                                    <h3 class="text-danger">/hɑ:t/</h3>
+                                    <%=image_tag("hat.jpg", height: "80px")%>
+                                </div>
+                                <div class="flip-card-back rounded shadow">
+                                    <div class="pt-3 text-center font-italic text-success" id="word-example" style="margin-top: 5em;">My hat is very nice</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="pt-3 text-center font-italic text-success" id="word-example">
-                    
-                </div>
-                <div class="pt-4" id="infor_Result">
-                    <div class="row">
-                        <div class="col-md-3 col-12 text-center border pt-3">
-                            <%=image_tag("microphone.png", width: "70px", id: "microphone", class: "microphone")%>
+                    <div class="col-sm-6 col-md-3 com-12 border pt-3">
+                        <p class="text-blue-en4all">Start speak: </p>
+                        <div class="text-center">
+                            <%=image_tag("microphone.png", height: "100px", id: "microphone", class: "microphone")%>
                         </div>
-                        <div class="col-sm-6 col-md-3 com-12 d-flex border pt-3">
-                            <p class="text-blue-en4all pr-4">Word:</p>
-                            <h2 id="word" class="pt-4"></h2>
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-12 d-flex border pt-3">
-                            <p class="text-blue-en4all pr-4">Say: </p>
-                            <h2 class="text-success pt-4" id="erea_Say"></h2>
-                        </div>
-                        <div class="col-md-3 col-12 d-flex border pt-3">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="text-blue-en4all pr-4">Result: </p>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-12 border pt-3">
+                        <p class="text-blue-en4all">Your speak: </p>
+                        <h2 class="text-success text-center text-uppercase pt-4" id="erea_Say"></h2>
+                    </div>
+                    <div class="col-md-3 col-12 border pt-3">
+                        <p class="text-blue-en4all">Your result: </p>
+                        <div class="text-center">
+                            <div id="result" class="d-none rounded-lg w-100 p-3 float-left">
+                                <!-- Progress bar 1 -->
+                                <div id="result-speak" class="progress mx-auto">
+                                    <span class="progress-left">
+                                        <span class="progress-bar border-success"></span>
+                                    </span>
+                                    <span class="progress-right">
+                                        <span class="progress-bar border-danger"></span>
+                                    </span>
+                                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                                        <div id="value-result-speak" class="h5 font-weight-bold text-blue-en4all"></div>
+                                    </div>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <canvas id="result" class="d-none"></canvas>
-                                </div>
+                                <!-- END -->    
                             </div>
                         </div>
                     </div>
@@ -62,9 +79,105 @@
         </div>
     </div>
 </div>
+
+
+
+
 <style>
-    .chartjs-render-monitor{
-        width: 200px !important;
-        height: 100px !important;
-    }
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+
+.progress {
+  width: 90px;
+  height: 90px;
+  background: none;
+  position: relative;
+}
+
+.progress::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 6px solid #eee;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progress>span {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.progress .progress-left {
+  left: 0;
+}
+
+.progress .progress-bar {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border-width: 6px;
+  border-style: solid;
+  position: absolute;
+  top: 0;
+}
+
+.progress .progress-left .progress-bar {
+  left: 100%;
+  border-top-right-radius: 80px;
+  border-bottom-right-radius: 80px;
+  border-left: 0;
+  -webkit-transform-origin: center left;
+  transform-origin: center left;
+}
+
+.progress .progress-right {
+  right: 0;
+}
+
+.progress .progress-right .progress-bar {
+  left: -100%;
+  border-top-left-radius: 80px;
+  border-bottom-left-radius: 80px;
+  border-right: 0;
+  -webkit-transform-origin: center right;
+  transform-origin: center right;
+}
+
+.progress .progress-value {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSE
+* ==========================================
+*
+*/
+
+.rounded-lg {
+  border-radius: 1rem;
+}
+
+.text-gray {
+  color: #aaa;
+}
+
+div.h4 {
+  line-height: 1rem;
+}
 </style>
