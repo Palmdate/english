@@ -45,14 +45,9 @@ $(document).on('turbolinks:load', function() {
   
   function speakWord(){
     timeRecord = 5;
-    if(word !== ""){
       document.getElementById("erea_Say").innerHTML = "";
       $("#result").addClass("d-none");
       record();
-    }
-    else{
-      alert("The word don't choice!!!");
-    }
   }
 
   function record(){
@@ -75,19 +70,30 @@ $(document).on('turbolinks:load', function() {
   }
 
   function showResult(){
-    var ctx = document.getElementById('result').getContext('2d');
-    var accuracyChart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        datasets: [{
-          data: [50],
-          backgroundColor: ['#57b0f3']
-        }],
-      },
-      options: {
-        cutoutPercentage: 50
+    document.getElementById("result-speak").setAttribute("data-value", 90);
+    document.getElementById("value-result-speak").innerHTML = "90%";
+
+    $("#Next").removeClass("d-none");
+
+    $(".progress").each(function() {
+
+      var value = $(this).attr('data-value');
+      var left = $(this).find('.progress-left .progress-bar');
+      var right = $(this).find('.progress-right .progress-bar');
+
+      if (value > 0) {
+        if (value <= 50) {
+            right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
+        } else {
+          right.css('transform', 'rotate(180deg)')
+          left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
+        }
       }
     });
+
+    function percentageToDegrees(percentage) {
+      return percentage / 100 * 360
+    }
   }
 
   function reviewSpeak(id){
@@ -151,6 +157,7 @@ $(document).on('turbolinks:load', function() {
   // Click function handle
 
   $("#microphone").click(function() {
+    $("#Next").addClass("d-none");
     speakWord();
   });
 
