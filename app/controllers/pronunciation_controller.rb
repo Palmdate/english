@@ -11,4 +11,9 @@ class PronunciationController < ApplicationController
 
   def list_word
   end
+  def ipa_word
+    word = params[:word]
+    gon.word_ipa = PronunciationHelper.to_ipa(word)
+    render json: { status: 'complete', message: word_ipa }
+  end
 end

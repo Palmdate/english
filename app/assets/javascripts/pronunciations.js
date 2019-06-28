@@ -3,6 +3,7 @@ $(document).on('turbolinks:load', function() {
   var word = "";
   var idWord = "";
   var result = document.getElementById('erea_Say');
+  var score;                    // % correct word
  
   function showInfoWork(e) {
     word = document.getElementById(e.id).innerHTML;
@@ -56,12 +57,12 @@ $(document).on('turbolinks:load', function() {
       timeRecord --;
       var rs = document.getElementById("erea_Say").innerHTML;
       if(timeRecord == 0 || rs != ""){
-        $("#result").removeClass("d-none");
+        $("#result").removeClass("d-none");       
         showResult();
 
         stopConverting();
         clearInterval(start);
-
+        
         if(rs === ""){
           document.getElementById("erea_Say").innerHTML = "None";
         }
@@ -119,7 +120,6 @@ $(document).on('turbolinks:load', function() {
       }
     }
     
-    
     // speechRecognizer.start();
 
     var finalTranscripts = '';
@@ -140,25 +140,61 @@ $(document).on('turbolinks:load', function() {
     speechRecognizer.onerror = function (event) {
 
     };
-    //}// else {
-    //   confirm("Please set: \n media.webspeech.recognition.enable in about:config \n to get all feature of web");
-    // }
+   
   };
   function stopConverting () {
     if('webkitSpeechRecognition' in window) {
       speechRecognizer.continuous = false;
     }
     speechRecognizer.stop();
-    
-
   };
   // ------------Speech to text
+
+  // ==========================================
+  //  Matching function
+  // ==========================================
+  function matchingWord (origin, result) {
+
+    var origin_text = origin.split('');
+    var new_text = result.split('');
+    var j = 0;
+    var len, i, text;
+    score = 0;
+    
+    for (i = 0, len = origin_text.length, text = ""; i < len; i++) {
+      if (origin_text[i] == new_text[j]) {
+        text += "<ins>" + origin_text[i] + "</ins>";
+        j ++;
+        score ++;
+      }else {
+        text += "<del>" + origin_text[i] + "</del>";
+      }
+      
+    }
+    score = Math.round(score / len * 100);
+    return text;
+  };
+  
+  // ==========================================
+  //  To Ipa
+  // ==========================================
+  function toIpa (word) {
+    $.ajax({
+      url: "/pronunciation/ipa_word", // Route to the Script Controller method
+      type: "POST",
+      dataType: "JSON",
+      data: { word: word  // This goes to Controller in params hash, i.e. params[:file_name]
+            }
+    })
+  };
   
   // Click function handle
-
   $("#microphone").click(function() {
-    $("#Next").addClass("d-none");
     speakWord();
+    toIpa("eight");
+    var test = gon.word_ipa;
+    // console.log(gon.word_ipa);
+    alert(test);
   });
 
   $("#word").click(function(event) {

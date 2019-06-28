@@ -1,5 +1,6 @@
 <script src='//code.responsivevoice.org/responsivevoice.js'></script>
-<script src='/assets/pronunciation.js' type="text/javascript"></script>
+<script src='/assets/pronunciations.js' type="text/javascript"></script>
+<%= Gon::Base.render_data %>
 <%= render 'home/header' %>
 <div class="row justify-content-center">
     <div class="col-lg-10">
@@ -92,6 +93,7 @@
 *
 */
 
+
 .progress {
   width: 90px;
   height: 90px;
@@ -108,6 +110,27 @@
   position: absolute;
   top: 0;
   left: 0;
+    }
+    
+del, ins {
+    display: inline-block;
+    padding: 0.01em;
+    font-size: 23px;
+    background: none;
+}
+
+ins {
+    text-decoration: none;
+    color: green;
+}
+
+a ins {
+    text-decoration: inherit;
+}
+
+del {
+    text-decoration-line: none;
+    color: red;  left: 0;
 }
 
 .progress>span {
