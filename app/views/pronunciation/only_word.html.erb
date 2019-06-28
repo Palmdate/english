@@ -56,22 +56,33 @@
                     </div>
                     <div class="col-md-3 col-12 border pt-3">
                         <p class="text-blue-en4all">Your result: </p>
-                        <div class="text-center">
-                            <div id="result" class="d-none rounded-lg w-100 p-3 float-left">
-                                <!-- Progress bar 1 -->
-                                <div id="result-speak" class="progress mx-auto">
-                                    <span class="progress-left">
-                                        <span class="progress-bar border-success"></span>
-                                    </span>
-                                    <span class="progress-right">
-                                        <span class="progress-bar border-danger"></span>
-                                    </span>
-                                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                                        <div id="value-result-speak" class="h5 font-weight-bold text-blue-en4all"></div>
+                        <!--  -->
+                        <div class="flip-card rounded shadow">
+                            <div class="flip-card-inner rounded shadow">
+                                <div class="flip-card-front rounded shadow">
+                                    
+                                    <div class="text-center">
+                                        <div id="result" class="d-none rounded-lg w-100 p-3 float-left">
+                                            <!-- -- Progress bar 1 -- -->
+                                            <div id="result-speak" class="progress mx-auto">
+                                                <span class="progress-left">
+                                                    <span class="progress-bar border-success"></span>
+                                                </span>
+                                                <span class="progress-right">
+                                                    <span class="progress-bar border-danger"></span>
+                                                </span>
+                                                <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                                                    <div id="value-result-speak" class="h5 font-weight-bold text-blue-en4all"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END -->
                                     </div>
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
-                                <!-- END -->    
+                                <div class="flip-card-back rounded shadow">
+                                    <div class="pt-3 text-center font-italic text-success" id="word-match" style="margin-top: 5em;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,127 +91,127 @@
         </div>
     </div>
 </div>
-
+<p id="get_ipa" ></p>
 
 
 
 <style>
-/*
-*
-* ==========================================
-* CUSTOM UTIL CLASSES
-* ==========================================
-*
-*/
+ /*
+  *
+  * ==========================================
+  * CUSTOM UTIL CLASSES
+  * ==========================================
+  *
+  */
 
 
-.progress {
-  width: 90px;
-  height: 90px;
-  background: none;
-  position: relative;
-}
+ .progress {
+     width: 90px;
+     height: 90px;
+     background: none;
+     position: relative;
+ }
 
-.progress::after {
-  content: "";
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 6px solid #eee;
-  position: absolute;
-  top: 0;
-  left: 0;
-    }
-    
-del, ins {
-    display: inline-block;
-    padding: 0.01em;
-    font-size: 23px;
-    background: none;
-}
+ .progress::after {
+     content: "";
+     width: 100%;
+     height: 100%;
+     border-radius: 50%;
+     border: 6px solid #eee;
+     position: absolute;
+     top: 0;
+     left: 0;
+ }
+ 
+ del, ins {
+     display: inline-block;
+     padding: 0.01em;
+     font-size: 23px;
+     background: none;
+ }
 
-ins {
-    text-decoration: none;
-    color: green;
-}
+ ins {
+     text-decoration: none;
+     color: green;
+ }
 
-a ins {
-    text-decoration: inherit;
-}
+ a ins {
+     text-decoration: inherit;
+ }
 
-del {
-    text-decoration-line: none;
-    color: red;  left: 0;
-}
+ del {
+     text-decoration-line: none;
+     color: red;  left: 0;
+ }
 
-.progress>span {
-  width: 50%;
-  height: 100%;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  z-index: 1;
-}
+ .progress>span {
+     width: 50%;
+     height: 100%;
+     overflow: hidden;
+     position: absolute;
+     top: 0;
+     z-index: 1;
+ }
 
-.progress .progress-left {
-  left: 0;
-}
+ .progress .progress-left {
+     left: 0;
+ }
 
-.progress .progress-bar {
-  width: 100%;
-  height: 100%;
-  background: none;
-  border-width: 6px;
-  border-style: solid;
-  position: absolute;
-  top: 0;
-}
+ .progress .progress-bar {
+     width: 100%;
+     height: 100%;
+     background: none;
+     border-width: 6px;
+     border-style: solid;
+     position: absolute;
+     top: 0;
+ }
 
-.progress .progress-left .progress-bar {
-  left: 100%;
-  border-top-right-radius: 80px;
-  border-bottom-right-radius: 80px;
-  border-left: 0;
-  -webkit-transform-origin: center left;
-  transform-origin: center left;
-}
+ .progress .progress-left .progress-bar {
+     left: 100%;
+     border-top-right-radius: 80px;
+     border-bottom-right-radius: 80px;
+     border-left: 0;
+     -webkit-transform-origin: center left;
+     transform-origin: center left;
+ }
 
-.progress .progress-right {
-  right: 0;
-}
+ .progress .progress-right {
+     right: 0;
+ }
 
-.progress .progress-right .progress-bar {
-  left: -100%;
-  border-top-left-radius: 80px;
-  border-bottom-left-radius: 80px;
-  border-right: 0;
-  -webkit-transform-origin: center right;
-  transform-origin: center right;
-}
+ .progress .progress-right .progress-bar {
+     left: -100%;
+     border-top-left-radius: 80px;
+     border-bottom-left-radius: 80px;
+     border-right: 0;
+     -webkit-transform-origin: center right;
+     transform-origin: center right;
+ }
 
-.progress .progress-value {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+ .progress .progress-value {
+     position: absolute;
+     top: 0;
+     left: 0;
+ }
 
-/*
-*
-* ==========================================
-* FOR DEMO PURPOSE
-* ==========================================
-*
-*/
+ /*
+  *
+  * ==========================================
+  * FOR DEMO PURPOSE
+  * ==========================================
+  *
+  */
 
-.rounded-lg {
-  border-radius: 1rem;
-}
+ .rounded-lg {
+     border-radius: 1rem;
+ }
 
-.text-gray {
-  color: #aaa;
-}
+ .text-gray {
+     color: #aaa;
+ }
 
-div.h4 {
-  line-height: 1rem;
-}
+ div.h4 {
+     line-height: 1rem;
+ }
 </style>

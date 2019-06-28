@@ -946,9 +946,7 @@ end
 
 # Create Write From Dictation database 
 wfd.each do |name, content|
-  
   WriteFrDic.create(audio: name, result: content)
-
 end
 
 # Create Read Aloud database

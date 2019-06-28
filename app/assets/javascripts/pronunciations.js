@@ -4,7 +4,7 @@ $(document).on('turbolinks:load', function() {
   var idWord = "";
   var result = document.getElementById('erea_Say');
   var score;                    // % correct word
- 
+  
   function showInfoWork(e) {
     word = document.getElementById(e.id).innerHTML;
     responsiveVoice.speak(word, "UK English Female", { rate: 0.9 });
@@ -45,6 +45,7 @@ $(document).on('turbolinks:load', function() {
   }
   
   function speakWord(){
+    speak_ipa = $("#get_ipa").text();
     timeRecord = 5;
       document.getElementById("erea_Say").innerHTML = "";
       $("#result").addClass("d-none");
@@ -67,12 +68,21 @@ $(document).on('turbolinks:load', function() {
           document.getElementById("erea_Say").innerHTML = "None";
         }
       }
+     
     }, 1000);
   }
 
   function showResult(){
-    document.getElementById("result-speak").setAttribute("data-value", 90);
-    document.getElementById("value-result-speak").innerHTML = "90%";
+    // Get text to matching
+    var result = $('#erea_Say').text();
+    var speak = $('#work_say').text();
+    if (result != "") {
+      match = matchingWord(speak, result);
+      document.getElementById('word-match').innerHTML = match;
+    }
+    
+    document.getElementById("result-speak").setAttribute("data-value", score);
+    document.getElementById("value-result-speak").innerHTML = score + "%";
 
     $("#Next").removeClass("d-none");
 
@@ -90,6 +100,9 @@ $(document).on('turbolinks:load', function() {
           left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
         }
       }
+     
+      
+
     });
 
     function percentageToDegrees(percentage) {
@@ -147,16 +160,18 @@ $(document).on('turbolinks:load', function() {
       speechRecognizer.continuous = false;
     }
     speechRecognizer.stop();
+    
+   
   };
   // ------------Speech to text
 
   // ==========================================
   //  Matching function
   // ==========================================
-  function matchingWord (origin, result) {
+  function matchingWord(origin, result) {
 
-    var origin_text = origin.split('');
-    var new_text = result.split('');
+    var origin_text = origin.toLowerCase().split('');
+    var new_text = result.toLowerCase().split('');
     var j = 0;
     var len, i, text;
     score = 0;
@@ -178,23 +193,24 @@ $(document).on('turbolinks:load', function() {
   // ==========================================
   //  To Ipa
   // ==========================================
-  function toIpa (word) {
+  function toIpa(word) {
     $.ajax({
       url: "/pronunciation/ipa_word", // Route to the Script Controller method
       type: "POST",
       dataType: "JSON",
       data: { word: word  // This goes to Controller in params hash, i.e. params[:file_name]
-            }
+            },
+      success: function(data) {
+        $("#get_ipa").text(data.message);
+        // console.log(data.message);
+      }
     })
+    
   };
   
   // Click function handle
   $("#microphone").click(function() {
     speakWord();
-    toIpa("eight");
-    var test = gon.word_ipa;
-    // console.log(gon.word_ipa);
-    alert(test);
   });
 
   $("#word").click(function(event) {
