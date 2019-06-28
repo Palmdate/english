@@ -59,8 +59,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Alert
 gem 'rails-assets-sweetalert2', '~> 5.1.1', source: 'https://rails-assets.org'
 gem 'sweet-alert2-rails'
-# Schedule job
-gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
