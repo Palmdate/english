@@ -933,9 +933,27 @@ read_aloud_hard = ["Thompson recognized and exploited all the ingredients of a s
                   ]
 
 # Database default IPA
-list_ipa = [["ʌ" -> ["monkey", "wonder", "cover", "discover", "luck", "donut", "scrub", "subtitle", "umbrella", "rough", "tough", "touch", "young", "youngster", "bump", "monk", "blood"],
-             "ɑ" -> ["blot", "cot", "clot", "jot", "got", "hot", "knot", "lot", "not", "plot", "pot", "rot", "shot", "spot", "tot", "lock", "clock", "rock", "flock", "mock", "shock", "dock", "knock", "stock", "block", "hall", "all", "small", "tall", "call", "fall", "install", "mall", "ball", "pall", "bought", "brought", "fought", "ought", "sought", "saw", "raw", "law", "draw", "flaw"],
-             "æ", "e", "ə", "ɜ:", "ɪ", "i:", "ɒ", "ɔ:", "ʊ", "u:", "aɪ", "aʊ", "eɪ", "oʊ", "ɔɪ", "eə", "ɪə", "ʊə"], ["b", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ŋ", "p", "r", "s", "ʃ", "t", "tʃ", "θ", "ð", "v", "w", "z", "ʒ", "dʒ"]]
+list_ipa = [[{"ʌ" => ["monkey", "wonder", "cover", "discover", "luck", "donut", "scrub", "subtitle", "umbrella", "rough", "tough", "touch", "young", "youngster", "bump", "monk", "blood"]},
+             {"ɑ" -> ["blot", "cot", "clot", "jot", "got", "hot", "knot", "lot", "not", "plot", "pot", "rot", "shot", "spot", "tot", "lock", "clock", "rock", "flock", "mock", "shock", "dock", "knock", "stock", "block", "hall", "all", "small", "tall", "call", "fall", "install", "mall", "ball", "pall", "bought", "brought", "fought", "ought", "sought", "saw", "raw", "law", "draw", "flaw"]},
+             {"æ" => ["sat", "man", "hat", "cat", "fat", "chat", "pat", "last", "add", "vast"]},
+             {"e" => ["sketch", "bed", "get", "editor", "pen", "met", "let", "pet", "best", "peck"]},
+             {"ə" => ["ago", "banana", "assistant", "problem", "celebrate", "enemy", "duplicate", "president", "family"]},
+             {"ɜr" => ["bird", "concern", "hurt", "herd", "alert", "dessert", "skirt", "dirt", "occur", "prefer", "word", "work", "worth", "world", "earth", "learn", "heard", "yearn", "pearl"]},
+             {"ər" => ["actor", "doctor", "administrator", "alligator", "ambassador", "concert", "desert", "mother", "teacher", "border"]},
+             {"ʊr" => ["tour", "contour", "detour", "parkour", "pure", "allure", "abjure", "adjure", "poor", "spoor", "boorish", "moorhen"]},
+             {"ɪ" => ["film", "if", "in", "chill", "started", "wanted", "dances", "buses", "decide", "English"]},
+             {"i:" => ["sleep", "sheep", "keep", "beep", "read", "eat", "neat", "beat", "be", "these", "he", "she", "believe", "belief", "field", "chief"]},
+             {"ɑr" => ["artist", "car", "Mars", "far", "park", "art", "large", "mark", "aardvark", "afar", "agar", "apartment", "arbitrary", "arcade", "archaic"]},
+             {"ɔr" => ["floor", "door", "underfloor", "trapdoor", "dance floor", "score", "chore", "store", "before", "sword", "born", "corn", "horn", "scorn", "thorn"]},
+             {"ʊ" => ["put", "sugar", "push", "butcher", "book", "foot", "cook", "hood", "would", "should", "could"]},
+             {"u:" => ["too", "bamboo", "spoon", "baboon", "cool", "rude", "flu", "emu", "guru", "impromptu", "blue", "clue", "true", "sue", "glue"]},
+             {"aɪ" => ["pint", "islet", "island", "align", "asign", "shine", "ripe", "cite", "fine", "hide", "deny", "try", "apply", "fly", "ally"]},
+             {"aʊ" => ["house", "sound", "mouse", "ground", "loud", "how", "towel", "brown", "shower", "allow"]},
+             {"eɪ" => ["Asia", "alien", "baker", "decade", "safe", "acclaim", "acquaint", "afraid", "way", "day", "eight", "beige", "weigh", "grey", "they"]},
+             {"oʊ" => ["go", "hole", "cold", "bold", "ago", "boat", "boast", "toast", "oat", "low", "show", "arrow", "flow", "borrow", "shoulder", "boulder", "poultice", "poultry", "soul"]},
+             {"ɔɪ" => ["appoint", "choice", "moist", "Android", "oil", "destroy", "boy", "toy", "employ", "joy"]},
+             {"er" => ["chair", "fair", "lair", "hair", "air", "hare", "share", "square", "blare", "care", "where", "there", "nowhere", "somewhere", "anywhere", "pear", "bear", "wear", "forswear", "swear"]},
+             {"ɪr" => ["ear", "beard", "year", "near", "fear", "here", "adhere", "cohere", "sphere", "mere", "beer", "cheer", "leer", "career", "auctioneer", "premier", "cashhier", "chandelier", "cavalier", "bandolier"]}], ["b", "d", "f", "g", "h", "j", "k", "l", "m", "n", "ŋ", "p", "r", "s", "ʃ", "t", "tʃ", "θ", "ð", "v", "w", "z", "ʒ", "dʒ"]]
 # Remove old database
 WriteFrDic.all.each do |k|
   k.destroy
