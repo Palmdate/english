@@ -3,7 +3,8 @@ $(document).on('turbolinks:load', function() {
   var word = "";
   var idWord = "";
   var result = document.getElementById('erea_Say');
- 
+  var score = 0;                    // % correct word
+  
   function showInfoWork(e) {
     word = document.getElementById(e.id).innerHTML;
     responsiveVoice.speak(word, "UK English Female", { rate: 0.9 });
@@ -56,25 +57,36 @@ $(document).on('turbolinks:load', function() {
       timeRecord --;
       var rs = document.getElementById("erea_Say").innerHTML;
       if(timeRecord == 0 || rs != ""){
-        $("#result").removeClass("d-none");
+        $("#result").removeClass("d-none");       
         showResult();
 
         stopConverting();
         clearInterval(start);
-
+        
         if(rs === ""){
           document.getElementById("erea_Say").innerHTML = "None";
         }
       }
+     
     }, 1000);
   }
 
   function showResult(){
-    document.getElementById("result-speak").setAttribute("data-value", 90);
-    document.getElementById("value-result-speak").innerHTML = "90%";
+    // Get text to matching
+    var result = $('#erea_Say').text();
+    var speak = $('#work_say').text();
+    if (result != "") {
+      match = matchingWord(speak, result);
+      document.getElementById('word-match').innerHTML = match;
+    }
+    
+    document.getElementById("result-speak").setAttribute("data-value", score);
+    document.getElementById("value-result-speak").innerHTML = score + "%";
 
-    $("#Next").removeClass("d-none");
-
+    if (score == 100) {
+      $("#Next").removeClass("d-none");
+    }
+    
     $(".progress").each(function() {
 
       var value = $(this).attr('data-value');
@@ -89,6 +101,7 @@ $(document).on('turbolinks:load', function() {
           left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
         }
       }
+     
     });
 
     function percentageToDegrees(percentage) {
@@ -119,7 +132,6 @@ $(document).on('turbolinks:load', function() {
       }
     }
     
-    
     // speechRecognizer.start();
 
     var finalTranscripts = '';
@@ -140,9 +152,7 @@ $(document).on('turbolinks:load', function() {
     speechRecognizer.onerror = function (event) {
 
     };
-    //}// else {
-    //   confirm("Please set: \n media.webspeech.recognition.enable in about:config \n to get all feature of web");
-    // }
+   
   };
   function stopConverting () {
     if('webkitSpeechRecognition' in window) {
@@ -150,14 +160,72 @@ $(document).on('turbolinks:load', function() {
     }
     speechRecognizer.stop();
     
-
+   
   };
   // ------------Speech to text
+
+  // ==========================================
+  //  Matching function
+  // ==========================================
+  function matchingWord(origin, result) {
+
+    var origin_text = origin.toLowerCase().split('');
+    var new_text = result.toLowerCase().split('');
+    var j = 0;
+    var len, i, text;
+    score = 0;
+    
+    for (i = 0, len = origin_text.length, text = ""; i < len; i++) {
+      if (origin_text[i] == new_text[j]) {
+        text += "<ins>" + origin_text[i] + "</ins>";
+        j ++;
+        score ++;
+      }else {
+        text += "<del>" + origin_text[i] + "</del>";
+      }
+      
+    }
+    score = Math.round(score / len * 100);
+    return text;
+  };
+  
+  // ==========================================
+  //  To Ipa
+  // ==========================================
+  function toIpa(word) {
+    $.ajax({
+      url: "/pronunciation/ipa_word", // Route to the Script Controller method
+      type: "POST",
+      dataType: "JSON",
+      data: { word: word  // This goes to Controller in params hash, i.e. params[:file_name]
+            },
+      success: function(data) {
+        $("#get_ipa").text(data.message);
+        // console.log(data.message);
+      }
+    })
+    
+  };
+
+  // ==========================================
+  //  Send word and letter to controller
+  // ==========================================
+  function update_alphabet_trainning() {
+    var word = $('#work_say').text();
+    var ipa_letter = $('.col-sm-3 h1').text().replace(/[/]/g,"");
+    $.ajax({
+      url: "/pronunciation/store_alphabet_trainning", // Route to the Script Controller method
+      type: "GET",
+      dataType: "html",
+      data: { word: word,
+              ipa_letter: ipa_letter// This goes to Controller in params hash, i.e. params[:file_name]
+            }
+    })
+    
+  };
   
   // Click function handle
-
   $("#microphone").click(function() {
-    $("#Next").addClass("d-none");
     speakWord();
   });
 
@@ -167,6 +235,14 @@ $(document).on('turbolinks:load', function() {
 
   $(".wordItem").click(function(event) {
     showInfoWork(event.target);
+  });
+
+  $("#Next").click(function() {
+    document.querySelector('a[rel="next"]').click();
+    if (document.querySelector('a[rel="next"]') == null) {
+      alert("You got the DONE award for this vowels");
+    }
+    update_alphabet_trainning();
   });
 
 });

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_21_102748) do
+ActiveRecord::Schema.define(version: 2019_07_02_044522) do
 
   create_table "courses", force: :cascade do |t|
     t.text "skill"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2019_06_21_102748) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.text "alphabet_trainning"
   end
 
   create_table "ipas", force: :cascade do |t|
@@ -35,6 +36,8 @@ ActiveRecord::Schema.define(version: 2019_06_21_102748) do
     t.text "list_words"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "gif"
+    t.text "description"
   end
 
   create_table "read_aloud_charts", force: :cascade do |t|

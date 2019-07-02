@@ -1,194 +1,206 @@
 <%= render 'home/header' %>
 
-<% alphabet_wrong = IpaUser.find_by(user_id: current_user.id).nil? ? [] : IpaUser.find_by(user_id: current_user.id).alphabet_wrong %>
-<% alphabet_done = IpaUser.find_by(user_id: current_user.id).nil? ? [] : IpaUser.find_by(user_id: current_user.id).alphabet_done %>
-
 <div class="row justify-content-center">
-  <div class="col-lg-10">
-    <div class="read-alouds bg-white shadow p-2">
-      <div>
-        <h2 class="text-left font-weight-bold pb-3 text-blue-en4all">VOWELS</h2>
-        <% @list_vowels.each do |vowel| %>       
-        <a class="" style="font-size: 50px" data-turbolinks='false' href="<%= pronunciation_only_word_path(:ipa => vowel) %>">
-          <div class="rounded-lg p-3 float-left">
-          <!-- Progress bar 1 -->
-            <div class="progress mx-auto" data-value='80'>
-              <span class="progress-left">
-                            <span class="progress-bar border-warning"></span>
-              </span>
-              <span class="progress-right">
-                            <span class="progress-bar border-warning"></span>
-              </span>
-              <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                <% if alphabet_wrong.include? vowel %>
-                  <div class="h2 font-weight-bold text-danger"><%= vowel %></div>
-                <% elsif alphabet_done.include? vowel %>
-                  <div class="h2 font-weight-bold text-success"><%= vowel %></div>
-                <% else %>
-                  <div class="h2 font-weight-bold text-blue-en4all"><%= vowel %></div>
+    <div class="col-lg-10">
+        <div class="read-alouds bg-white shadow p-2">
+            <div>
+                <h2 class="text-left font-weight-bold pb-3 text-blue-en4all">VOWELS</h2>
+                <% @list_vowels.each do |vowel| %>       
+                    <a class="" style="font-size: 50px" data-turbolinks='false' href="<%= pronunciation_only_word_path(:ipa => vowel) %>">
+                        <div class="rounded-lg p-3 float-left">
+                            <!-- Progress bar 1 -->
+                            <% if @alphabet_trainning.include? vowel %>
+                                <div class="progress mx-auto" data-value='<%= @alphabet_trainning[vowel] %>'>
+                            <% elsif @alphabet_done.include? vowel %>
+                                    <div class="progress mx-auto" data-value='100' >
+                            <% else %>
+                                        <div class="progress mx-auto">
+                            <% end %>
+                            <span class="progress-left">
+                                <span class="progress-bar border-warning"></span>
+                            </span>
+                            <span class="progress-right">
+                                <span class="progress-bar border-warning"></span>
+                            </span>
+                            <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                                <% if @alphabet_wrong.include? vowel %>
+                                    <div class="h2 font-weight-bold text-danger"><%= vowel %></div>
+                                <% elsif @alphabet_done.include? vowel %>
+                                    <div class="h2 font-weight-bold text-success"><%= vowel %></div>
+                                <% else %>
+                                    <div class="h2 font-weight-bold text-blue-en4all"><%= vowel %></div>
+                                <% end %>
+                            </div>
+                                
+                                </div>
+                       
+                        </div>
+                        
+                        <!-- END -->    
+                    </a>
                 <% end %>
-              </div>
-            </div>
-          </div>
-          <!-- END -->    
-        </a>
-        <% end %>
-        <div class="clearfix"></div>
-        <h2 class="text-left font-weight-bold pt-3 text-blue-en4all">CONSONANTS</h2>
+                <div class="clearfix"></div>
+                <h2 class="text-left font-weight-bold pt-3 text-blue-en4all">CONSONANTS</h2>
 
-        <% @list_consonants.each do |cons| %>      
-        <a class="" style="font-size: 50px" data-turbolinks='false' href="<%= pronunciation_only_word_path(:ipa => cons) %>">
-          <div class="rounded-lg p-3 float-left">
-          <!-- Progress bar 1 -->
-            <div class="progress mx-auto" data-value='80'>
-              <span class="progress-left">
-                <span class="progress-bar border-warning"></span>
-              </span>
-              <span class="progress-right">
-                <span class="progress-bar border-warning"></span>
-              </span>
-              <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                <% if alphabet_wrong.include? cons %>
-                  <div class="h2 font-weight-bold text-danger"><%= cons %></div>
-                <% elsif alphabet_done.include? cons %>
-                  <div class="h2 font-weight-bold text-success"><%= cons %></div>
-                <% else %>
-                  <div class="h2 font-weight-bold text-blue-en4all"><%= cons %></div>
-                <% end %>
-              </div>
+                <% @list_consonants.each do |cons| %>      
+                    <a class="" style="font-size: 50px" data-turbolinks='false' href="<%= pronunciation_only_word_path(:ipa => cons) %>">
+                        <div class="rounded-lg p-3 float-left">
+                          <!-- Progress bar 1 -->
+                          <% if @alphabet_trainning.include? cons %>
+                          <div class="progress mx-auto" data-value='<%= @alphabet_trainning[cons] %>'>
+                            <% elsif @alphabet_done.include? cons %>
+                            <div class="progress mx-auto" data-value='100' >
+                              <% else %>
+                              <div class="progress mx-auto">
+                                <% end %>
+                                <span class="progress-left">
+                                    <span class="progress-bar border-warning"></span>
+                                </span>
+                                <span class="progress-right">
+                                    <span class="progress-bar border-warning"></span>
+                                </span>
+                                <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                                    <% if @alphabet_wrong.include? cons %>
+                                        <div class="h2 font-weight-bold text-danger"><%= cons %></div>
+                                    <% elsif @alphabet_done.include? cons %>
+                                        <div class="h2 font-weight-bold text-success"><%= cons %></div>
+                                    <% else %>
+                                        <div class="h2 font-weight-bold text-blue-en4all"><%= cons %></div>
+                                    <% end %>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END -->    
+                    </a>
+                <% end %>  
+                <div class="clearfix"></div>
             </div>
-          </div>
-          <!-- END -->    
-        </a>
-        <% end %>  
-        <div class="clearfix"></div>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <style>
-/*
-*
-* ==========================================
-* CUSTOM UTIL CLASSES
-* ==========================================
-*
-*/
+ /*
+  *
+  * ==========================================
+  * CUSTOM UTIL CLASSES
+  * ==========================================
+  *
+  */
 
-.progress {
-  width: 90px;
-  height: 90px;
-  background: none;
-  position: relative;
-}
+ .progress {
+     width: 90px;
+     height: 90px;
+     background: none;
+     position: relative;
+ }
 
-.progress::after {
-  content: "";
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 6px solid #eee;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+ .progress::after {
+     content: "";
+     width: 100%;
+     height: 100%;
+     border-radius: 50%;
+     border: 6px solid #eee;
+     position: absolute;
+     top: 0;
+     left: 0;
+ }
 
-.progress>span {
-  width: 50%;
-  height: 100%;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  z-index: 1;
-}
+ .progress>span {
+     width: 50%;
+     height: 100%;
+     overflow: hidden;
+     position: absolute;
+     top: 0;
+     z-index: 1;
+ }
 
-.progress .progress-left {
-  left: 0;
-}
+ .progress .progress-left {
+     left: 0;
+ }
 
-.progress .progress-bar {
-  width: 100%;
-  height: 100%;
-  background: none;
-  border-width: 6px;
-  border-style: solid;
-  position: absolute;
-  top: 0;
-}
+ .progress .progress-bar {
+     width: 100%;
+     height: 100%;
+     background: none;
+     border-width: 6px;
+     border-style: solid;
+     position: absolute;
+     top: 0;
+ }
 
-.progress .progress-left .progress-bar {
-  left: 100%;
-  border-top-right-radius: 80px;
-  border-bottom-right-radius: 80px;
-  border-left: 0;
-  -webkit-transform-origin: center left;
-  transform-origin: center left;
-}
+ .progress .progress-left .progress-bar {
+     left: 100%;
+     border-top-right-radius: 80px;
+     border-bottom-right-radius: 80px;
+     border-left: 0;
+     -webkit-transform-origin: center left;
+     transform-origin: center left;
+ }
 
-.progress .progress-right {
-  right: 0;
-}
+ .progress .progress-right {
+     right: 0;
+ }
 
-.progress .progress-right .progress-bar {
-  left: -100%;
-  border-top-left-radius: 80px;
-  border-bottom-left-radius: 80px;
-  border-right: 0;
-  -webkit-transform-origin: center right;
-  transform-origin: center right;
-}
+ .progress .progress-right .progress-bar {
+     left: -100%;
+     border-top-left-radius: 80px;
+     border-bottom-left-radius: 80px;
+     border-right: 0;
+     -webkit-transform-origin: center right;
+     transform-origin: center right;
+ }
 
-.progress .progress-value {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+ .progress .progress-value {
+     position: absolute;
+     top: 0;
+     left: 0;
+ }
 
-/*
-*
-* ==========================================
-* FOR DEMO PURPOSE
-* ==========================================
-*
-*/
+ /*
+  *
+  * ==========================================
+  * FOR DEMO PURPOSE
+  * ==========================================
+  *
+  */
 
-.rounded-lg {
-  border-radius: 1rem;
-}
+ .rounded-lg {
+     border-radius: 1rem;
+ }
 
-.text-gray {
-  color: #aaa;
-}
+ .text-gray {
+     color: #aaa;
+ }
 
-div.h4 {
-  line-height: 1rem;
-}
+ div.h4 {
+     line-height: 1rem;
+ }
 </style>
 
 <script>
-  $(function() {
+ $(function() {
 
-  $(".progress").each(function() {
+     $(".progress").each(function() {
 
-    var value = $(this).attr('data-value');
-    var left = $(this).find('.progress-left .progress-bar');
-    var right = $(this).find('.progress-right .progress-bar');
+         var value = $(this).attr('data-value');
+         var left = $(this).find('.progress-left .progress-bar');
+         var right = $(this).find('.progress-right .progress-bar');
 
-    if (value > 0) {
-      if (value <= 50) {
-        right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
-      } else {
-        right.css('transform', 'rotate(180deg)')
-        left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
-      }
-    }
+         if (value > 0) {
+             if (value <= 50) {
+                 right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
+             } else {
+                 right.css('transform', 'rotate(180deg)')
+                 left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
+             }
+         }
 
-  })
+     })
 
-  function percentageToDegrees(percentage) {
-    return percentage / 100 * 360
-  }
+     function percentageToDegrees(percentage) {
+         return percentage / 100 * 360
+     }
 
-});
+ });
 </script>

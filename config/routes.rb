@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'pronunciation/index'
   get 'pronunciation/only_word'
   get 'pronunciation/list_word'
+  get 'pronunciation/store_alphabet_trainning'
   get 'admin/index'
   get 'admin/report'
   get 'build/index'

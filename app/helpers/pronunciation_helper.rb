@@ -1,5 +1,6 @@
 # coding: utf-8
 module PronunciationHelper
+  include Pagy::Frontend
   require "sqlite3"
   require "humanize"
   
@@ -80,7 +81,7 @@ module PronunciationHelper
       end
     end
 
-    # Check all ipa: ɑ: => ɑ, ɜ: => ɝ, i: => i, ɒ => , ɔ: => ɔ, u: => u
+    # Check all ipa: i: => i, u: => u
     # /ʌ+|a+|æ+|e+|ə+|ɝ+|ɪ+|i+|ɑ+|ɔ+|ʊ+|u+|aɪ+|aʊ+|eɪ+|oʊ+|ɔɪ+|eə+|ɪə+|ʊə+|b+|d+|f+|g+|h+|j+|k+|ɫ+|m+|n+|ŋ+|p+|r+|s+|ʃ+|t+|tʃ+|θ+|ð+|v+|w+|z+|ʒ+|dʒ+/
     
     # Get list include double vowels and consotants
@@ -89,8 +90,8 @@ module PronunciationHelper
       hash_ipa[elem] = array_double.count(elem)
     end
     #  Get list include one vowels and consotants
-    array_once = array.gsub(/aɪ|aʊ|eɪ|oʊ|ɔɪ|eə|ɪə|ʊə|tʃ|dʒ/, '')
-    new_array = array_once.scan /ʌ+|ɑ+|æ+|e+|ə+|ɝ+|ɪ+|i+|ɒ+|ɔ+|ʊ+|u+|b+|d+|f+|g+|h+|j+|k+|ɫ+|m+|n+|ŋ+|p+|r+|s+|ʃ+|t+|tʃ+|θ+|ð+|v+|w+|z+|ʒ+/
+    array_once = array.gsub(/aɪ|aʊ|eɪ|oʊ|ɔɪ|tʃ|dʒ|ɜr|ər|ɑr|ɔr|er|ɪr/, '')
+    new_array = array_once.scan /ʌ+|ɑ+|æ+|e+|ə+|ɪ+|i+|ʊ+|u+|b+|d+|f+|g+|h+|j+|k+|ɫ+|m+|n+|ŋ+|p+|r+|s+|ʃ+|t+|tʃ+|θ+|ð+|v+|w+|z+|ʒ+/
     new_array.uniq.each do |elem|
       hash_ipa[elem] = new_array.count(elem)
     end
@@ -112,7 +113,7 @@ module PronunciationHelper
       hash_ipa = get_ipa(list_result.where(user_id: user_id))
       result_user = IpaUser.find_by(user_id: user_id)
       if result_user.nil?
-        IpaUser.new(:user_id => user_id, :alphabet_wrong => hash_ipa.keys, :alphabet_done => []).save!
+        IpaUser.new(:user_id => user_id, :alphabet_wrong => hash_ipa.keys, :alphabet_done => [], :alphabet_trainning => Hash.new).save!
       else
         result_user.update(:alphabet_wrong => hash_ipa.keys)
       end
