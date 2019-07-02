@@ -3,7 +3,7 @@ $(document).on('turbolinks:load', function() {
   var word = "";
   var idWord = "";
   var result = document.getElementById('erea_Say');
-  var score;                    // % correct word
+  var score = 0;                    // % correct word
   
   function showInfoWork(e) {
     word = document.getElementById(e.id).innerHTML;
@@ -84,8 +84,10 @@ $(document).on('turbolinks:load', function() {
     document.getElementById("result-speak").setAttribute("data-value", score);
     document.getElementById("value-result-speak").innerHTML = score + "%";
 
-    $("#Next").removeClass("d-none");
-
+    if (score == 100) {
+      $("#Next").removeClass("d-none");
+    }
+    
     $(".progress").each(function() {
 
       var value = $(this).attr('data-value');
@@ -101,8 +103,6 @@ $(document).on('turbolinks:load', function() {
         }
       }
      
-      
-
     });
 
     function percentageToDegrees(percentage) {
@@ -207,6 +207,23 @@ $(document).on('turbolinks:load', function() {
     })
     
   };
+
+  // ==========================================
+  //  Send word and letter to controller
+  // ==========================================
+  function update_alphabet_trainning() {
+    var word = $('#work_say').text();
+    var ipa_letter = $('.col-sm-3 h1').text().replace(/[/]/g,"");
+    $.ajax({
+      url: "/pronunciation/store_alphabet_trainning", // Route to the Script Controller method
+      type: "GET",
+      dataType: "html",
+      data: { word: word,
+              ipa_letter: ipa_letter// This goes to Controller in params hash, i.e. params[:file_name]
+            }
+    })
+    
+  };
   
   // Click function handle
   $("#microphone").click(function() {
@@ -219,6 +236,14 @@ $(document).on('turbolinks:load', function() {
 
   $(".wordItem").click(function(event) {
     showInfoWork(event.target);
+  });
+
+  $("#Next").click(function() {
+    document.querySelector('a[rel="next"]').click();
+    if (document.querySelector('a[rel="next"]') == null) {
+      alert("You got the DONE award for this vowels");
+    }
+    update_alphabet_trainning();
   });
 
 });
