@@ -66,6 +66,8 @@ $(document).on('turbolinks:load', function() {
         if(rs === ""){
           document.getElementById("erea_Say").innerHTML = "None";
         }
+
+        $("#recordIcon").removeClass("recordding");
       }
      
     }, 1000);
@@ -226,7 +228,14 @@ $(document).on('turbolinks:load', function() {
   
   // Click function handle
   $("#microphone").click(function() {
-    speakWord();
+    if(!$("#recordIcon").hasClass("recordding")) {
+      $("#Next").addClass("d-none");
+      $("#recordIcon").addClass("recordding");
+      speakWord();
+    }
+    else{
+      alert("Recoding ...");
+    }
   });
 
   $("#word").click(function(event) {

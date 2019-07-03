@@ -17,7 +17,7 @@
                                 <%=image_tag("ipa/#{@ipa_letter}.jpg", width: "300px")%>
                             </div>
                             <div class="col-12 col-md pt-3 pt-md-0">
-                                <p>How to pronunciation</p>
+                                <p><%= @ipa_letter %></p>
                             </div>
                         </div>
                     </div>
@@ -51,23 +51,34 @@
                     
                     <!-- table list words -->
                     <div class="col-sm-6 col-md-3 com-12 border pt-3">
-                        <p class="text-blue-en4all">Start speak: </p>
-                        <div class="text-center">
-                            <%=image_tag("microphone.png", height: "100px", id: "microphone", class: "microphone")%>
+                        <div class="flip-card rounded shadow">
+                            <div class="flip-card rounded shadow">
+                                <div class="flip-card rounded shadow">
+                                    <p class="text-blue-en4all pt-2 text-center">Record</p>
+                                    <div id="recordIcon" class="text-center" style="left: 4rem">
+                                        <%=image_tag("microphone.png", height: "100px", id: "microphone", class: "microphone")%>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3 col-12 border pt-3">
-                        <p class="text-blue-en4all">Your speak: </p>
-                        <h2 class="text-success text-center text-uppercase pt-4" id="erea_Say"></h2>
+                        <div class="flip-card rounded shadow">
+                            <div class="flip-card rounded shadow">
+                                <div class="flip-card rounded shadow">
+                                    <p class="text-blue-en4all pt-2 text-center">Your speak</p>
+                                    <h2 class="text-success text-center text-uppercase pt-4" id="erea_Say"></h2>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-3 col-12 border pt-3">
-                        <p class="text-blue-en4all">Your result: </p>
                         <!--  -->
-                        <div class="flip-card rounded shadow" style="height: 75%;">
+                        <div class="flip-card rounded shadow">
                             <div class="flip-card-inner rounded shadow">
                                 <div class="flip-card-front rounded shadow">
-                                    
                                     <div class="text-center">
+                                        <p class="text-blue-en4all pt-2 text-center">Rate</p>
                                         <div id="result" class="d-none rounded-lg w-100 p-3 float-left">
                                             <!-- -- Progress bar 1 -- -->
                                             <div id="result-speak" class="progress mx-auto">
@@ -75,7 +86,7 @@
                                                     <span class="progress-bar border-success"></span>
                                                 </span>
                                                 <span class="progress-right">
-                                                    <span class="progress-bar border-danger"></span>
+                                                    <span class="progress-bar border-success"></span>
                                                 </span>
                                                 <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
                                                     <div id="value-result-speak" class="h5 font-weight-bold text-blue-en4all"></div>
@@ -86,8 +97,9 @@
                                     </div>
                                     <!-- </div> -->
                                 </div>
-                                <div class="flip-card-back rounded shadow">
-                                    <div class="pt-3 text-center font-italic text-success" id="word-match" style="margin-top: 5em;"></div>
+                                <div class="flip-card-back rounded shadow" style="z-index: 999">
+                                    <p class="text-blue-en4all pt-2 text-center">Your result</p>
+                                    <div class="pt-3 text-center font-italic text-success pt-4" id="word-match"></div>
                                 </div>
                             </div>
                         </div>

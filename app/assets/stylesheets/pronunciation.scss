@@ -51,4 +51,31 @@
     transform: rotateY(180deg);
   }
 
+.recordding {
+  position: relative;
+
+  animation: pulse 2s linear infinite;
+  border: #fff solid 5px !important;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  content: ' ';
   
+  position: absolute;
+  transform: scale(0.714);
+  z-index: 1;
+
+  animation: pulse 1s linear infinite, cycle-colors 6s linear infinite;
+}
+
+.recordding img {
+  border-radius: 9999px;
+  position: relative;
+}
+
+@keyframes cycle-colors {
+  0% { border-color: hsl(0, 100%, 50%); }
+  25% { border-color: hsl(90, 100%, 50%); }
+  50% { border-color: hsl(180, 100%, 50%); }
+  75% { border-color: hsl(270, 100%, 50%); }
+  100% { border-color: hsl(360, 100%, 50%); }
+}
