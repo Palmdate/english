@@ -4,7 +4,10 @@ class PronunciationController < ApplicationController
   before_action :check_user
   
   def index
-    @list_vowels = ["ʌ", "ɑ", "æ", "e", "ə", "ɜr", "ər", "ɪ", "i:", "ɑr", "ɔr", "ʊ", "u:", "aɪ", "aʊ", "eɪ", "oʊ", "ɔɪ", "er", "ɪr"]
+    # Check again ɑ ~ ɔ, fact: ɔ = o, ɑ = ɒ
+    # ɜ, ɪə, ʊə
+    # ɑ ~ ɔ ~ a
+    @list_vowels = ["ʌ", "ɑ", "æ", "e", "ə", "ɜr", "ər", "ʊr", "ɪ", "i:", "ɑr", "ɔr", "ʊ", "u:", "aɪ", "aʊ", "eɪ", "oʊ", "ɔɪ", "er", "ɪr"]
     @list_consonants = ["b", "p", "f", "v", "t", "d", "l", "g", "h", "k", "m", "n", "ŋ", "s", "ʃ", "z", "ʒ", "tʃ", "θ", "ð", "r", "w", "j", "dʒ"]
     ipa_user = IpaUser.find_by(user_id: current_user.id)
     @alphabet_wrong = ipa_user.nil? ? [] : ipa_user.alphabet_wrong
@@ -41,7 +44,7 @@ class PronunciationController < ApplicationController
     if percent == 100
       new_done = ipa_user.alphabet_done + [ipa_letter]
       new_wrong = ipa_user.alphabet_wrong - [ipa_letter]
-      new_trainning = ipa_user.alphabet_trainning.delete(ipa_letter)
+      new_trainning = ipa_user.alphabet_trainning.except(ipa_letter)
     else
       new_trainning = ipa_user.alphabet_trainning.merge!(ipa_letter => percent)
       new_done = ipa_user.alphabet_done - [ipa_letter]

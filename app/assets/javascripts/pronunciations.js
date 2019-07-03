@@ -164,7 +164,7 @@ $(document).on('turbolinks:load', function() {
     
    
   };
-  // ------------Speech to text
+  // ------------Speech to text ---------------
 
   // ==========================================
   //  Matching function
@@ -247,11 +247,13 @@ $(document).on('turbolinks:load', function() {
   });
 
   $("#Next").click(function() {
-    document.querySelector('a[rel="next"]').click();
     if (document.querySelector('a[rel="next"]') == null) {
       alert("You got the DONE award for this vowels");
+    } else {
+      document.querySelector('a[rel="next"]').click();
     }
     update_alphabet_trainning();
+      
   });
 
 });
