@@ -4,8 +4,6 @@
     <div class="col-lg-10">
       <div class="bg-white shadow p-2">
         <div class="student-grade-table p-4">
-          <% if current_user.id %>
-          <% course = Course.where(user_id: current_user.id) %>
           <div class="row row-course-header d-flex">
             <div class="col-1 mt-3 mb-3 col-course-day font-weight-bold">DAY</div>
             <div class="col-4 mt-3 mb-3 col-course-skill font-weight-bold">SKILL</div>
@@ -13,34 +11,31 @@
             <div class="col-2 mt-3 mb-3 col-course-status font-weight-bold">STATUS</div>
             <div class="col-3 mt-3 mb-3 col-course-action font-weight-bold">ACTIONS</div>
           </div>
-          <% (1..30).each do |n| %>
-          <% by_day = course.where(day_id: n) %>    
-          <% by_day.order("id ASC").each do |c| %>
+          
+          <% Course.where(user_id: 6).pluck(:day_id, :skill, :quality, :status, :id).sort.each do |course| %>
           <div class="row row-course panel-body d-flex border-top">
-            <div class="col-1 mt-2 mb-2 col-course-day"><%= n %></div>
-            <div class="col-4 mt-2 mb-2 col-course-skill"><%= c.skill %></div>
-            <div class="col-2 mt-2 mb-2 col-course-quality"><%= c.quality %></div>
-            <div class="col-2 mt-2 mb-2 col-course-status"><%= c.status %></div>
+            <div class="col-1 mt-2 mb-2 col-course-day"><%= course.first %></div>
+            <div class="col-4 mt-2 mb-2 col-course-skill"><%= course[1] %></div>
+            <div class="col-2 mt-2 mb-2 col-course-quality"><%= course[2] %></div>
+            <div class="col-2 mt-2 mb-2 col-course-status"><%= course[3] %></div>
             <div class="col-3 mt-2 mb-2 col-course-action">
               <a class="edit btn-sm btn-warning" style="display: unset;color: white;"><span class="fa fa-pencil"></span></a>
-              <% if (c.skill == "Write From Dictation") %>
-              <%= link_to '<span class="fa fa-tv"></span>'.html_safe, write_fr_dics_path(:audio => c.quality, :status_id => c.id), :class => "test btn-sm btn-info", :style => "display: unset;color: white;", :"data-turbolinks" => false %>
-              <%elsif (c.skill == "Read Aloud") %>
-              <%= link_to '<span class="fa fa-tv"></span>'.html_safe, read_alouds_path(:audio => c.quality, :status_id => c.id), :class => "test btn-sm btn-info", :style => "display: unset;color: white;", :"data-turbolinks" => false %>
+              <% if (course[1] == "Write From Dictation") %>
+              <%= link_to '<span class="fa fa-tv"></span>'.html_safe, write_fr_dics_path(:audio => course[2], :status_id => course.last), :class => "test btn-sm btn-info", :style => "display: unset;color: white;", :"data-turbolinks" => false %>
+              <%elsif (course[1] == "Read Aloud") %>
+              <%= link_to '<span class="fa fa-tv"></span>'.html_safe, read_alouds_path(:audio => course[2], :status_id => course.last), :class => "test btn-sm btn-info", :style => "display: unset;color: white;", :"data-turbolinks" => false %>
               <% else %>
               <a class="test btn-sm btn-info" style="display: unset;color: white;" href="#"><span class="fa fa-tv"></span></a>
               <% end %>
-              <%= link_to '<span class="fa fa-trash-o"></span>'.html_safe, c, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn-sm btn-danger" %>
+              <% @course = Course.find(course.last) %>
+              <%= link_to '<span class="fa fa-trash-o"></span>'.html_safe, @course, method: :delete, data: { confirm: 'Are you sure?' }, :class => "delete btn-sm btn-danger" %>
             </div>
           </div>
-          
-          <% @course = Course.find(c.id) %>
           <%= render 'edit_form_course', course: @course  %>
           
           <% end %>
-          <% end %>
           <%= render 'create_form_course' %>
-          <% end %>
+
         </div>
       </div>
     </div>

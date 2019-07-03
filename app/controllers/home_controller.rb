@@ -2,6 +2,9 @@ class HomeController < ApplicationController
   before_action :check_user
   
   def index
+    if current_user.email == "admin@en4pr.com"
+      redirect_to  admin_index_path
+    end
     
   end
 
