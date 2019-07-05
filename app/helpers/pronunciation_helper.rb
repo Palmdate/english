@@ -107,8 +107,8 @@ module PronunciationHelper
   end
 
   def self.save_record_ipa
-    list_user = ReadAloudReport.where("date(updated_at) between :start and :end", {start: 14.days.ago.to_date, end: Date.today}).order(:updated_at).pluck(:user_id)
-    list_result = ReadAloudReport.where("date(updated_at) between :start and :end", {start: 14.days.ago.to_date, end: Date.today}).order(:updated_at)
+    list_user = ReadAloudChart.where("date(updated_at) between :start and :end", {start: 14.days.ago.to_date, end: Date.today}).order(:updated_at).pluck(:user_id)
+    list_result = ReadAloudChart.where("date(updated_at) between :start and :end", {start: 14.days.ago.to_date, end: Date.today}).order(:updated_at)
     list_user.each do |user_id|
       hash_ipa = get_ipa(list_result.where(user_id: user_id))
       result_user = IpaUser.find_by(user_id: user_id)

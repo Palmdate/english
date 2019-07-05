@@ -11,7 +11,7 @@ class ReadAloudsController < ApplicationController
     else
       unless params[:rate] == nil
         # check condition if :rate >= 55%, it will save :result
-        if params[:rate] >= 55
+        if params[:rate].to_i >= 55
           result = ReadAloudChart.new(:user_id => current_user.id, :rate => params[:rate], :sentence => params[:sentence], :result => params[:result])
           result.save!
         else
