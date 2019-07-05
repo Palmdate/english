@@ -65,6 +65,15 @@ gem 'whenever', require: false
 # Pagination
 gem 'pagy', '~> 2.1.3'
 
+gem 'activeadmin'
+gem 'active_admin_flat_skin'
+
+# Plus integrations with:
+gem 'devise'
+gem 'cancancan'
+gem 'draper'
+gem 'pundit'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

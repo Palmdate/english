@@ -1,6 +1,8 @@
 # coding: utf-8
 Rails.application.routes.draw do
 
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   get 'pronunciation/index'
   get 'pronunciation/only_word'
   get 'pronunciation/list_word'
