@@ -4,6 +4,7 @@ $(document).on('turbolinks:load', function() {
   var idWord = "";
   var result = document.getElementById('erea_Say');
   var score = 0;                    // % correct word
+  var count_next = 0;
   
   function showInfoWork(e) {
     word = document.getElementById(e.id).innerHTML;
@@ -247,13 +248,29 @@ $(document).on('turbolinks:load', function() {
   });
 
   $("#Next").click(function() {
-    if (document.querySelector('a[rel="next"]') == null) {
-      alert("You got the DONE award for this vowels");
+    length_list = $('.list_word').length;
+    if (count_next == length_list - 1) {
+      Swal.fire({
+        title: 'Sweet!',
+        text: 'You have finished tranning this vowel.',
+        imageUrl: '/assets/success.jpg',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Custom image',
+        animation: false
+      }).then(function() {
+        // Redirect the page
+        window.location.href = "//" + window.location.host + "/pronunciation/index";
+        console.log(window.location);
+      });
     } else {
-      document.querySelector('a[rel="next"]').click();
+      
+      $('.list_word:eq('+ count_next +')').addClass("d-none");
+      $('.list_word:eq('+ (count_next + 1) +')').removeClass("d-none");
+      count_next ++;
     }
     update_alphabet_trainning();
-      
+
   });
 
 });

@@ -19,7 +19,6 @@ class PronunciationController < ApplicationController
   def only_word
     @ipa_letter = params[:ipa]
     @ipa_words = Ipa.all.find_by(name: @ipa_letter).list_words
-    @pagy, @ipa_words = pagy_array(@ipa_words, items: 1)
 
   end
 
